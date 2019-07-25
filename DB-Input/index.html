@@ -57,11 +57,11 @@
 				<div class="wrap-input100 input100-select bg1">
 					<span class="label-input100">Needed Services *</span>
 					<div>
-						<select class="js-select2" name="service">
-							<option>Please chooses</option>
-							<option>eCommerce Bussiness</option>
-							<option>UI/UX Design</option>
-							<option>Online Services</option>
+						<select class="js-select2" name="service" data-validate="ABCD">
+							<option value="">Please choose</option>
+							<option value="2">eCommerce Bussiness</option>
+							<option value="3">UI/UX Design</option>
+							<option value="4">Online Services</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
@@ -144,17 +144,17 @@
 			});
 
 
-			$(".js-select2").each(function(){
-				$(this).on('select2:close', function (e){
-					if($(this).val() == "Please chooses") {
-						$('.js-show-service').slideUp();
-					}
-					else {
-						$('.js-show-service').slideUp();
-						$('.js-show-service').slideDown();
-					}
-				});
-			});
+			// $(".js-select2").each(function(){
+			// 	$(this).on('select2:close', function (e){
+			// 		if($(this).val() == "Please choose") {
+			// 			$('.js-show-service').slideUp();
+			// 		}
+			// 		else {
+			// 			$('.js-show-service').slideUp();
+			// 			$('.js-show-service').slideDown();
+			// 		}
+			// 	});
+			// });
 		})
 	</script>
 <!--===============================================================================================-->
