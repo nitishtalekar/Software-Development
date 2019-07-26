@@ -1,7 +1,16 @@
-<!DOCTYPE html>
+<?php require('server.php');
+
+	$grno = $_SESSION['GRNO'];
+	$name = $_SESSION['Name'];
+	
+	if(isset($_POST['student_ach'])){
+		header('location: Internship.php');
+	}
+	
+?>
 <html lang="en">
 <head>
-	<title>Internships</title>
+	<title>Achievements</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -34,99 +43,63 @@
 
 	<div class="container-contact100">
 		<div class="wrap-contact100">
-			<form class="contact100-form validate-form">
+			<form class="contact100-form validate-form" method="POST">
 				<span class="contact100-form-title">
-					Internships
+					Achievements
 				</span>
 				
-				<!-- Internship 1 -->
 				<div class="wrap-input100">
-					<center><label class="label-inputx">Internship 1</label></center>
+					<center>
+						<label class="label-inputx">GR. Number : <?= $grno ?></label>
+						<label class="label-inputx">Name : <?= $name ?></label>
+					</center>
 				</div>
-				<div class="wrap-input100  bg1" >
-					<span class="label-input100">Company Name</span>
-					<input class="input100" type="text" name="comp1" placeholder="Enter Company Name">
+				<!-- Achievement 1 -->
+				<div class="wrap-input100">
+					<center><label class="label-inputx">Achievement 1</label></center>
 				</div>
-				<div class="wrap-input100  bg1" >
-					<span class="label-input100">Position</span>
-					<input class="input100" type="text" name="pos1" placeholder="Enter your Position">
-				</div>
-				
 				<div class="wrap-input100  bg1 rs1-wrap-input100" >
-					<span class="label-input100">Date From</span>
-					<input class="input100" type="date" name="from1" placeholder="Validity Year">
+					<span class="label-input100">Enter Achievement</span>
+					<input class="input100" type="text" name="ach1" placeholder="Achievement">
 				</div>
 
 				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Date Till</span>
-					<input class="input100" type="date" name="till1" placeholder="Upload Certificate">
+					<span class="label-input100">Upload Cerificate</span>
+					<input class="input50" type="file" name="ach_cert1" placeholder="Upload Certificate">
 				</div>
 				
-				<div class="wrap-input100  bg1 rs1-alert-validate" >
-					<span class="label-input100">Description</span>
-					<textarea class="input100" name="desc1" placeholder="Describe your experiance"></textarea>
-				</div>
-				
-				<!-- Internship 2 -->
+				<!-- Achievement 2 -->
 				<div class="wrap-input100">
-					<center><label class="label-inputx">Internship 2</label></center>
+					<center><label class="label-inputx">Achievement 2</label></center>
 				</div>
-				<div class="wrap-input100  bg1" >
-					<span class="label-input100">Company Name</span>
-					<input class="input100" type="text" name="comp2" placeholder="Enter Company Name">
-				</div>
-				<div class="wrap-input100  bg1" >
-					<span class="label-input100">Position</span>
-					<input class="input100" type="text" name="pos2" placeholder="Enter your Position">
-				</div>
-				
 				<div class="wrap-input100  bg1 rs1-wrap-input100" >
-					<span class="label-input100">Date From</span>
-					<input class="input100" type="date" name="from2" placeholder="Validity Year">
+					<span class="label-input100">Enter Achievement</span>
+					<input class="input100" type="text" name="ach2" placeholder="Achievement">
 				</div>
 
 				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Date Till</span>
-					<input class="input100" type="date" name="till2" placeholder="Upload Certificate">
+					<span class="label-input100">Upload Cerificate</span>
+					<input class="input50" type="file" name="ach_cert2" placeholder="Upload Certificate">
 				</div>
 				
-				<div class="wrap-input100  bg1 rs1-alert-validate" >
-					<span class="label-input100">Description</span>
-					<textarea class="input100" name="desc2" placeholder="Describe your experiance"></textarea>
-				</div>
-				
-				<!-- Internship 3 -->
+				<!-- Achievement 3 -->
 				<div class="wrap-input100">
-					<center><label class="label-inputx">Internship 3</label></center>
+					<center><label class="label-inputx">Achievement 3</label></center>
 				</div>
-				<div class="wrap-input100  bg1" >
-					<span class="label-input100">Company Name</span>
-					<input class="input100" type="text" name="comp3" placeholder="Enter Company Name">
-				</div>
-				<div class="wrap-input100  bg1" >
-					<span class="label-input100">Position</span>
-					<input class="input100" type="text" name="pos3" placeholder="Enter your Position">
-				</div>
-				
 				<div class="wrap-input100  bg1 rs1-wrap-input100" >
-					<span class="label-input100">Date From</span>
-					<input class="input100" type="date" name="from3" placeholder="Validity Year">
+					<span class="label-input100">Enter Achievement</span>
+					<input class="input100" type="text" name="ach3" placeholder="Achievement">
 				</div>
 
 				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Date Till</span>
-					<input class="input100" type="date" name="till3" placeholder="Upload Certificate">
-				</div>
-				
-				<div class="wrap-input100  bg1 rs1-alert-validate" >
-					<span class="label-input100">Description</span>
-					<textarea class="input100" name="desc3" placeholder="Describe your experiance"></textarea>
+					<span class="label-input100">Upload Cerificate</span>
+					<input class="input50" type="file" name="ach_cert3" placeholder="Upload Certificate">
 				</div>
 
 				<div class="container-contact100-form-btn">
-					<button class="contact100-form-btn">
+					<button type="submit" class="contact100-form-btn" name="student_ach">
 						<span>
-							Submit
+							Next
 							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
 						</span>
 					</button>

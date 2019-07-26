@@ -1,7 +1,15 @@
-<!DOCTYPE html>
+<?php require('server.php');
+
+  
+  if(isset($_POST['student_id'])){
+    $grno = mysqli_real_escape_string($db, $_POST['grno']);
+    $_SESSION['GRNO'] = $grno;
+		header('location: Student.php');
+	}
+?>
 <html lang="en">
 <head>
-	<title>Contact V5</title>
+	<title>Student ID</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -34,89 +42,20 @@
 
 	<div class="container-contact100">
 		<div class="wrap-contact100">
-			<form class="contact100-form validate-form">
+			<form class="contact100-form validate-form" method="POST">
 				<span class="contact100-form-title">
-					Contact Us
+					Student Information - Gr. Number
 				</span>
-
-				<div class="wrap-input100 validate-input bg1" data-validate="Please Type Your Name">
-					<span class="label-input100">FULL NAME *</span>
-					<input class="input100" type="text" name="name" placeholder="Enter Your Name">
+				
+        <div class="wrap-input100 validate-input bg1" data-validate="Please Fill Field">
+					<span class="label-input100">G.R Number</span>
+					<input class="input100" type="text" name="grno" placeholder="Enter Your G.R Number">
 				</div>
 
-				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Enter Your Email (e@a.x)">
-					<span class="label-input100">Email *</span>
-					<input class="input100" type="text" name="email" placeholder="Enter Your Email ">
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Phone</span>
-					<input class="input100" type="text" name="phone" placeholder="Enter Number Phone">
-				</div>
-
-				<div class="wrap-input100 input100-select bg1">
-					<span class="label-input100">Needed Services *</span>
-					<div>
-						<select class="js-select2" name="service" data-validate="ABCD">
-							<option value="">Please choose</option>
-							<option value="2">eCommerce Bussiness</option>
-							<option value="3">UI/UX Design</option>
-							<option value="4">Online Services</option>
-						</select>
-						<div class="dropDownSelect2"></div>
-					</div>
-				</div>
-
-				<div class="w-full dis-none js-show-service">
-					<div class="wrap-contact100-form-radio">
-						<span class="label-input100">What type of products do you sell?</span>
-
-						<div class="contact100-form-radio m-t-15">
-							<input class="input-radio100" id="radio1" type="radio" name="type-product" value="physical" checked="checked">
-							<label class="label-radio100" for="radio1">
-								Phycical Products
-							</label>
-						</div>
-
-						<div class="contact100-form-radio">
-							<input class="input-radio100" id="radio2" type="radio" name="type-product" value="digital">
-							<label class="label-radio100" for="radio2">
-								Digital Products
-							</label>
-						</div>
-
-						<div class="contact100-form-radio">
-							<input class="input-radio100" id="radio3" type="radio" name="type-product" value="service">
-							<label class="label-radio100" for="radio3">
-								Services Consulting
-							</label>
-						</div>
-					</div>
-
-					<div class="wrap-contact100-form-range">
-						<span class="label-input100">Budget *</span>
-
-						<div class="contact100-form-range-value">
-							$<span id="value-lower">610</span> - $<span id="value-upper">980</span>
-							<input type="text" name="from-value">
-							<input type="text" name="to-value">
-						</div>
-
-						<div class="contact100-form-range-bar">
-							<div id="filter-bar"></div>
-						</div>
-					</div>
-				</div>
-
-				<div class="wrap-input100 validate-input bg0 rs1-alert-validate" data-validate = "Please Type Your Message">
-					<span class="label-input100">Message</span>
-					<textarea class="input100" name="message" placeholder="Your message here..."></textarea>
-				</div>
-
-				<div class="container-contact100-form-btn">
-					<button class="contact100-form-btn">
+        <div class="container-contact100-form-btn">
+					<button type="submit" class="contact100-form-btn" name="student_id">
 						<span>
-							Submit
+							Next
 							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
 						</span>
 					</button>
@@ -142,19 +81,6 @@
 				minimumResultsForSearch: 20,
 				dropdownParent: $(this).next('.dropDownSelect2')
 			});
-
-
-			// $(".js-select2").each(function(){
-			// 	$(this).on('select2:close', function (e){
-			// 		if($(this).val() == "Please choose") {
-			// 			$('.js-show-service').slideUp();
-			// 		}
-			// 		else {
-			// 			$('.js-show-service').slideUp();
-			// 			$('.js-show-service').slideDown();
-			// 		}
-			// 	});
-			// });
 		})
 	</script>
 <!--===============================================================================================-->
@@ -162,31 +88,6 @@
 	<script src="vendor/daterangepicker/daterangepicker.js"></script>
 <!--===============================================================================================-->
 	<script src="vendor/countdowntime/countdowntime.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/noui/nouislider.min.js"></script>
-	<script>
-	    var filterBar = document.getElementById('filter-bar');
-
-	    noUiSlider.create(filterBar, {
-	        start: [ 1500, 3900 ],
-	        connect: true,
-	        range: {
-	            'min': 1500,
-	            'max': 7500
-	        }
-	    });
-
-	    var skipValues = [
-	    document.getElementById('value-lower'),
-	    document.getElementById('value-upper')
-	    ];
-
-	    filterBar.noUiSlider.on('update', function( values, handle ) {
-	        skipValues[handle].innerHTML = Math.round(values[handle]);
-	        $('.contact100-form-range-value input[name="from-value"]').val($('#value-lower').html());
-	        $('.contact100-form-range-value input[name="to-value"]').val($('#value-upper').html());
-	    });
-	</script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
 

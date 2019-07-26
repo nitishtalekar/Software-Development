@@ -1,4 +1,58 @@
-<!DOCTYPE html>
+<?php require('server.php');
+	
+			$grno = $_SESSION['GRNO'];
+	if(isset($_POST['student_info'])){
+		$fname = mysqli_real_escape_string($db, $_POST['fname']);
+		$mname = mysqli_real_escape_string($db, $_POST['mname']);
+		$lname = mysqli_real_escape_string($db, $_POST['lname']);
+		$email = mysqli_real_escape_string($db, $_POST['email']);
+		$phone = mysqli_real_escape_string($db, $_POST['phone']);
+		$gen = $_POST['gender'];
+		$dob = mysqli_real_escape_string($db, $_POST['dob']);
+		$tenbrd = $_POST['tenboard'];
+		$tenper = mysqli_real_escape_string($db, $_POST['tenpercent']);
+		$twelvebrd= $_POST['twelveboard'];
+		$twelveper = mysqli_real_escape_string($db, $_POST['twelvepercent']);
+		$dept = $_POST['dept'];
+		$sem = $_POST['sem'];
+		$doj = mysqli_real_escape_string($db, $_POST['doj']);
+		$name = $fname." ".$mname." ".$lname;
+		// echo $name;
+		// $grno,$name,$email,$phone,$gen,$dob,$tenbrd,$tenper,$twelvebrd,$twelveper,$doj,$dept,$sem
+		// echo $grno;
+		// echo $fname;
+		// echo $mname;
+		// echo $lname;
+		// echo $email;
+		// echo $phone;
+		// echo $gen;
+		// echo $dob;
+		// echo $tenbrd;
+		// echo $tenper;
+		// echo $twelvebrd;
+		// echo $twelveper;
+		// echo $dept;
+		// echo $sem;
+		// echo $doj;
+		
+		$query = "INSERT INTO student(grno, student_name, student_mail, student_phone, student_gen, student_dob, ten_board, ten_percent, twelve_board, twelve_percent, student_doj, student_dept, student_sem) VALUES ('$grno','$name','$email','$phone','$gen','$dob','$tenbrd','$tenper','$twelvebrd','$twelveper','$doj','$dept','$sem')";
+    mysqli_query($db, $query);
+		$query2 = "INSERT INTO achievements(grno) VALUES ('$grno')";
+		mysqli_query($db, $query2);
+		$query3 = "INSERT INTO certification(grno) VALUES ('$grno')";
+		mysqli_query($db, $query3);
+		$query4 = "INSERT INTO internships(grno) VALUES ('$grno')";
+		mysqli_query($db, $query4);
+		
+		// $_SESSION['GRNO'] = $grno;
+		$_SESSION['Name'] = $name;
+		
+		header('location: Achievement.php');
+	}
+
+
+
+?>
 <html lang="en">
 <head>
 	<title>Student</title>
@@ -34,14 +88,13 @@
 
 	<div class="container-contact100">
 		<div class="wrap-contact100">
-			<form class="contact100-form validate-form">
+			<form class="contact100-form validate-form" method="POST" name="student">
 				<span class="contact100-form-title">
 					Student Information
 				</span>
 				
-				<div class="wrap-input100 validate-input bg1" data-validate="Please Fill Field">
-					<span class="label-input100">G.R Number</span>
-					<input class="input100" type="text" name="grno" placeholder="Enter Your G.R Number">
+				<div class="wrap-input100">
+					<center><label class="label-inputx">GR. Number : <?= $grno ?></label></center>
 				</div>
 				
 				<!-- NAME -->
@@ -83,7 +136,7 @@
 						<div class="dropDownSelect2"></div>
 					</div>
 				</div>
-				<div class="wrap-input100 bg1 rs1-wrap-input100" required>
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
 					<span class="label-input100">D.O.B</span>
 					<input class="input100" type="date" name="dob" placeholder="DOB">
 				</div>
@@ -93,7 +146,7 @@
 				<div class="wrap-input100 input100-select bg1 rs1-wrap-input100">
 					<span class="label-input100">10th Board</span>
 					<div>
-						<select class="js-select2" name="tenboard">
+						<select class="js-select2" name="tenboard" required>
 							<option selected disabled value="">Choose Board</option>
 							<option value="SSC">SSC</option>
 							<option value="ICSE">ICSE</option>
@@ -109,12 +162,12 @@
 				</div>
 				
 				<!-- 12th -->
-				<div class="wrap-input100 input100-select bg1 rs1-wrap-input100">
+				<div class="wrap-input100 input100-select bg1 rs1-wrap-input100" required>
 					<span class="label-input100">12th Board</span>
 					<div>
 						<select class="js-select2" name="twelveboard">
 							<option selected disabled value="">Choose Board</option>
-							<option value="SSC">SSC</option>
+							<option value="HSC">HSC</option>
 							<option value="ICSE">ICSE</option>
 							<option value="CBSE">CBSE</option>
 							<option value="Diploma">Diploma</option>
@@ -128,10 +181,10 @@
 					<input class="input100" type="text" name="twelvepercent" placeholder="%">
 				</div>
 				
-				<div class="wrap-input100 input100-select bg1">
+				<div class="wrap-input100 input100-select bg1 rs1-wrap-input100">
 					<span class="label-input100">Branch</span>
 					<div>
-						<select class="js-select2" name="service">
+						<select class="js-select2" name="dept" required>
 							<option selected disabled value="">Choose Department</option>
 							<option value="F.E">Applied Sciences</option>
 							<option value="Mech">Mechanical</option>
@@ -144,18 +197,36 @@
 					</div>
 				</div>
 				
+				<div class="wrap-input100 input100-select bg1 rs1-wrap-input100">
+					<span class="label-input100">Branch</span>
+					<div>
+						<select class="js-select2" name="sem" required>
+							<option selected disabled value="">Choose Semester</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+						</select>
+						<div class="dropDownSelect2"></div>
+					</div>
+				</div>
+				
 				<div class="wrap-input100 bg1">
 					<span class="label-input100">Date of Joining</span>
-					<input class="input100" type="date" name="phone" placeholder="DOB">
+					<input class="input100" type="date" name="doj">
 				</div>
 				
 				<div class="container-contact100-form-btn">
-					<a href="Achievement.html" class="contact100-form-btn">
+					<button type="submit" class="contact100-form-btn" name="student_info">
 						<span>
 							Next
 							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
 						</span>
-					</a>
+					</button>
 				</div>
 			</form>
 		</div>

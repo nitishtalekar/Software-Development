@@ -1,7 +1,16 @@
-<!DOCTYPE html>
+<?php require('server.php');
+
+	$grno = $_SESSION['GRNO'];
+	$name = $_SESSION['Name'];
+	
+	if(isset($_POST['student_cert'])){
+		header('location: Internship.php');
+	}
+	
+?>
 <html lang="en">
 <head>
-	<title>Achievements</title>
+	<title>Certificate</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -34,67 +43,85 @@
 
 	<div class="container-contact100">
 		<div class="wrap-contact100">
-			<form class="contact100-form validate-form">
+			<form class="contact100-form validate-form" method="POST">
 				<span class="contact100-form-title">
-					Achievements
+					Certifications
 				</span>
-
 				
-				<!-- Achievement 1 -->
 				<div class="wrap-input100">
-					<center><label class="label-inputx">Achievement 1</label></center>
+					<center>
+						<label class="label-inputx">GR. Number : <?= $grno ?></label>
+						<label class="label-inputx">Name : <?= $name ?></label>
+					</center>
 				</div>
+				
+				<!-- Certification 1 -->
+				<div class="wrap-input100">
+					<center><label class="label-inputx">Certification 1</label></center>
+				</div>
+				<div class="wrap-input100  bg1" >
+					<span class="label-input100">Course of Certification</span>
+					<input class="input100" type="text" name="course1" placeholder="Enter Course">
+				</div>
+				
 				<div class="wrap-input100  bg1 rs1-wrap-input100" >
-					<span class="label-input100">Enter Achievement</span>
-					<input class="input100" type="text" name="ach1" placeholder="Achievement">
+					<span class="label-input100">Validity Until Year </span>
+					<input class="input100" type="text" name="valid1" placeholder="Validity Year">
 				</div>
 
 				<div class="wrap-input100 bg1 rs1-wrap-input100">
 					<span class="label-input100">Upload Cerificate</span>
-					<input class="input50" type="file" name="ach_cert1" placeholder="Upload Certificate">
+					<input class="input50" type="file" name="course_cert1" placeholder="Upload Certificate">
 				</div>
 				
-				<!-- Achievement 2 -->
+				<!-- Certification 2 -->
 				<div class="wrap-input100">
-					<center><label class="label-inputx">Achievement 2</label></center>
+					<center><label class="label-inputx">Certification 2</label></center>
 				</div>
+				<div class="wrap-input100  bg1" >
+					<span class="label-input100">Course of Certification</span>
+					<input class="input100" type="text" name="course2" placeholder="Enter Course">
+				</div>
+				
 				<div class="wrap-input100  bg1 rs1-wrap-input100" >
-					<span class="label-input100">Enter Achievement</span>
-					<input class="input100" type="text" name="ach2" placeholder="Achievement">
+					<span class="label-input100">Validity Until Year</span>
+					<input class="input100" type="text" name="valid2" placeholder="Validity Year">
 				</div>
 
 				<div class="wrap-input100 bg1 rs1-wrap-input100">
 					<span class="label-input100">Upload Cerificate</span>
-					<input class="input50" type="file" name="ach_cert2" placeholder="Upload Certificate">
+					<input class="input50" type="file" name="course_cert2" placeholder="Upload Certificate">
 				</div>
 				
-				<!-- Achievement 3 -->
+				<!-- Certification 3 -->
 				<div class="wrap-input100">
-					<center><label class="label-inputx">Achievement 3</label></center>
+					<center><label class="label-inputx">Certification 3</label></center>
 				</div>
+				<div class="wrap-input100  bg1" >
+					<span class="label-input100">Course of Certification</span>
+					<input class="input100" type="text" name="course3" placeholder="Enter Course">
+				</div>
+				
 				<div class="wrap-input100  bg1 rs1-wrap-input100" >
-					<span class="label-input100">Enter Achievement</span>
-					<input class="input100" type="text" name="ach3" placeholder="Achievement">
+					<span class="label-input100">Validity Until Year</span>
+					<input class="input100" type="text" name="valid3" placeholder="Validity Year">
 				</div>
 
 				<div class="wrap-input100 bg1 rs1-wrap-input100">
 					<span class="label-input100">Upload Cerificate</span>
-					<input class="input50" type="file" name="ach_cert3" placeholder="Upload Certificate">
+					<input class="input50" type="file" name="course_cert3" placeholder="Upload Certificate">
 				</div>
 
 				<div class="container-contact100-form-btn">
-					<a href="Certificate.html" class="contact100-form-btn">
+					<a href="Internship.html" class="contact100-form-btn">
 						<span>
 							Next
 							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
 						</span>
 					</a>
-				</div>
 			</form>
 		</div>
 	</div>
-
-
 
 <!--===============================================================================================-->
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
