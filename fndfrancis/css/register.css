@@ -1,0 +1,18 @@
+h1{
+  color: red;
+  text-align: center;
+}
+
+img{
+  width: 1350px;
+  height: 250px;
+}
+
+form{
+  text-align: center;
+}
+
+.form-element{
+  margin-top: 10px;
+
+}

@@ -1,0 +1,38 @@
+.upper-container{
+  padding: 7px 37px 5px 5px;
+}
+
+span{
+  float: right;
+}
+
+.shoes_img,.hoodie_img{
+  width: 150px;
+  height: 80px;
+}
+
+img{
+  width: 1350px;
+  height: 250px;
+}
+
+.menu-bar{
+  margin-bottom: 20px;
+}
+
+#profile_image{
+    height:55px;
+    width:55px;
+}
+
+table{
+    width: 100%;
+}
+
+table,tr,td{
+  border: 1px solid;
+}
+
+a{
+  padding-left: 25px;
+}

@@ -1,0 +1,25 @@
+h1{
+  text-align: center;
+}
+
+img{
+  width: 1350px;
+  height: 250px;
+}
+
+form{
+  text-align: center;
+}
+
+.form-element{
+  margin-top: 10px;
+
+}
+
+.error{
+  color: red;
+}
+
+.success{
+  color: green;
+}

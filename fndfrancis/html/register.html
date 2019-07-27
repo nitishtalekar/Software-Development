@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Register Dead Poolites</title>
+    <link rel="stylesheet" href="/fndfrancis/css/register.css">
+  </head>
+  <body>
+    <h1>Register Here!</h1>
+    <img src="/fndfrancis/images/dead_pool_yo.jpeg" alt="">
+    <form method="post" enctype="multipart/form-data" action="/fndfrancis/register_user.php">
+      <div class="form-element">
+        <input type="text" name="username" placeholder="Username">
+      </div>
+      <div class="form-element">
+        <input type="password" name="password" placeholder="Password">
+      </div>
+      <div class="from-element">
+        <label>Gender</label>
+        <div class="radio-container">
+          <span>
+            <input id="male" type="radio" name="gender" value="m">
+            <label for="male">Male
+          </span>
+          <span>
+            <input id="female" type="radio" name="gender" value="f">
+            <label for="female">Female
+          </span>
+          <span>
+            <input id="others" type="radio" name="gender" value="o">
+            <label for="others">Others
+          </span>
+        </div>
+      </div>
+      <div class="form-element country-container">
+        <label for="country_opt">Country</label>
+        <select id="country_opt" name="country">
+          <option>India</option>
+          <option>USA</option>
+          <option>China</option>
+        </select>
+      </div>
+      <div class="form-element">
+        <label for="profilePic">Profile Pic</label>
+        <input type="file" name="profilePic" id="profilePic">
+      </div>
+      <div class="actions">
+        <button type="submit">Register</button>
+      </div>
+    </form>
+  </body>
+</html>
