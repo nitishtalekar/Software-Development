@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 24, 2019 at 09:14 AM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.3.7
+-- Generation Time: Jul 28, 2019 at 09:32 PM
+-- Server version: 10.1.33-MariaDB
+-- PHP Version: 7.2.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,12 +30,12 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `achievements` (
   `grno` varchar(100) NOT NULL,
-  `achievement1` varchar(100) NOT NULL,
-  `ach_certi1` varchar(100) NOT NULL,
-  `achievement2` varchar(100) NOT NULL,
-  `ach_certi2` varchar(100) NOT NULL,
-  `achievement3` varchar(100) NOT NULL,
-  `ach_certi3` varchar(100) NOT NULL
+  `achievement1` varchar(100) DEFAULT NULL,
+  `ach_certi1` varchar(100) DEFAULT NULL,
+  `achievement2` varchar(100) DEFAULT NULL,
+  `ach_certi2` varchar(100) DEFAULT NULL,
+  `achievement3` varchar(100) DEFAULT NULL,
+  `ach_certi3` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -46,15 +46,15 @@ CREATE TABLE `achievements` (
 
 CREATE TABLE `certification` (
   `grno` varchar(100) NOT NULL,
-  `course1` varchar(100) NOT NULL,
-  `validity1` int(100) NOT NULL,
-  `certificate1` varchar(100) NOT NULL,
-  `course2` varchar(100) NOT NULL,
-  `validity2` int(100) NOT NULL,
-  `certificate2` varchar(100) NOT NULL,
-  `course3` varchar(100) NOT NULL,
-  `validity3` int(100) NOT NULL,
-  `certificate3` varchar(100) NOT NULL
+  `course1` varchar(100) DEFAULT NULL,
+  `validity1` int(100) DEFAULT NULL,
+  `certificate1` varchar(100) DEFAULT NULL,
+  `course2` varchar(100) DEFAULT NULL,
+  `validity2` int(100) DEFAULT NULL,
+  `certificate2` varchar(100) DEFAULT NULL,
+  `course3` varchar(100) DEFAULT NULL,
+  `validity3` int(100) DEFAULT NULL,
+  `certificate3` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -65,21 +65,24 @@ CREATE TABLE `certification` (
 
 CREATE TABLE `internships` (
   `grno` varchar(100) NOT NULL,
-  `company1` varchar(100) NOT NULL,
-  `position1` varchar(100) NOT NULL,
-  `date_from1` date NOT NULL,
-  `date_till1` date NOT NULL,
-  `exp1` varchar(200) NOT NULL,
-  `company2` int(11) NOT NULL,
-  `position2` int(11) NOT NULL,
-  `date_from2` int(11) NOT NULL,
-  `date_till2` int(11) NOT NULL,
-  `exp2` int(11) NOT NULL,
-  `company3` int(11) NOT NULL,
-  `position3` int(11) NOT NULL,
-  `date_from3` int(11) NOT NULL,
-  `date_till3` int(11) NOT NULL,
-  `exp3` int(11) NOT NULL
+  `company1` varchar(100) DEFAULT NULL,
+  `position1` varchar(100) DEFAULT NULL,
+  `date_from1` date DEFAULT NULL,
+  `date_till1` date DEFAULT NULL,
+  `exp1` varchar(200) DEFAULT NULL,
+  `letter1` varchar(100) DEFAULT NULL,
+  `company2` varchar(100) DEFAULT NULL,
+  `position2` varchar(100) DEFAULT NULL,
+  `date_from2` int(100) DEFAULT NULL,
+  `date_till2` int(100) DEFAULT NULL,
+  `exp2` varchar(200) DEFAULT NULL,
+  `letter2` varchar(100) DEFAULT NULL,
+  `company3` varchar(100) DEFAULT NULL,
+  `position3` varchar(100) DEFAULT NULL,
+  `date_from3` int(100) DEFAULT NULL,
+  `date_till3` int(100) DEFAULT NULL,
+  `exp3` varchar(200) DEFAULT NULL,
+  `letter3` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -114,16 +117,23 @@ CREATE TABLE `subject` (
   `sub_id` varchar(100) NOT NULL,
   `sub_name` varchar(100) NOT NULL,
   `sub_credits` varchar(100) NOT NULL,
-  `sub_sem` int(100) NOT NULL,
+  `sub_sem` varchar(100) NOT NULL,
   `sub_dept` varchar(100) NOT NULL,
-  `sub_choicebased` int(100) NOT NULL,
-  `sub_internal` int(100) NOT NULL,
-  `sub_external` int(100) NOT NULL,
-  `sub_termwork` int(100) NOT NULL,
-  `sub_oral` int(100) NOT NULL,
-  `sub_total` int(100) NOT NULL,
-  `sub_duration` int(100) NOT NULL
+  `sub_choicebased` varchar(100) NOT NULL,
+  `sub_internal` varchar(100) NOT NULL,
+  `sub_external` varchar(100) NOT NULL,
+  `sub_termwork` varchar(100) NOT NULL,
+  `sub_oral` varchar(100) NOT NULL,
+  `sub_total` varchar(100) NOT NULL,
+  `sub_duration` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `subject`
+--
+
+INSERT INTO `subject` (`sub_id`, `sub_name`, `sub_credits`, `sub_sem`, `sub_dept`, `sub_choicebased`, `sub_internal`, `sub_external`, `sub_termwork`, `sub_oral`, `sub_total`, `sub_duration`) VALUES
+('1010', 'xxx', '12', '7', 'EXTC', '1', '9', '2', '3', '4', '6', '5');
 
 -- --------------------------------------------------------
 

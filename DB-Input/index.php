@@ -1,16 +1,20 @@
 <?php require('server.php');
 
-	$grno = $_SESSION['GRNO'];
-	$name = $_SESSION['Name'];
-	
-	if(isset($_POST['student_int'])){
-		header('location: Internship.php');
-	}
-	
+  if(isset($_POST['student'])){
+    header('location: Student/index.php');
+  }
+  
+  if(isset($_POST['professor'])){
+    header('location: Teacher/index.php');
+  }
+  
+  if(isset($_POST['tnp'])){
+    header('location: TandP/index.php');
+  }
 ?>
 <html lang="en">
 <head>
-	<title>Internships</title>
+	<title>Input-Database</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -43,109 +47,42 @@
 
 	<div class="container-contact100">
 		<div class="wrap-contact100">
-			<form class="contact100-form validate-form" method="POST">
+			<form class="contact100-form validate-form" action="index.php" method="POST" enctype="multipart/form-data">
 				<span class="contact100-form-title">
-					Internships
+					Welcome
 				</span>
-				
-				<div class="wrap-input100">
-					<center>
-						<label class="label-inputx">GR. Number : <?= $grno ?></label>
-						<label class="label-inputx">Name : <?= $name ?></label>
-					</center>
+        
+        <div class="wrap-input100">
+					<center><label class="label-inputx">Select User</label></center>
 				</div>
-				<!-- Internship 1 -->
-				<div class="wrap-input100">
-					<center><label class="label-inputx">Internship 1</label></center>
-				</div>
-				<div class="wrap-input100  bg1" >
-					<span class="label-input100">Company Name</span>
-					<input class="input100" type="text" name="comp1" placeholder="Enter Company Name">
-				</div>
-				<div class="wrap-input100  bg1" >
-					<span class="label-input100">Position</span>
-					<input class="input100" type="text" name="pos1" placeholder="Enter your Position">
-				</div>
-				
-				<div class="wrap-input100  bg1 rs1-wrap-input100" >
-					<span class="label-input100">Date From</span>
-					<input class="input100" type="date" name="from1" placeholder="Validity Year">
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Date Till</span>
-					<input class="input100" type="date" name="till1" placeholder="Upload Certificate">
-				</div>
-				
-				<div class="wrap-input100  bg1 rs1-alert-validate" >
-					<span class="label-input100">Description</span>
-					<textarea class="input100" name="desc1" placeholder="Describe your experiance"></textarea>
-				</div>
-				
-				<!-- Internship 2 -->
-				<div class="wrap-input100">
-					<center><label class="label-inputx">Internship 2</label></center>
-				</div>
-				<div class="wrap-input100  bg1" >
-					<span class="label-input100">Company Name</span>
-					<input class="input100" type="text" name="comp2" placeholder="Enter Company Name">
-				</div>
-				<div class="wrap-input100  bg1" >
-					<span class="label-input100">Position</span>
-					<input class="input100" type="text" name="pos2" placeholder="Enter your Position">
-				</div>
-				
-				<div class="wrap-input100  bg1 rs1-wrap-input100" >
-					<span class="label-input100">Date From</span>
-					<input class="input100" type="date" name="from2" placeholder="Validity Year">
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Date Till</span>
-					<input class="input100" type="date" name="till2" placeholder="Upload Certificate">
-				</div>
-				
-				<div class="wrap-input100  bg1 rs1-alert-validate" >
-					<span class="label-input100">Description</span>
-					<textarea class="input100" name="desc2" placeholder="Describe your experiance"></textarea>
-				</div>
-				
-				<!-- Internship 3 -->
-				<div class="wrap-input100">
-					<center><label class="label-inputx">Internship 3</label></center>
-				</div>
-				<div class="wrap-input100  bg1" >
-					<span class="label-input100">Company Name</span>
-					<input class="input100" type="text" name="comp3" placeholder="Enter Company Name">
-				</div>
-				<div class="wrap-input100  bg1" >
-					<span class="label-input100">Position</span>
-					<input class="input100" type="text" name="pos3" placeholder="Enter your Position">
-				</div>
-				
-				<div class="wrap-input100  bg1 rs1-wrap-input100" >
-					<span class="label-input100">Date From</span>
-					<input class="input100" type="date" name="from3" placeholder="Validity Year">
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Date Till</span>
-					<input class="input100" type="date" name="till3" placeholder="Upload Certificate">
-				</div>
-				
-				<div class="wrap-input100  bg1 rs1-alert-validate" >
-					<span class="label-input100">Description</span>
-					<textarea class="input100" name="desc3" placeholder="Describe your experiance"></textarea>
-				</div>
-
-				<div class="container-contact100-form-btn">
-					<button class="contact100-form-btn">
+        
+        <div class="container-contact100-form-btn ">
+					<button type="submit" class="contact100-form-btn" name="student">
 						<span>
-							Submit
-							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+							Student
+							<!-- <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i> -->
 						</span>
 					</button>
 				</div>
+        
+        <div class="container-contact100-form-btn ">
+					<button type="submit" class="contact100-form-btn" name="professor">
+						<span>
+							Professor
+							<!-- <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i> -->
+						</span>
+					</button>
+				</div>
+        
+        <div class="container-contact100-form-btn ">
+					<button type="submit" class="contact100-form-btn" name="tnp">
+						<span>
+							Placment Officer
+							<!-- <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i> -->
+						</span>
+					</button>
+				</div>
+
 			</form>
 		</div>
 	</div>
