@@ -33,7 +33,7 @@
       </div>
       <!-- /.col-lg-8 -->
       <div class="col-lg-5">
-        <h1 class="font-weight-light">Students of Rajiv Gandhi Institute of Technology</h1>
+        <h1 class="font-weight-light">Welcome RGIT Student</h1>
         <p>This is a template that is great for small businesses. It doesn't have too much fancy flare to it, but it makes a great use of the standard Bootstrap core components. Feel free to use this template for any project you want!</p>
       </div>
       <!-- /.col-md-4 -->
@@ -41,25 +41,34 @@
     <!-- /.row -->
 
     <!-- Call to Action Well -->
-    <div class="my-5 py-4 text-center">
+    <!-- <div class="my-5 py-4 text-center">
       <div>
         <h1 class="m-0">SELECT OPTION</h1>
       </div>
-    </div>
+    </div> -->
 
     <!-- Content Row -->
     <div class="row">
-      <div class="col-md-6 mb-5">
+      <div class="col-md-12 mb-5">
         <div class="card h-100">
           <div class="card-body">
-            <h2 class="card-title">Existing Student</h2>
+            <h2 class="card-title">Login as Student</h2>
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
           </div>
-          <form class="contact100-form validate-form" action="student_login.php" method="POST" enctype="multipart/form-data">
+          <form class="contact100-form validate-form" action="../authenticate.php" method="POST" enctype="multipart/form-data">
+            <div class="wrap-input100 validate-input bg1 mx-3 my-3" data-validate="Please Fill Field">
+    					<span class="label-input100">Student - ID:</span>
+    					<input class="input100" type="text" name="username" placeholder="Enter Student Id">
+    				</div>
+            <div class="wrap-input100 validate-input bg1 mx-3 my-3" data-validate="Please Fill Field">
+    					<span class="label-input100">PASSWORD:</span>
+    					<input class="input100" type="password" name="password" placeholder="Enter Password">
+    				</div>
+            <input type="text" name="type" value="student" hidden>
             <div class="container-contact100-form-btn mx-2 my-2">
     					<button type="submit" class="contact100-form-btn" name="student_id">
     						<span>
-    							Enter
+    							Login
     							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
     						</span>
     					</button>
@@ -68,24 +77,6 @@
         </div>
       </div>
       <!-- /.col-md-4 -->
-      <div class="col-md-6 mb-5">
-        <div class="card h-100">
-          <div class="card-body">
-            <h2 class="card-title">New Student</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-          </div>
-          <form class="contact100-form validate-form" action="index.php" method="POST" enctype="multipart/form-data">
-            <div class="container-contact100-form-btn mx-2 my-2">
-    					<button type="submit" class="contact100-form-btn" name="student_id">
-    						<span>
-    							Enter
-    							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
-    						</span>
-    					</button>
-    				</div>
-    			</form>
-        </div>
-      </div>
       
       <!-- /.col-md-4 -->
     </div>
