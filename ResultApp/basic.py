@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import filedialog
 
 from analyse import *
+from DeduceTotals import *
 
 path1 = ''
 path2 = ''
@@ -21,7 +22,7 @@ def open_file2():
 
 def file_submit():
 	global path1, path2
-	analyse(path1, path2)
+	findtotals(path1, path2)
 
 
 root = Tk()
