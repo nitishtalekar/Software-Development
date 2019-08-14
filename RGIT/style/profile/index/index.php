@@ -412,10 +412,10 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
-      <span class="d-block d-lg-none"><?//= $fname &nbsp;<?= $lname ?></span>
+      <span class="d-block d-lg-none"><?//= $fname ?>&nbsp;<?//= $lname ?></span>
       <span class="d-none d-lg-block">
         <div class="d-none d-lg-block imagebox ">
-          <?= "<img class='img-fluid img-profile rounded-circle mx-auto mb-2' src='../../".$img."' />";?>
+          <?//= "<img class='img-fluid img-profile rounded-circle mx-auto mb-2' src='../../".$img."' />";?>
           <a class="imagebox-desc" href="" data-toggle="modal" data-target="#profileImageForm">Edit</a>
         </div>
       </span>
