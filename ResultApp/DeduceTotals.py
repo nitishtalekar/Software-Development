@@ -2,20 +2,39 @@
 import pandas as pd
 
 
-def analyse(path1, path2):
-	df = pd.read_excel(path1, header = 7)
-	df = df.drop(['Unnamed: 1', 'Unnamed: 28', 'Unnamed: 29'], axis = 1)
+def clean(x):
+	if x == 'Ab':
+		return int(0)
+	x = list(str(x))
+	if x[-1] == 'E' or  x[-1] == 'F':
+		return "".join(x[:-1]).strip()
+	else:
+		return "".join(x)
+
+
+def findtotals(path1, path2):
+	original_file = pd.read_excel(path1)
+	original_file.dropna(how="all", inplace=True)
+	original_file = original_file.drop(['Unnamed: 1','Unnamed: 28','Unnamed: 29'], axis=1)
+
+	df = original_file.iloc[3:, :]
+	df.columns = original_file.iloc[2, :]
 
 	# HEADER LIST
-	col = list(df.columns.values)
+	colog = list(df.columns.values)
+	col = [str(i) for i in list(df.columns.values)]
 	c = col[:]
 	unclean_column_names = col.copy()
 	col2 = df.iloc[:1, :].values[0]
 
+	for i in col:
+		if col.count(i) == 2:
+			col[col.index(i)] = i + '-T'
+
 	i = 2
 	while i < len(col) - 3:
 		x = col[i - 1]
-		while 'Unnamed' in col[i]:
+		while 'nan' in col[i]:
 			col[i] = x
 			i = i + 1
 		i = i + 1
@@ -30,39 +49,32 @@ def analyse(path1, path2):
 	col2[-2] = ''
 	col2[-3] = ''
 
-	# print(l)
 	cols = list(zip(col, col2))
 	header = ["-".join(i).strip('-') for i in cols]
 
-	col.insert(1, 'NAME')  # For Storing orignal order of columns
+	col.insert(1, 'NAME')  # For Storing original order of columns
 
-	newdf = pd.read_excel(path1, header = 6)
-	coursenum = list(newdf.columns)
-	coursenum = [i for i in coursenum if 'Unnamed' not in i][1:-5]
-	subject_names = [i for i in unclean_column_names if 'Unnamed' not in i]
+	# To store subject names and subject codes - To be used later
+	newdf = df.iloc[2:, :]
+	newdf.columns = original_file.iloc[1, :]
+	coursenum = [str(i) for i in list(newdf.columns)][1:-3]
+	coursenum = [i for i in coursenum if 'nan' not in i]
+	subject_names = [i for i in unclean_column_names if 'nan' not in i]
 	subjectcodes = dict(zip(coursenum, subject_names))
 
-	df = df.rename(columns = dict(zip(c, header)))
+	# setting clean header to data frame
+	df.columns = header
 	df = df.iloc[3:, :]
 	df.index = pd.RangeIndex(len(df.index))
+
 	dfmarks = df.loc[::2]
 	dfnames = df.loc[1::2]
 
-	# dfmarks.loc[:,'NAME'] = dfnames['SEAT NUM'].values
 	dfmarks.loc[:, 'NAME'] = dfnames.loc[:, 'SEAT NUM'].values
 	dfmarks.index = pd.RangeIndex(len(dfmarks.index))
 
 	l = [i for i in dfnames.columns if 'TOT' in i][:-1] + list(dfnames.columns[-3:])
 	dfnames = dfnames.drop(l, axis = 1)
-
-	def clean(x):
-		if x == 'Ab':
-			return int(0)
-		x = list(str(x))
-		if x[-1] == 'E' or x[-1] == 'F':
-			return int("".join(x[:-1]))
-		else:
-			return int("".join(x))
 
 	for i in dfmarks.columns[1:-4]:
 		dfmarks.loc[:, i] = dfmarks.loc[:, i].apply(clean)
@@ -84,17 +96,9 @@ def analyse(path1, path2):
 			totalmarkscol.append(str(i + str('-TOT')))
 
 	temp = [i for i in coursenum if coursenum[0][:3] in i]
-
 	subjectcols = list(dftotalmarks)[2:-3]
 	subjectcols = subjectcols[:len(temp)]
-
 	totalmarkscol = totalmarkscol[:2] + subjectcols + totalmarkscol[-3:]
-
 	dftotalmarks = dftotalmarks[totalmarkscol]
 
-	dftotalmarks.to_csv(path2+'/TOTALMARKS.csv')
-
-
-
-
-
+	dftotalmarks.to_csv(path2 + '/TOTALMARKS.csv')
