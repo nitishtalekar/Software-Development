@@ -2,8 +2,8 @@
 import pandas as pd
 
 
-def analyse(path):
-	df = pd.read_excel(path, header = 7)
+def analyse(path1, path2):
+	df = pd.read_excel(path1, header = 7)
 	df = df.drop(['Unnamed: 1', 'Unnamed: 28', 'Unnamed: 29'], axis = 1)
 
 	# HEADER LIST
@@ -36,7 +36,7 @@ def analyse(path):
 
 	col.insert(1, 'NAME')  # For Storing orignal order of columns
 
-	newdf = pd.read_excel(path, header = 6)
+	newdf = pd.read_excel(path1, header = 6)
 	coursenum = list(newdf.columns)
 	coursenum = [i for i in coursenum if 'Unnamed' not in i][1:-5]
 	subject_names = [i for i in unclean_column_names if 'Unnamed' not in i]
@@ -92,4 +92,4 @@ def analyse(path):
 
 	dftotalmarks = dftotalmarks[totalmarkscol]
 
-	dftotalmarks.to_csv('TOTALMARKS.csv')
+	dftotalmarks.to_csv(path2+'/TOTALMARKS.csv')

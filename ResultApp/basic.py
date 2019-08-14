@@ -15,13 +15,13 @@ def open_file1():
 
 def open_file2():
 	global path2
-	path2 = filedialog.askopenfilename()
+	path2 = filedialog.askdirectory()
 	entryRollVar.set(path2)
 
 
 def file_submit():
-	global path1
-	analyse(path1)
+	global path1, path2
+	analyse(path1, path2)
 
 
 root = Tk()
@@ -51,14 +51,14 @@ entryName.place(x = X + 210, y = Y)
 buttonBrowse1 = Button(root, text = "Browse file", command = open_file1)
 buttonBrowse1.place(x = X + 600, y = Y + 2)
 
-labelRollList = Label(root, text = 'Select Roll List (Excel File)', width = 20, justify = LEFT, anchor = 'w')
+labelRollList = Label(root, text = 'Select Output Folder', width = 20, justify = LEFT, anchor = 'w')
 labelRollList.place(x = X, y = Y + 40)
 
 entryRollVar = StringVar()
 entryRoll = Entry(root, textvariable = entryRollVar, width = 40)
 entryRoll.place(x = X + 210, y = Y + 40)
 
-buttonBrowse1 = Button(root, text = "Browse file", command = open_file2)
+buttonBrowse1 = Button(root, text = "Browse Folder", command = open_file2)
 buttonBrowse1.place(x = X + 600, y = Y + 42)
 
 buttonSubmit = Button(root, text = "Submit", command = file_submit, width = 10)
