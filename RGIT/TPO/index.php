@@ -55,15 +55,16 @@
             <h2 class="card-title">Login as Training and Placement Officer</h2>
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
           </div>
-          <form class="contact100-form validate-form" action="index.php" method="POST" enctype="multipart/form-data">
+          <form class="contact100-form validate-form" action="../authenticate.php" method="POST" enctype="multipart/form-data">
             <div class="wrap-input100 validate-input bg1 mx-3 my-3" data-validate="Please Fill Field">
     					<span class="label-input100">TPO - ID:</span>
-    					<input class="input100" type="text" name="tnpno" placeholder="Enter TPO Id">
+    					<input class="input100" type="text" name="username" placeholder="Enter TPO Id">
     				</div>
             <div class="wrap-input100 validate-input bg1 mx-3 my-3" data-validate="Please Fill Field">
     					<span class="label-input100">PASSWORD:</span>
-    					<input class="input100" type="password" name="tnppwd" placeholder="Enter Password">
+    					<input class="input100" type="password" name="password" placeholder="Enter Password">
     				</div>
+            <input type="text" name="type" value="tpo" hidden>
             <div class="container-contact100-form-btn mx-2 my-2">
     					<button type="submit" class="contact100-form-btn" name="student_id">
     						<span>
