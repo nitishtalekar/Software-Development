@@ -1,5 +1,15 @@
 <?php
 session_start();
+
+if (!isset($_SESSION['userid']))
+{
+
+  header('Location: /college_project/RGIT/');
+}elseif($_SESSION['type']!='tpo'){
+
+  header('Location: /college_project/RGIT/');
+}
+
 $userid = $_SESSION['userid'];
 $username = $_SESSION['username'];
 
@@ -89,10 +99,10 @@ else{
   <div class="container">
 
   <div class="container">
-  <h2>Eligible Students</h2>
+  <h2 id="after_nav">Eligible Students</h2>
   <p>These can apply for the company</p>
 
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Company">
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Student">
   <table id="myTable" class="table table-hover overflow-y:auto;">
     <thead>
       <tr>

@@ -21,6 +21,7 @@
               session_start();
               $_SESSION['userid'] = $userid;
               $_SESSION['username'] = $username;
+              $_SESSION['type'] = 'student';
               header('Location: /college_project/RGIT/Student/student_profile.php');
             }
       }elseif($type == 'teacher'){
@@ -30,7 +31,7 @@
           $query = "select company_id from company where company_name='$username' and password='$password'";
           $results = $conn ->query($query);
           if ($results -> num_rows ===0) {
-              header('Location: /college_project/TandP/login.php?invalid=1');
+              header('Location: /college_project/RGIT/TPO/index.php?invalid=1');
             }else {
               $row = $results -> fetch_assoc();
               $userid = $row['company_id'];
@@ -38,8 +39,9 @@
               session_start();
               $_SESSION['userid'] = $userid;
               $_SESSION['username'] = $username;
+              $_SESSION['type'] = 'tpo';
               //header('Location: /fndfrancis/home.php?username='.$username);
-              header('Location: /college_project/TandP/eligible_students.php');
+              header('Location: /college_project/RGIT/TPO/tpo_profile.php');
               }
           }
   }

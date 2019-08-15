@@ -7,6 +7,16 @@
 tr:nth-child(even) {
   background-color: #f2f2f2
 }
+
+#myInput{
+  margin-top: 15px; 
+  
+}
+
+#after_nav{
+  margin-top: 15px;
+}
+
 @font-face {
   font-family: Montserrat-Regular;
   src: url('../fonts/montserrat/Montserrat-Regular.ttf'); 

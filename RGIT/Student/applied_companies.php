@@ -1,5 +1,16 @@
 <?php
 session_start();
+
+
+if (!isset($_SESSION['userid']))
+{
+
+  header('Location: /college_project/RGIT/');
+}elseif($_SESSION['type']!='student'){
+
+  header('Location: /college_project/RGIT/');
+}
+
 $userid = $_SESSION['userid'];
 $username = $_SESSION['username'];
 
@@ -56,6 +67,8 @@ else{
     </script>
     <style>
       .sub_row{background-color:#35ec35  !important;}
+      .sub_row_not_selected{background-color:#ff4b4b   !important;}
+      .sub_row_no_answer{background-color:#5fb4f2   !important;}
     </style>
 </head>
 <body>
@@ -82,7 +95,7 @@ $results = $conn -> query($query);
   <div class="container">
 
   <div class="container">
-  <h2>Applied Companies</h2>
+  <h2 id="after_nav">Applied Companies</h2>
   <p>You have applied for these companies</p>
 
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Company">
@@ -91,6 +104,7 @@ $results = $conn -> query($query);
       <tr>
         <th>Company Name</th>
         <th>Date</th>
+        <th>Updated On</th>
         <th>Status</th>
       </tr>
     </thead>
@@ -100,9 +114,19 @@ $results = $conn -> query($query);
         {
           while($row = $results -> fetch_assoc()){
           ?>
-          <tr class="sub_row">
+          <tr <?php
+              if ($row['selected_notselected']==-1) {
+                echo("class='sub_row_no_answer'");
+              }elseif ($row['selected_notselected']==0) {
+                echo("class='sub_row_not_selected'");
+              }elseif ($row['selected_notselected']==1){
+                echo("class='sub_row'");
+                } ?> 
+          >
+
             <td><?php echo( $company_name[strval($row['company_id'])] );?></td>
             <td><?php echo( $row['date'] );?></td>
+            <td><?php echo( $row['selected_notselected_date'] );?></td>
             <td><?php
               if ($row['selected_notselected']==-1) {
                 echo("No Answer");

@@ -1,10 +1,16 @@
 <?php
 session_start();
 
+
 if (!isset($_SESSION['userid']))
 {
+
+  header('Location: /college_project/RGIT/');
+}elseif($_SESSION['type']!='tpo'){
+
   header('Location: /college_project/RGIT/');
 }
+
 
 $userid = $_SESSION['userid'];
 $username = $_SESSION['username'];
@@ -81,7 +87,7 @@ else{
       <div class="col-md-4 mb-5">
         <div class="card h-100">
           <div class="card-body">
-            <h2 class="card-title">Applicable Students</h2>
+            <h2 class="card-title">Eligible Students</h2>
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
           </div>
           <form class="contact100-form validate-form" action="eligible_students.php" method="POST" enctype="multipart/form-data">

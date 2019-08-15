@@ -1,5 +1,15 @@
 <?php
 session_start();
+
+if (!isset($_SESSION['userid']))
+{
+
+  header('Location: /college_project/RGIT/');
+}elseif($_SESSION['type']!='tpo'){
+
+  header('Location: /college_project/RGIT/');
+}
+
 $userid = $_SESSION['userid'];
 $username = $_SESSION['username'];
 
@@ -9,13 +19,19 @@ if ($conn -> connect_error){
 }
 else{
  
-    $query = "select company_name, minimum_percentage_eng from company where company_id = $userid";
-    $results = $conn -> query($query);
-    $row = $results -> fetch_assoc();
-  
-    $company_name = $row['company_name'];
-    $minimum_percentage_eng = $row['minimum_percentage_eng'];
-  
+$student_name = array();
+$student_ph_no = array();
+$student_dob = array();
+
+$query=  'select * from student';
+$results = $conn -> query($query);
+
+while($row = $results -> fetch_assoc()){
+  $student_name[strval($row['grno'])] = $row['student_name'];
+  $student_ph_no[strval($row['grno'])] = $row['student_phone'];
+  $student_dob[strval($row['grno'])] = $row['student_dob'];
+
+  }
 }
 
   ?>
@@ -88,30 +104,36 @@ else{
   <!-- Page Content -->
   <div class="container">
 
-  <h2>Selected Students</h2>
+  <h2 id="after_nav">Selected Students</h2>
   <p>These are selected for this company</p>
 
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Company">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Student">
 <table id="myTable" class="table table-hover overflow-y:auto;">
-    <thead>
+<thead>
       <tr>
         <th>Student Grno</th>
-        <th>Date</th>
+        <th>Student Name</th>
+        <th>Student Phone</th>
+        <th>Student DOB</th>
+        <th>Selected Date</th>
       </tr>
     </thead>
-    <tbody>
-        <?php
-          while($row = $results -> fetch_assoc()){
-          ?>
-          <tr>
-            <td><?php echo ($row['student_grno']);?></td>
-            <td><?php echo ($row['date']);?></td>
-          </tr>
-          <?php
-            }
-          ?>
-    </tbody>
-</table>
+        <tbody>
+              <?php
+                while($row = $results -> fetch_assoc()){
+                ?>
+                <tr  class="sub_row">
+                  <td><?php echo ($row['student_grno']);?></td>
+                  <td><?php echo ($student_name[strval($row['student_grno'])]);?></td>
+                  <td><?php echo ($student_ph_no[strval($row['student_grno'])]);?></td>
+                  <td><?php echo ($student_dob[strval($row['student_grno'])]);?></td>
+                  <td><?php echo ($row['selected_notselected_date']);?></td>
+                </tr>
+                <?php
+                  }
+                ?>
+        </tbody>
+    </table>
 
   </div>
   <!-- Footer -->

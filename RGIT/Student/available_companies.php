@@ -1,5 +1,16 @@
 <?php
 session_start();
+
+
+if (!isset($_SESSION['userid']))
+{
+
+  header('Location: /college_project/RGIT/');
+}elseif($_SESSION['type']!='student'){
+
+  header('Location: /college_project/RGIT/');
+}
+
 $userid = $_SESSION['userid'];
 $username = $_SESSION['username'];
 
@@ -86,7 +97,7 @@ while($row = $results -> fetch_assoc()){
   <div class="container">
 
   <div class="container">
-  <h2>Available Companies</h2>
+  <h2 id="after_nav">Available Companies</h2>
   <p>Search for Companies</p>
   <?php
       $query = "select * from company where minimum_percentage_tenth <= $tenth_percent and minimum_percentage_twelfth <= $twelfth_percent";

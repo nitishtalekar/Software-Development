@@ -1,5 +1,15 @@
 <?php
 session_start();
+
+if (!isset($_SESSION['userid']))
+{
+
+  header('Location: /college_project/RGIT/');
+}elseif($_SESSION['type']!='student'){
+
+  header('Location: /college_project/RGIT/');
+}
+
 $username = $_SESSION['username'];
 $userid = $_SESSION['userid'];
 

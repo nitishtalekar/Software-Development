@@ -24,7 +24,7 @@
 
   <title>RGIT-Home</title>
 
-  <!-- Bootstrap core CSS -->
+  <!-- Bootstrap core CSS --> 
   <link href="style/home/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
@@ -32,7 +32,6 @@
   <link rel="stylesheet" type="text/css" href="style/forms/css/main.css">
 
 </head>
-
 <body>
 
   <!-- Page Content -->
