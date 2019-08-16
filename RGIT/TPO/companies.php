@@ -2,16 +2,15 @@
 session_start();
 
 
-if (!isset($_SESSION['userid']))
+if (!isset($_SESSION['tpo_id']))
 {
 
   header('Location: /college_project/RGIT/');
-}elseif($_SESSION['type']!='student'){
+}elseif($_SESSION['type']!='tpo'){
 
   header('Location: /college_project/RGIT/');
 }
 
-$userid = $_SESSION['userid'];
 $username = $_SESSION['username'];
 
 require '../includes/dbconnect.php';
@@ -19,24 +18,10 @@ if ($conn -> connect_error){
   die($conn -> connect_error);
 }
 else{
-
-
-  $query = "select * from student where grno = $userid";
-  $results = $conn -> query($query);
-  $row = $results -> fetch_assoc();
-
-  $tenth_percent = $row['tenth_percent'];
-  $twelfth_percent = $row['twelfth_percent'];
+  
   }
 
-  $already = false;
-
-  if (array_key_exists('already', $_GET)) {
-    $already = true;
-  }
   ?>
-
-<?php if($already){echo(" <script type='text/javascript'> alert('Already applied'); </script> ");}?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,30 +64,22 @@ else{
 </head>
 <body>
  <!-- Navigation -->
-<?php require '../includes/header.php';?>
+<?php require '../includes/header_tpo.php';?>
 
 
 <?php
-$available = array();
 
-$query = "select * from applied_student where student_grno = $userid";
-$results = $conn -> query($query);
+    $query = "select * from company";
+    $results = $conn -> query($query);
 
-while($row = $results -> fetch_assoc()){
-    $available[] = $row['company_id'];
-}
 ?>
   
   <!-- Page Content -->
   <div class="container">
 
   <div class="container">
-  <h2 id="after_nav">Available Companies</h2>
+  <h2 id="after_nav">Companies</h2>
   <p>Search for Companies</p>
-  <?php
-      $query = "select * from company where minimum_percentage_tenth <= $tenth_percent and minimum_percentage_twelfth <= $twelfth_percent";
-      $results = $conn -> query($query);
-    ?>
 
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Company">
   <table id="myTable" class="table table-hover overflow-y:auto;">
@@ -111,7 +88,7 @@ while($row = $results -> fetch_assoc()){
         <th>Company Name</th>
         <th>Min Eng percentage</th>
         <th>Annual Package</th>
-        <th>Apply</th>
+        <th>Select</th>
       </tr>
     </thead>
   
@@ -121,29 +98,21 @@ while($row = $results -> fetch_assoc()){
         {
         while($row = $results -> fetch_assoc()){
           ?>
-          <tr style="<?php if(in_array($row['company_id'],$available)){echo"background-color:#35ec35";}?>">
+          <tr>
             <td><?php echo ($row['company_name']);?></td>
             <td><?php echo ($row['minimum_percentage_eng']);?></td>
             <td><?php echo ($row['annual_package']);?></td>
-            <?php 
-                if(!in_array($row['company_id'],$available)){  
-            ?>
-                    <td><form method="post" action="/college_project/RGIT/Student/apply.php" onsubmit="return confirm('Are you sure you want to apply for <?php echo($row['company_name']); ?> ?');">
+            <td>
+                <form method="post" action="/college_project/RGIT/TPO/to_profile.php" onsubmit="return confirm('Are you sure you want to select <?php echo($row['company_name']); ?> ?');">
                     <input type="number" name="company_id" value="<?php echo( $row['company_id']); ?>" hidden>
-                    <button style="height:30px;" class="apply_button contact100-form-btn" type="submit">Apply</button>
-                    </form>
-                    </td>
-            <?php
-                }
-                else{
-            ?>
-                    <td >Applied</td>
-            <?php
-                }
-            ?>
+                    <input type="text" name="company_name" value="<?php echo( $row['company_name']); ?>" hidden>
+                    <button style="height:30px;" class="apply_button contact100-form-btn" type="submit">Select</button>
+                </form>
+            </td>
+            
           </tr>
           <?php
-          }
+        } 
         }else {
           echo("No Companies");
         }

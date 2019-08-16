@@ -25,6 +25,8 @@ else{
   
     $company_name = $row['company_name'];
     $minimum_percentage_eng = $row['minimum_percentage_eng'];
+
+    $email_addresses=array();
   
 }
 
@@ -115,6 +117,7 @@ else{
         <tbody>
               <?php
                 while($row = $results -> fetch_assoc()){
+                  $email_addresses[] = $row['student_mail'];
                 ?>
                 <tr>
                   <td><?php echo ($row['grno']);?></td>
@@ -129,8 +132,14 @@ else{
     </table>
 </div>
 
-
-
+<?php
+$_SESSION['emails'] = $email_addresses;
+?>
+<div style="margin-bottom:10px;">
+  <form target="_blank" method="post" action="/college_project/RGIT/TPO/sending_mail.php" onsubmit="return confirm('Are you sure you want to send_mail to all students ?');">
+    <button style="height:30px;" class="apply_button contact100-form-btn" type="submit">Send Mail</button>
+  </form>
+</div>
 
 
   </div>
