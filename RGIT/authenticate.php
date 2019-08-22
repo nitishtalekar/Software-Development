@@ -17,10 +17,10 @@
             }else {
               $row = $results -> fetch_assoc();
               $userid = $row['grno'];
-
               session_start();
               $_SESSION['userid'] = $userid;
               $_SESSION['username'] = $username;
+              $_SESSION['placement_higherstudies'] = $row['placement_higherstudies'];
               $_SESSION['type'] = 'student';
               header('Location: /college_project/RGIT/Student/student_profile.php');
             }

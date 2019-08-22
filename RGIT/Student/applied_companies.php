@@ -19,9 +19,8 @@ if ($conn -> connect_error){
   die($conn -> connect_error);
 }
 else{
-  $query = "select * from applied_student where student_grno = $userid";
-
-  $results = $conn -> query($query);
+  // $query = "select * from applied_student where student_grno = $userid";
+  // $results = $conn -> query($query);
 
 }
 

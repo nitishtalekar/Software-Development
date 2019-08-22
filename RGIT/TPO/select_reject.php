@@ -27,32 +27,6 @@ if($conn -> connect_error){
     $row = $results -> fetch_assoc();
     $selected = $row['selected_notselected'];
 
-
-
-// $selected=false;
-// $available=false;
-// if($status==0){
-//     $query = "select * from applied_student where student_grno = $student_grno and company_id = $userid";
-//     $results = $conn -> query($query);
-//     $selected = $results['selected_notselected']
-//
-// }else{
-//   $query = "select * from selected_student where student_grno = $student_grno and company_id = $userid";
-//   $results = $conn -> query($query);
-//   $available = $results -> num_rows > 0
-// }
-//   if ($available) {
-//       header('Location: /college_project/TandP/applied_students.php?selected=true');
-//     // if ($status==0) {
-//     //   header('Location: /college_project/TandP/applied_students.php?already=true');
-//     // }
-//     // else {
-//     //   header('Location: /college_project/TandP/applied_students.php?already=true&status=true');
-//     // }
-//   }
-//   if ($selected == 0) {
-//     header('Location: /college_project/TandP/applied_students.php?rejected=true');
-//   }
   if($selected==0 &&  $status==0){
     header('Location: /college_project/RGIT/TPO/applied_students.php?rejected=true');
   }
@@ -66,10 +40,36 @@ if($conn -> connect_error){
       $query = "update applied_student set selected_notselected = 0,selected_notselected_date='$date' where company_id=$userid and student_grno = $student_grno";
       $results = $conn -> query($query);
     }else{
+      
+      $query = "select * from placed_student where student_grno = $student_grno";
+      $results = $conn -> query($query);
+      $already_placed = $results -> num_rows > 0 ;
+
+      if($already_placed){
+        $row = $results -> fetch_assoc();
+        $current_company_id = $row['company_id'];
+          $query = "select annual_package from company where company_id = $current_company_id";
+          $results = $conn -> query($query);
+          $row = $results -> fetch_assoc();
+        $old_income = $row['annual_package'];
+          $query = "select annual_package from company where company_id = $userid";
+          $results = $conn -> query($query);
+          $row = $results -> fetch_assoc();
+        $new_income = $row['annual_package'];
+        if($new_income >= 1.4 * $old_income){
+          $query = "update placed_student set company_id = $userid, placed_date = '$date' where student_grno = $student_grno";
+          $results = $conn -> query($query);
+         }
+      }else{
+        $query = "insert into placed_student(student_grno,company_id,placed_date) values($student_grno,$userid,'$date')";
+        $results = $conn -> query($query);
+        $query = "update student set placement_higherstudies = 2 where grno = $student_grno";
+        $results = $conn -> query($query);
+      }
+
       $query = "update applied_student set selected_notselected = 1,selected_notselected_date='$date' where company_id=$userid and student_grno = $student_grno";
       $results = $conn -> query($query);
-      // $query = "insert into selected_student(student_grno,company_id,date) values($student_grno,$userid,'$date')";
-      // $results = $conn -> query($query);
+
     }
     if($results){
       header('Location: /college_project/RGIT/TPO/applied_students.php');

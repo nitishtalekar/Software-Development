@@ -48,7 +48,7 @@ else{
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>RGIT-Home</title>
+  <title>RGIT-Home </title>
 
   <!-- Bootstrap core CSS --> 
   <link href="../style/home/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -105,6 +105,19 @@ while($row = $results -> fetch_assoc()){
     ?>
 
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Company">
+<span style="text-align:right;">
+<?php
+
+// if($_SESSION['placement_higherstudies'] <=2)
+// {
+//   echo(" <a class='navbar-brand' href='/college_project/RGIT/TPO/tpo_profile.php'>");
+//   echo("<span style='margin-left:5px; margin-right:5px;'> > </span>");
+//   echo(ucwords($_SESSION['company_name']));
+//   echo("</a>");
+// }
+
+?>
+</span>
   <table id="myTable" class="table table-hover overflow-y:auto;">
     <thead>
       <tr>
@@ -121,12 +134,27 @@ while($row = $results -> fetch_assoc()){
         {
         while($row = $results -> fetch_assoc()){
           ?>
-          <tr style="<?php if(in_array($row['company_id'],$available)){echo"background-color:#35ec35";}?>">
+          <tr style="
+          <?php
+            if($old_salary > 0 &&($row['company_id']!= $placed_company_id)  && (1.4*$old_salary) > $row['annual_package'] && (!in_array($row['company_id'],$available))){
+              echo"background-color:#ff4b4b";
+            }
+            elseif(in_array($row['company_id'],$available))
+              {echo"background-color:#35ec35";}
+           ?>
+          
+          ">
             <td><?php echo ($row['company_name']);?></td>
             <td><?php echo ($row['minimum_percentage_eng']);?></td>
             <td><?php echo ($row['annual_package']);?></td>
-            <?php 
-                if(!in_array($row['company_id'],$available)){  
+            
+            <?php
+              if($old_salary > 0 &&($row['company_id']!= $placed_company_id)  && (1.4*$old_salary) > $row['annual_package'] && (!in_array($row['company_id'],$available))){
+                ?>
+                <td>Not Applicable Salary 40% ↓</td>
+                <?php
+              }
+              elseif(!in_array($row['company_id'],$available)){  
             ?>
                     <td><form method="post" action="/college_project/RGIT/Student/apply.php" onsubmit="return confirm('Are you sure you want to apply for <?php echo($row['company_name']); ?> ?');">
                     <input type="number" name="company_id" value="<?php echo( $row['company_id']); ?>" hidden>
