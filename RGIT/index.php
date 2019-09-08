@@ -1,4 +1,4 @@
-<?php require('server.php');
+<?php
 
   if(isset($_POST['student'])){
     header('location: Student/index.php');
@@ -8,7 +8,7 @@
     header('location: Professor/index.php');
   }
   
-  if(isset($_POST['tnp'])){
+  if(isset($_POST['tpo'])){
     header('location: TPO/index.php');
   }
 ?>
@@ -108,7 +108,7 @@
           </div>
           <form class="contact100-form validate-form" action="index.php" method="POST" enctype="multipart/form-data">
             <div class="container-contact100-form-btn mx-2 my-2">
-    					<button type="submit" class="contact100-form-btn" name="tnp">
+    					<button type="submit" class="contact100-form-btn" name="tpo">
     						<span>
     							Enter
     							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>

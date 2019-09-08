@@ -1,19 +1,19 @@
 <?php
-  $username = $_POST['username'];
-  $password = $_POST['password'];
+  $grno = $_POST['grno'];
+  $password = $_POST['pwd'];
   $type = $_POST['type'];
 
-  require 'includes/dbconnect.php';
+  require 'dbconnect.php';
   if ($conn -> connect_error){
     die($conn -> connect_error);
   }
   else{
 
       if($type == 'student'){
-          $query = "select grno from student where student_name='$username' and password='$password'";
+          $query = "SELECT * FROM student WHERE grno='$grno' AND password='$password'";
           $results = $conn ->query($query);
           if ($results -> num_rows ===0) {
-              header('Location: /college_project/RGIT/Student/student_login.php?invalid=1');
+              header('Location: /RGIT/Student/student_login.php?invalid=1');
             }else {
               $row = $results -> fetch_assoc();
               $userid = $row['grno'];
@@ -22,7 +22,8 @@
               $_SESSION['username'] = $username;
               $_SESSION['placement_higherstudies'] = $row['placement_higherstudies'];
               $_SESSION['type'] = 'student';
-              header('Location: /college_project/RGIT/Student/student_profile.php');
+              $_SESSION['GRNO'] = $grno;
+              header('Location: /RGIT/Student/profile.php');
             }
       }elseif($type == 'teacher'){
 
@@ -32,7 +33,7 @@
           $query = "select * from tpo where tpo_name='$username' and tpo_password='$password'";
           $results = $conn ->query($query);
           if ($results -> num_rows ===0) {
-              header('Location: /college_project/RGIT/TPO/index.php?invalid=1');
+              header('Location: /RGIT/TPO/index.php?invalid=1');
             }else {
               $row = $results -> fetch_assoc();
               // $userid = $row['company_id'];
@@ -44,7 +45,7 @@
               $_SESSION['username'] = $username;
               $_SESSION['type'] = 'tpo';
               //header('Location: /fndfrancis/home.php?username='.$username);
-              header('Location: /college_project/RGIT/TPO/companies.php');
+              header('Location: /RGIT/TPO/companies.php');
               }
           }
   }

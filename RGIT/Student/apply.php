@@ -4,10 +4,10 @@ session_start();
 if (!isset($_SESSION['userid']))
 {
 
-  header('Location: /college_project/RGIT/');
+  header('Location: /RGIT/');
 }elseif($_SESSION['type']!='student'){
 
-  header('Location: /college_project/RGIT/');
+  header('Location: /RGIT/');
 }
 
 $username = $_SESSION['username'];
@@ -25,7 +25,7 @@ if($conn -> connect_error){
   $results = $conn -> query($query);
 
   if ($results -> num_rows > 0) {
-    header('Location: /college_project/RGIT/Student/available_companies.php?already=1');
+    header('Location: /RGIT/Student/available_companies.php?already=1');
   }
   else{
     $date = date("Y-m-d");
@@ -33,7 +33,7 @@ if($conn -> connect_error){
 
     $results = $conn -> query($query);
     if($results){
-      header('Location: /college_project/RGIT/Student/applied_companies.php');
+      header('Location: /RGIT/Student/applied_companies.php');
     }
     die('could not apply for company');
   }

@@ -1,4 +1,4 @@
-<?php require('../server.php');
+<?php require('../../dbconnect.php');
 	
 	$grno = $_SESSION['GRNO'];
 	$exist = 0;
@@ -9,6 +9,7 @@
 	$smname = "";
 	$slname = "";
 	$semail = "";
+	$spwd = "";
 	$sphone = "";
 	$sdob = "";
 	$stenper = "";
@@ -51,6 +52,7 @@
   if (mysqli_num_rows($results) == 1) {
       $exist = 1;
 			$sname = $row['student_name'];
+			$spwd = $row['password'];
 			$nameexp = explode(" ",$sname);
 			$sfname = $nameexp[0];
 			$smname = $nameexp[1];
@@ -71,7 +73,7 @@
 				$g3 = 'selected';
 			}
 			$sdob = $row['student_dob'];
-			$stenbrd = $row['ten_board'];
+			$stenbrd = $row['tenth_board'];
 			if($stenbrd == 'SSC'){
 				$ten0 = '';
 				$ten1 = 'selected';
@@ -88,8 +90,8 @@
 				$ten0 = '';
 				$ten4 = 'selected';
 			}
-			$stenper = $row['ten_percent'];
-			$stwelvebrd = $row['twelve_board'];
+			$stenper = $row['tenth_percent'];
+			$stwelvebrd = $row['twelfth_board'];
 			if($stwelvebrd == 'HSC'){
 				$twelve0 = '';
 				$twelve1 = 'selected';
@@ -110,7 +112,7 @@
 				$twelve0 = '';
 				$twelve5 = 'selected';
 			}
-			$stwelveper = $row['twelve_percent'];
+			$stwelveper = $row['twelfth_percent'];
 			$sdept = $row['student_dept'];
 			if($sdept == 'F.E'){
 				$dept0 = '';
@@ -181,6 +183,8 @@
 		$lname = mysqli_real_escape_string($db, $_POST['lname']);
 		$email = mysqli_real_escape_string($db, $_POST['email']);
 		$phone = mysqli_real_escape_string($db, $_POST['phone']);
+		$pwd = mysqli_real_escape_string($db, $_POST['pwd']);
+		$pwd2 = mysqli_real_escape_string($db, $_POST['pwd2']);
 		$gen = $_POST['gender'];
 		$dob = mysqli_real_escape_string($db, $_POST['dob']);
 		$tenbrd = $_POST['tenboard'];
@@ -191,6 +195,7 @@
 		$sem = $_POST['sem'];
 		$doj = mysqli_real_escape_string($db, $_POST['doj']);
 		$name = $fname." ".$mname." ".$lname;
+		
 		// echo $name;
 		// $grno,$name,$email,$phone,$gen,$dob,$tenbrd,$tenper,$twelvebrd,$twelveper,$doj,$dept,$sem
 		// echo $grno;
@@ -208,18 +213,25 @@
 		// echo $dept;
 		// echo $sem;
 		// echo $doj;
+		// echo $pwd;
    if($exist==0){
-		$query = "INSERT INTO student(grno, student_name, student_mail, student_phone, student_gen, student_dob, ten_board, ten_percent, twelve_board, twelve_percent, student_doj, student_dept, student_sem) VALUES ('$grno','$name','$email','$phone','$gen','$dob','$tenbrd','$tenper','$twelvebrd','$twelveper','$doj','$dept','$sem')";
-    mysqli_query($db, $query);
-		$query2 = "INSERT INTO achievements(grno) VALUES ('$grno')";
-		mysqli_query($db, $query2);
-		$query3 = "INSERT INTO certification(grno) VALUES ('$grno')";
-		mysqli_query($db, $query3);
-		$query4 = "INSERT INTO internships(grno) VALUES ('$grno')";
-		mysqli_query($db, $query4);
+		 if($pwd == $pwd2){
+				$query = "INSERT INTO student(grno, student_name, password, student_mail, student_phone, student_gen, student_dob, tenth_board, tenth_percent, twelfth_board, twelfth_percent, student_doj, student_dept, student_sem) VALUES ('$grno','$name','$pwd','$email','$phone','$gen','$dob','$tenbrd','$tenper','$twelvebrd','$twelveper','$doj','$dept','$sem')";
+		    $x = mysqli_query($db, $query);
+				$query2 = "INSERT INTO achievements(grno) VALUES ('$grno')";
+				mysqli_query($db, $query2);
+				$query3 = "INSERT INTO certification(grno) VALUES ('$grno')";
+				mysqli_query($db, $query3);
+				$query4 = "INSERT INTO internships(grno) VALUES ('$grno')";
+				mysqli_query($db, $query4);
+		}
+		else{
+			alert("PASSWORDS DONT MATCH");
+			header('location: Student.php');
+		}
 	}
 	else{
-		$query = "UPDATE student SET student_name='$name',student_mail='$email',student_phone='$phone',student_gen='$gen',student_dob='$dob',ten_board='$tenbrd',twelve_percent='$twelveper',twelve_board='$twelvebrd',twelve_percent='$twelveper',student_doj='$doj',student_dept='$dept',student_sem='$sem' WHERE grno='$grno';";
+		$query = "UPDATE student SET student_name='$name',student_mail='$email',student_phone='$phone',student_gen='$gen',student_dob='$dob',tenth_board='$tenbrd',tenth_percent='$tenper',twelfth_board='$twelvebrd',twelfth_percent='$twelveper',student_doj='$doj',student_dept='$dept',student_sem='$sem' WHERE grno='$grno';";
 		mysqli_query($db, $query);
 	}
 		$_SESSION['GRNO'] = $grno;
@@ -235,28 +247,27 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--===============================================================================================-->
-		<link rel="icon" type="image/png" href="../images/icons/favicon.ico"/>
 	<!--===============================================================================================-->
-		<link rel="stylesheet" type="text/css" href="../vendor/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../../style/forms/vendor/bootstrap/css/bootstrap.min.css">
 	<!--===============================================================================================-->
-		<link rel="stylesheet" type="text/css" href="../fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="../../style/forms/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 	<!--===============================================================================================-->
-		<link rel="stylesheet" type="text/css" href="../fonts/iconic/css/material-design-iconic-font.min.css">
+		<link rel="stylesheet" type="text/css" href="../../style/forms/fonts/iconic/css/material-design-iconic-font.min.css">
 	<!--===============================================================================================-->
-		<link rel="stylesheet" type="text/css" href="../vendor/animate/animate.css">
+		<link rel="stylesheet" type="text/css" href="../../style/forms/vendor/animate/animate.css">
 	<!--===============================================================================================-->
-		<link rel="stylesheet" type="text/css" href="../vendor/css-hamburgers/hamburgers.min.css">
+		<link rel="stylesheet" type="text/css" href="../../style/forms/vendor/css-hamburgers/hamburgers.min.css">
 	<!--===============================================================================================-->
-		<link rel="stylesheet" type="text/css" href="../vendor/animsition/css/animsition.min.css">
+		<link rel="stylesheet" type="text/css" href="../../style/forms/vendor/animsition/css/animsition.min.css">
 	<!--===============================================================================================-->
-		<link rel="stylesheet" type="text/css" href="../vendor/select2/select2.min.css">
+		<link rel="stylesheet" type="text/css" href="../../style/forms/vendor/select2/select2.min.css">
 	<!--===============================================================================================-->
-		<link rel="stylesheet" type="text/css" href="../vendor/daterangepicker/daterangepicker.css">
+		<link rel="stylesheet" type="text/css" href="../../style/forms/vendor/daterangepicker/daterangepicker.css">
 	<!--===============================================================================================-->
-		<link rel="stylesheet" type="text/css" href="../vendor/noui/nouislider.min.css">
+		<link rel="stylesheet" type="text/css" href="../../style/forms/vendor/noui/nouislider.min.css">
 	<!--===============================================================================================-->
-		<link rel="stylesheet" type="text/css" href="../css/util.css">
-		<link rel="stylesheet" type="text/css" href="../css/main.css">
+		<link rel="stylesheet" type="text/css" href="../../style/forms/css/util.css">
+		<link rel="stylesheet" type="text/css" href="../../style/forms/css/main.css">
 	<!--===============================================================================================-->
 </head>
 <body>
@@ -287,6 +298,16 @@
 				<div class="wrap-input100 bg1 validate-input rs2-wrap-input100" data-validate="Please Fill Field">
 					<span class="label-input100">Last Name</span>
 					<input class="input100" type="text" name="lname" value="<?= $slname ?>" placeholder="Last Name">
+				</div>
+				
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Please Fill Field">
+					<span class="label-input100">Password</span>
+					<input class="input100" type="password" name="pwd" value="<?= $spwd ?>" placeholder="Enter Your Password ">
+				</div>
+				
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Please Fill Field">
+					<span class="label-input100">Comfirm Password</span>
+					<input class="input100" type="password" name="pwd2" value="<?= $spwd ?>" placeholder="Re-Enter Your Password ">
 				</div>
 				
 				<!-- CONTACT -->
@@ -411,14 +432,14 @@
 
 
 	<!--===============================================================================================-->
-		<script src="../vendor/jquery/jquery-3.2.1.min.js"></script>
+		<script src="../../style/forms/vendor/jquery/jquery-3.2.1.min.js"></script>
 	<!--===============================================================================================-->
-		<script src="../vendor/animsition/js/animsition.min.js"></script>
+		<script src="../../style/forms/vendor/animsition/js/animsition.min.js"></script>
 	<!--===============================================================================================-->
-		<script src="../vendor/bootstrap/js/popper.js"></script>
-		<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="../../style/forms/vendor/bootstrap/js/popper.js"></script>
+		<script src="../../style/forms/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<!--===============================================================================================-->
-		<script src="../vendor/select2/select2.min.js"></script>
+		<script src="../../style/forms/vendor/select2/select2.min.js"></script>
 		<script>
 			$(".js-select2").each(function(){
 				$(this).select2({
@@ -428,12 +449,12 @@
 			})
 		</script>
 	<!--===============================================================================================-->
-		<script src="../vendor/daterangepicker/moment.min.js"></script>
-		<script src="../vendor/daterangepicker/daterangepicker.js"></script>
+		<script src="../../style/forms/vendor/daterangepicker/moment.min.js"></script>
+		<script src="../../style/forms/vendor/daterangepicker/daterangepicker.js"></script>
 	<!--===============================================================================================-->
-		<script src="../vendor/countdowntime/countdowntime.js"></script>
+		<script src="../../style/forms/vendor/countdowntime/countdowntime.js"></script>
 	<!--===============================================================================================-->
-		<script src="../js/main.js"></script>
+		<script src="../../style/forms/js/main.js"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>

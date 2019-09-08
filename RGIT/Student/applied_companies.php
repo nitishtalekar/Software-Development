@@ -5,10 +5,10 @@ session_start();
 if (!isset($_SESSION['userid']))
 {
 
-  header('Location: /college_project/RGIT/');
+  header('Location: /RGIT/');
 }elseif($_SESSION['type']!='student'){
 
-  header('Location: /college_project/RGIT/');
+  header('Location: /RGIT/');
 }
 
 $userid = $_SESSION['userid'];

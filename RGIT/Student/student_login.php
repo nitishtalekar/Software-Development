@@ -58,11 +58,11 @@
           <form class="contact100-form validate-form" action="../authenticate.php" method="POST" enctype="multipart/form-data">
             <div class="wrap-input100 validate-input bg1 mx-3 my-3" data-validate="Please Fill Field">
     					<span class="label-input100">Student - ID:</span>
-    					<input class="input100" type="text" name="username" placeholder="Enter Student Id">
+    					<input class="input100" type="text" name="grno" placeholder="Enter Student Id">
     				</div>
             <div class="wrap-input100 validate-input bg1 mx-3 my-3" data-validate="Please Fill Field">
     					<span class="label-input100">PASSWORD:</span>
-    					<input class="input100" type="password" name="password" placeholder="Enter Password">
+    					<input class="input100" type="password" name="pwd" placeholder="Enter Password">
     				</div>
             <input type="text" name="type" value="student" hidden>
             <div class="container-contact100-form-btn mx-2 my-2">

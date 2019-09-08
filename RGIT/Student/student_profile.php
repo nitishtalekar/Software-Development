@@ -1,19 +1,18 @@
-<?php
-session_start();
+<?php require '../dbconnect.php';
+// session_start();
 
 if (!isset($_SESSION['userid']))
 {
-
-  header('Location: /college_project/RGIT/');
+  header('Location: /RGIT/');
 }elseif($_SESSION['type']!='student'){
 
-  header('Location: /college_project/RGIT/');
+  header('Location: /RGIT/');
 }
 
 $userid = $_SESSION['userid'];
 $username = $_SESSION['username'];
 
-require '../includes/dbconnect.php';
+
 if ($conn -> connect_error){
   die($conn -> connect_error);
 }
@@ -52,7 +51,7 @@ else{
 </head>
 <body>
  <!-- Navigation -->
-<?php require '../includes/header.php';?>
+<?php require '../include/header.php';?>
   
   <!-- Page Content -->
   <div class="container">

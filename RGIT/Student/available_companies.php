@@ -5,10 +5,10 @@ session_start();
 if (!isset($_SESSION['userid']))
 {
 
-  header('Location: /college_project/RGIT/');
+  header('Location: /RGIT/');
 }elseif($_SESSION['type']!='student'){
 
-  header('Location: /college_project/RGIT/');
+  header('Location: /RGIT/');
 }
 
 $userid = $_SESSION['userid'];
@@ -110,7 +110,7 @@ while($row = $results -> fetch_assoc()){
 
 // if($_SESSION['placement_higherstudies'] <=2)
 // {
-//   echo(" <a class='navbar-brand' href='/college_project/RGIT/TPO/tpo_profile.php'>");
+//   echo(" <a class='navbar-brand' href='/RGIT/TPO/tpo_profile.php'>");
 //   echo("<span style='margin-left:5px; margin-right:5px;'> > </span>");
 //   echo(ucwords($_SESSION['company_name']));
 //   echo("</a>");
@@ -156,7 +156,7 @@ while($row = $results -> fetch_assoc()){
               }
               elseif(!in_array($row['company_id'],$available)){  
             ?>
-                    <td><form method="post" action="/college_project/RGIT/Student/apply.php" onsubmit="return confirm('Are you sure you want to apply for <?php echo($row['company_name']); ?> ?');">
+                    <td><form method="post" action="/RGIT/Student/apply.php" onsubmit="return confirm('Are you sure you want to apply for <?php echo($row['company_name']); ?> ?');">
                     <input type="number" name="company_id" value="<?php echo( $row['company_id']); ?>" hidden>
                     <button style="height:30px;" class="apply_button contact100-form-btn" type="submit">Apply</button>
                     </form>

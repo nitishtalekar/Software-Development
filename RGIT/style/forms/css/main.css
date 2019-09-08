@@ -248,6 +248,22 @@ iframe {
   width: calc((100% - 30px) / 3);
 }
 
+.fb1-wrap-input100 {
+  width: calc((100% - 30px) / 2);
+  border: 1px solid #e6e6e6;
+  border-radius: 13px;
+  padding: 10px 30px 9px 22px;
+  margin-bottom: 20px;
+}
+
+.fb2-wrap-input100 {
+  width: calc((100% - 30px) / 3);
+  border: 1px solid #e6e6e6;
+  border-radius: 13px;
+  padding: 10px 30px 9px 22px;
+  margin-bottom: 20px;
+}
+
 .label-input100 {
   font-family: Montserrat-SemiBold;
   font-size: 10px;

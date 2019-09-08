@@ -1,3 +1,9 @@
+<?php
+  if(isset($_POST['new_student'])){
+    header('location: forms/index.php');
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -76,7 +82,7 @@
           </div>
           <form class="contact100-form validate-form" action="index.php" method="POST" enctype="multipart/form-data">
             <div class="container-contact100-form-btn mx-2 my-2">
-    					<button type="submit" class="contact100-form-btn" name="student_id">
+    					<button type="submit" class="contact100-form-btn" name="new_student">
     						<span>
     							Enter
     							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
