@@ -54,30 +54,31 @@ function createpdf($fbresults, $teacherresults, $subjectresults){
 
     while($row = mysqli_fetch_assoc($questions)){
         $pdf->SetFont('Arial','',12);
-        $pdf->MultiCell(0, 10, ucfirst(strtolower($row['question'])), 0,'L');
+        $pdf->MultiCell(0, 15, 'Q.'.$ansindex.' '.ucfirst(strtolower($row['question'])), 0,'L');
         $pdf->SetFont('Arial','',11);
         $fbscore = $fbresults['score'.$ansindex];
+        // $pdf->SetXY(20, $pdf->GetY());
+        // $pdf->Cell(0,0,'Average Feedback Score: '.$fbscore,0,1,'L');
         $pdf->SetXY(20, $pdf->GetY());
-        $pdf->Cell(0,0,'Average Feedback Score: '.$fbscore,0,1,'L');
-        $pdf->SetXY(20, $pdf->GetY());
-        $pdf->Cell(0,10,'Feedback Conversion: '.$row['ans'.$fbscore],0,1,'L');
+        $pdf->Cell(0,0,'Feedback: '.$row['ans'.$fbscore],0,1,'L');
         $pdf->Ln(2);
         $ansindex = $ansindex + 1;
     }
 
+    $pdf->AddPage();
     $remarks = explode('<->', $fbresults['remark']);
     $x = count($remarks)-1;
     $pdf->SetFont('Arial','B',14);
     $pdf->Cell(0,10, 'Student Reviews', 'T',1,'C');
     while($x >= 0){
         $pdf->SetFont('Arial','',12);
-        $pdf->SetXY(20, $pdf->GetY());
+        // $pdf->SetXY(20, $pdf->GetY());
         $pdf->MultiCell(0, 10, ucfirst(strtolower($remarks[$x])), 0,'L');
         $x = $x-1;
     }
 
 
-    $pdf->Output('PDF1'.$fbresults['fb_id'].'.pdf', 'F');
+    $pdf->Output('FeedbackForProf/'.$teacherresults['teacher_name'].'-'.$subjectresults['sub_name'].'-'.$fbresults['year'].'.pdf', 'F');
 
 }
 
