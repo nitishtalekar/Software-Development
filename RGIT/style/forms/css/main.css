@@ -279,6 +279,13 @@ iframe {
   line-height: 1.5;
   text-transform: uppercase;
 }
+.label-inputx2 {
+  font-family: Montserrat-SemiBold;
+  font-size: 18px;
+  color: #393939;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
 
 .input100 {
   display: block;
@@ -391,7 +398,6 @@ textarea.input100 {
     padding: 10px 10px 9px 10px;
   }
 }
-
 
 
 /*------------------------------------------------------------------

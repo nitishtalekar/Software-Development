@@ -31,6 +31,7 @@ while($row = mysqli_fetch_assoc($results)){
 	$arrlength = count($teach);
 	$_SESSION['count'] = $arrlength-1;
 	
+	//
 	// for($x = 0; $x < $arrlength; $x++) {
 	//     echo $teach[$x];
 	//     echo "<br>";
@@ -136,21 +137,21 @@ while($row = mysqli_fetch_assoc($results)){
 				</div>
 				<!-- QUESTIONS sections -->
 				<div class="fb1-wrap-input100">
-					<center><label class="label-inputx">QUESTION 1:</label></center>
+					<center><label class="label-inputx2">HOW DOES THE TEACHER EXPLAIN THE SUBJECT ?</label></center>
 				</div>
 				<div class="fb1-wrap-input100">
-					<center><label class="label-inputx">QUESTION 2:</label></center>
+					<center><label class="label-inputx2">HOW IS THE LANGUAGE AND COMMUNICATION OF THE TEACHER ?</label></center>
 				</div>
 				<div class="wrap-input100 input100-select bg1 rs1-wrap-input100 validate-input" data-validate="Please Fill Field">
 					<span class="label-input100">Answer</span>
 					<div>
 						<select class="js-select2" name="answer1" required>
 							<option selected disabled value="">Choose Option</option>
-							<option value="VeryBad">Very Bad</option>
-							<option value="Bad">Bad</option>
-							<option value="Average">Average</option>
-							<option value="Good">Good</option>
-							<option value="VeryGood">Very Good</option>
+							<option value="5">Exceedingly Well</option>
+							<option value="4">Adequately Well</option>
+							<option value="3">Reasonably Well</option>
+							<option value="2">Inadequate</option>
+							<option value="1">Totally Inadequate</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
@@ -160,31 +161,31 @@ while($row = mysqli_fetch_assoc($results)){
 					<div>
 						<select class="js-select2" name="answer2" required>
 							<option selected disabled value="">Choose Option</option>
-							<option value="VeryBad">Very Bad</option>
-							<option value="Bad">Bad</option>
-							<option value="Average">Average</option>
-							<option value="Good">Good</option>
-							<option value="VeryGood">Very Good</option>
+							<option value="5">Excellent</option>
+							<option value="4">Very Good</option>
+							<option value="3">Good</option>
+							<option value="2">Satisfactory</option>
+							<option value="1">Poor</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
 				</div>
 				<div class="fb1-wrap-input100">
-					<center><label class="label-inputx">QUESTION 1:</label></center>
+					<center><label class="label-inputx2">HOW MUCH OPPORTUNITY DOES THE TEACHER GIVE FOR Q & A ?</label></center>
 				</div>
 				<div class="fb1-wrap-input100">
-					<center><label class="label-inputx">QUESTION 2:</label></center>
+					<center><label class="label-inputx2">HOW IS THE TEACHER'S CONTROL AND COMMAND OVER THE CLASS ?</label></center>
 				</div>
 				<div class="wrap-input100 input100-select bg1 rs1-wrap-input100 validate-input" data-validate="Please Fill Field">
 					<span class="label-input100">Answer</span>
 					<div>
 						<select class="js-select2" name="answer3" required>
 							<option selected disabled value="">Choose Option</option>
-							<option value="VeryBad">Very Bad</option>
-							<option value="Bad">Bad</option>
-							<option value="Average">Average</option>
-							<option value="Good">Good</option>
-							<option value="VeryGood">Very Good</option>
+							<option value="5">Ample Opportunity</option>
+							<option value="4">Sufficient Opportunity</option>
+							<option value="3">Occasional Opportunity</option>
+							<option value="2">Rare Opportunity</option>
+							<option value="1">Never</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
@@ -194,31 +195,31 @@ while($row = mysqli_fetch_assoc($results)){
 					<div>
 						<select class="js-select2" name="answer4" required>
 							<option selected disabled value="">Choose Option</option>
-							<option value="VeryBad">Very Bad</option>
-							<option value="Bad">Bad</option>
-							<option value="Average">Average</option>
-							<option value="Good">Good</option>
-							<option value="VeryGood">Very Good</option>
+							<option value="5">Maintains Good Discipline</option>
+							<option value="4">Maintains Reasonable Discipline</option>
+							<option value="3">Some Disorder in class</option>
+							<option value="2">Class is Frequently Disordered</option>
+							<option value="1">Class is Noisy</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
 				</div>
 				<div class="fb1-wrap-input100">
-					<center><label class="label-inputx">QUESTION 1:</label></center>
+					<center><label class="label-inputx2">HOW DOES THE TEACHER STIMULATE YOU TO THINK ABOUT THE SUBJECT ?</label></center>
 				</div>
 				<div class="fb1-wrap-input100">
-					<center><label class="label-inputx">QUESTION 2:</label></center>
+					<center><label class="label-inputx2">WHAT IS THE ATTITUDE OF THE TEACHER TOWARDS YOU ?</label></center>
 				</div>
 				<div class="wrap-input100 input100-select bg1 rs1-wrap-input100 validate-input" data-validate="Please Fill Field">
 					<span class="label-input100">Answer</span>
 					<div>
 						<select class="js-select2" name="answer5" required>
 							<option selected disabled value="">Choose Option</option>
-							<option value="VeryBad">Very Bad</option>
-							<option value="Bad">Bad</option>
-							<option value="Average">Average</option>
-							<option value="Good">Good</option>
-							<option value="VeryGood">Very Good</option>
+							<option value="5">Highly Stimulating</option>
+							<option value="4">Adequately Stimulating</option>
+							<option value="3">Stimulating</option>
+							<option value="2">Rarely Stimulating</option>
+							<option value="1">Never</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
@@ -228,31 +229,31 @@ while($row = mysqli_fetch_assoc($results)){
 					<div>
 						<select class="js-select2" name="answer6" required>
 							<option selected disabled value="">Choose Option</option>
-							<option value="VeryBad">Very Bad</option>
-							<option value="Bad">Bad</option>
-							<option value="Average">Average</option>
-							<option value="Good">Good</option>
-							<option value="VeryGood">Very Good</option>
+							<option value="5">Usually Sympathetic and Helpful</option>
+							<option value="4">Somtimes Sympathetic and Helpful</option>
+							<option value="3">Sympathetic</option>
+							<option value="2">Avoids Personal Contact</option>
+							<option value="1">Appears Indifferent</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
 				</div>
 				<div class="fb1-wrap-input100">
-					<center><label class="label-inputx">QUESTION 1:</label></center>
+					<center><label class="label-inputx2">HOW MUCH OF THE SYLLABUS DOES THE TEACHER COMPLETE ?</label></center>
 				</div>
 				<div class="fb1-wrap-input100">
-					<center><label class="label-inputx">QUESTION 2:</label></center>
+					<center><label class="label-inputx2">DOES THE TEACHER VICTIMIZE SOME STUDENTS ?</label></center>
 				</div>
 				<div class="wrap-input100 input100-select bg1 rs1-wrap-input100 validate-input" data-validate="Please Fill Field">
 					<span class="label-input100">Answer</span>
 					<div>
 						<select class="js-select2" name="answer7" required>
 							<option selected disabled value="">Choose Option</option>
-							<option value="VeryBad">Very Bad</option>
-							<option value="Bad">Bad</option>
-							<option value="Average">Average</option>
-							<option value="Good">Good</option>
-							<option value="VeryGood">Very Good</option>
+							<option value="5">Above 90%</option>
+							<option value="4">75% - 90%</option>
+							<option value="3">60% - 75%</option>
+							<option value="2">50% - 60%</option>
+							<option value="1">Below 50%</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
@@ -262,31 +263,31 @@ while($row = mysqli_fetch_assoc($results)){
 					<div>
 						<select class="js-select2" name="answer8" required>
 							<option selected disabled value="">Choose Option</option>
-							<option value="VeryBad">Very Bad</option>
-							<option value="Bad">Bad</option>
-							<option value="Average">Average</option>
-							<option value="Good">Good</option>
-							<option value="VeryGood">Very Good</option>
+							<option value="5">Always</option>
+							<option value="4">Very Often</option>
+							<option value="3">Frequently</option>
+							<option value="2">Occasionally</option>
+							<option value="1">Never</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
 				</div>
 				<div class="fb1-wrap-input100">
-					<center><label class="label-inputx">QUESTION 1:</label></center>
+					<center><label class="label-inputx2">HOW MUCH OF CLASS TIME DOES TEACHER USE FOR TEACHING THE SUBJECT AND DOESNT DIVIATE ?</label></center>
 				</div>
 				<div class="fb1-wrap-input100">
-					<center><label class="label-inputx">QUESTION 2:</label></center>
+					<center><label class="label-inputx2">DOES THE TEACHER SHOW FAVOURITEISM TOWARDS THE STUDENTS IN OR OUTSIDE CLASS ?</label></center>
 				</div>
 				<div class="wrap-input100 input100-select bg1 rs1-wrap-input100 validate-input" data-validate="Please Fill Field">
 					<span class="label-input100">Answer</span>
 					<div>
 						<select class="js-select2" name="answer9" required>
 							<option selected disabled value="">Choose Option</option>
-							<option value="VeryBad">Very Bad</option>
-							<option value="Bad">Bad</option>
-							<option value="Average">Average</option>
-							<option value="Good">Good</option>
-							<option value="VeryGood">Very Good</option>
+							<option value="5">Above 90%</option>
+							<option value="4">80% - 90%</option>
+							<option value="3">70% - 80%</option>
+							<option value="2">60% - 70%</option>
+							<option value="1">Below 60%</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
@@ -296,30 +297,30 @@ while($row = mysqli_fetch_assoc($results)){
 					<div>
 						<select class="js-select2" name="answer10" required>
 							<option selected disabled value="">Choose Option</option>
-							<option value="VeryBad">Very Bad</option>
-							<option value="Bad">Bad</option>
-							<option value="Average">Average</option>
-							<option value="Good">Good</option>
-							<option value="VeryGood">Very Good</option>
+							<option value="5">Always</option>
+							<option value="4">Very Often</option>
+							<option value="3">Frequently</option>
+							<option value="2">Occasionally</option>
+							<option value="1">Never</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
 				</div><div class="fb1-wrap-input100">
-					<center><label class="label-inputx">QUESTION 1:</label></center>
+					<center><label class="label-inputx2">WHEN DOES THE TEACHER RETURN THE CORRECTED PERIODIC TEST OR ASSIGNMENT ?</label></center>
 				</div>
 				<div class="fb1-wrap-input100">
-					<center><label class="label-inputx">QUESTION 2:</label></center>
+					<center><label class="label-inputx2">HOW PUNTUAL IS THE TEACHER WHEN COMING TO THE CLASS ?</label></center>
 				</div>
 				<div class="wrap-input100 input100-select bg1 rs1-wrap-input100 validate-input" data-validate="Please Fill Field">
 					<span class="label-input100">Answer</span>
 					<div>
 						<select class="js-select2" name="answer11" required>
 							<option selected disabled value="">Choose Option</option>
-							<option value="VeryBad">Very Bad</option>
-							<option value="Bad">Bad</option>
-							<option value="Average">Average</option>
-							<option value="Good">Good</option>
-							<option value="VeryGood">Very Good</option>
+							<option value="5">Within a Week</option>
+							<option value="4">Within a Fortnight</option>
+							<option value="3">Within 3 Weeks</option>
+							<option value="2">After a Month</option>
+							<option value="1">Never</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
@@ -329,11 +330,11 @@ while($row = mysqli_fetch_assoc($results)){
 					<div>
 						<select class="js-select2" name="answer12" required>
 							<option selected disabled value="">Choose Option</option>
-							<option value="VeryBad">Very Bad</option>
-							<option value="Bad">Bad</option>
-							<option value="Average">Average</option>
-							<option value="Good">Good</option>
-							<option value="VeryGood">Very Good</option>
+							<option value="5">Always on Time</option>
+							<option value="4">Occasionally Late</option>
+							<option value="3">Frequently Late</option>
+							<option value="2">Often Late</option>
+							<option value="1">Never on Time</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>

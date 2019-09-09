@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 08, 2019 at 12:01 PM
+-- Generation Time: Sep 09, 2019 at 02:32 AM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -132,11 +132,37 @@ CREATE TABLE `feedback` (
   `fb_id` int(200) NOT NULL,
   `t_id` varchar(200) NOT NULL,
   `sub_id` varchar(200) NOT NULL,
-  `year` int(20) NOT NULL,
-  `e_o` int(20) NOT NULL,
-  `score` varchar(200) NOT NULL,
-  `remark` varchar(200) NOT NULL
+  `year` varchar(200) NOT NULL,
+  `score1` varchar(200) NOT NULL,
+  `score2` varchar(200) NOT NULL,
+  `score3` varchar(200) NOT NULL,
+  `score4` varchar(200) NOT NULL,
+  `score5` varchar(200) NOT NULL,
+  `score6` varchar(200) NOT NULL,
+  `score7` varchar(200) NOT NULL,
+  `score8` varchar(200) NOT NULL,
+  `score9` varchar(200) NOT NULL,
+  `score10` varchar(200) NOT NULL,
+  `score11` varchar(200) NOT NULL,
+  `score12` varchar(200) NOT NULL,
+  `remark` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`fb_id`, `t_id`, `sub_id`, `year`, `score1`, `score2`, `score3`, `score4`, `score5`, `score6`, `score7`, `score8`, `score9`, `score10`, `score11`, `score12`, `remark`) VALUES
+(1, '201', 'S200', '2019', '4', '3', '3', '4', '4', '4', '4', '4', '3', '3', '3', '3', '<->acsad<->sdfdd<->sd'),
+(2, '202', 'S300', '2019', '4', '3', '3', '3', '3', '4', '4', '4', '3', '4', '4', '4', '<->asd<->--<->asd'),
+(3, '203', 'S400', '2019', '3', '2', '4', '4', '4', '4', '3', '3', '4', '3', '4', '4', '<->asdsad<->asd<->dsa'),
+(4, '204', 'S500', '2019', '4', '4', '3', '3', '4', '5', '3', '5', '3', '4', '4', '4', '<->addfsd<->qwe<->adsad'),
+(5, '100', 'S100', '2019', '1', '3', '2', '3', '4', '4', '3', '4', '3', '3', '3', '3', '<->gf'),
+(6, '200', 'S200', '2019', '4', '4', '4', '3', '3', '3', '2', '4', '2', '3', '3', '5', '<->fds'),
+(7, '300', 'S300', '2019', '3', '3', '4', '5', '2', '4', '3', '2', '3', '3', '4', '5', '<->--'),
+(8, '400', 'S400', '2019', '2', '1', '5', '5', '3', '4', '2', '3', '3', '3', '5', '4', '<->--'),
+(9, '500', 'S500', '2019', '2', '3', '5', '5', '3', '3', '5', '4', '3', '4', '3', '2', '<->ds'),
+(19, '201', 'S200', '2020', '3', '4', '5', '4', '3', '3', '4', '5', '4', '3', '4', '5', '3asd');
 
 -- --------------------------------------------------------
 
@@ -168,19 +194,23 @@ CREATE TABLE `feedback_temp` (
 --
 
 INSERT INTO `feedback_temp` (`fbt_id`, `t_id`, `sub_id`, `ques1`, `ques2`, `ques3`, `ques4`, `ques5`, `ques6`, `ques7`, `ques8`, `ques9`, `ques10`, `ques11`, `ques12`, `remark`) VALUES
-(1, '201', 'S200', 'Average', 'Bad', 'Bad', 'Good', 'Good', 'VeryGood', 'Average', 'Average', 'Average', 'Average', 'Average', 'Bad', '--'),
-(2, '202', 'S300', 'Average', 'Average', 'Bad', 'Good', 'VeryGood', 'Good', 'Good', 'Good', 'Good', 'Good', 'Average', 'VeryBad', 'ergdfes'),
-(3, '203', 'S400', 'Good', 'Average', 'Average', 'VeryGood', 'Good', 'Good', 'Bad', 'Good', 'Average', 'Average', 'Good', 'VeryGood', '--'),
-(4, '204', 'S500', 'Average', 'Average', 'Good', 'Average', 'Good', 'Average', 'Good', 'Good', 'VeryBad', 'Average', 'Good', 'Good', 'ghk'),
-(5, '100', 'S100', 'Good', 'Good', 'VeryBad', 'Bad', 'Average', 'Good', 'Good', 'Good', 'Average', 'Average', 'Average', 'Good', 'sda'),
-(6, '200', 'S200', 'Bad', 'Average', 'Bad', 'Average', 'Good', 'Average', 'Bad', 'Average', 'Average', 'Good', 'Bad', 'Average', '--'),
-(7, '300', 'S300', 'Average', 'Bad', 'Average', 'Good', 'Average', 'Good', 'Bad', 'Good', 'Good', 'VeryGood', 'Good', 'Good', '--'),
-(8, '400', 'S400', 'Good', 'VeryGood', 'Average', 'Average', 'Good', 'Good', 'Bad', 'Good', 'Good', 'Good', 'Average', 'Average', '--'),
-(9, '500', 'S500', 'Good', 'Good', 'Bad', 'Good', 'Good', 'Good', 'Good', 'Good', 'Average', 'Average', 'VeryGood', 'VeryGood', 'asd'),
-(10, '201', 'S200', 'Good', 'Good', 'Good', 'Average', 'Bad', 'Good', 'VeryGood', 'Good', 'Good', 'Good', 'Average', 'Average', 'ad'),
-(11, '202', 'S300', 'Good', 'Average', 'Average', 'Bad', 'Good', 'VeryGood', 'Good', 'Average', 'Average', 'Average', 'Good', 'Good', 'asd'),
-(12, '203', 'S400', 'Good', 'Average', 'Average', 'Average', 'Good', 'Average', 'Good', 'Average', 'Good', 'Good', 'Good', 'Average', 'afdf'),
-(13, '204', 'S500', 'VeryGood', 'VeryGood', 'Bad', 'Average', 'Average', 'Bad', 'Average', 'Good', 'VeryGood', 'VeryGood', 'Average', 'VeryGood', 'f');
+(1, '201', 'S200', '3', '2', '2', '4', '4', '5', '4', '4', '3', '3', '3', '3', 'acsad'),
+(2, '202', 'S300', '5', '2', '3', '4', '4', '3', '4', '4', '3', '4', '4', '4', 'asd'),
+(3, '203', 'S400', '4', '3', '4', '4', '3', '5', '3', '3', '4', '5', '5', '4', 'asdsad'),
+(4, '204', 'S500', '3', '4', '3', '3', '4', '5', '4', '5', '2', '5', '4', '3', 'addfsd'),
+(5, '201', 'S200', '4', '4', '3', '5', '3', '3', '5', '4', '4', '1', '2', '5', 'sdfdd'),
+(6, '202', 'S300', '2', '3', '5', '3', '2', '4', '5', '5', '4', '5', '5', '5', '--'),
+(7, '203', 'S400', '3', '3', '4', '5', '5', '4', '2', '4', '4', '3', '3', '4', 'asd'),
+(8, '204', 'S500', '5', '3', '4', '3', '4', '5', '4', '4', '3', '3', '4', '4', 'qwe'),
+(9, '201', 'S200', '5', '4', '3', '4', '5', '4', '4', '4', '2', '4', '3', '2', 'sd'),
+(10, '202', 'S300', '4', '4', '2', '2', '4', '5', '3', '4', '2', '2', '2', '4', 'asd'),
+(11, '203', 'S400', '1', '1', '4', '4', '3', '2', '3', '3', '4', '2', '4', '4', 'dsa'),
+(12, '204', 'S500', '4', '5', '3', '4', '4', '4', '2', '5', '4', '5', '4', '4', 'adsad'),
+(13, '100', 'S100', '1', '3', '2', '3', '4', '4', '3', '4', '3', '3', '3', '3', 'gf'),
+(14, '200', 'S200', '4', '4', '4', '3', '3', '3', '2', '4', '2', '3', '3', '5', 'fds'),
+(15, '300', 'S300', '3', '3', '4', '5', '2', '4', '3', '2', '3', '3', '4', '5', '--'),
+(16, '400', 'S400', '2', '1', '5', '5', '3', '4', '2', '3', '3', '3', '5', '4', '--'),
+(17, '500', 'S500', '2', '3', '5', '5', '3', '3', '5', '4', '3', '4', '3', '2', 'ds');
 
 -- --------------------------------------------------------
 
@@ -406,7 +436,8 @@ ALTER TABLE `company`
 -- Indexes for table `feedback`
 --
 ALTER TABLE `feedback`
-  ADD PRIMARY KEY (`fb_id`);
+  ADD PRIMARY KEY (`fb_id`),
+  ADD UNIQUE KEY `t_id` (`t_id`,`sub_id`,`year`);
 
 --
 -- Indexes for table `feedback_temp`
@@ -476,13 +507,13 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `fb_id` int(200) NOT NULL AUTO_INCREMENT;
+  MODIFY `fb_id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `feedback_temp`
 --
 ALTER TABLE `feedback_temp`
-  MODIFY `fbt_id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `fbt_id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `placed_student`
