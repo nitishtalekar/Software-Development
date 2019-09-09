@@ -1,44 +1,44 @@
 <?php require('../dbconnect.php');
 
 if(isset($_POST['upload_fb'])){
-  $query = "SELECT DISTINCT t_id,sub_id FROM feedback_temp;";
-  $results = mysqli_query($db, $query);
-  while($row = mysqli_fetch_assoc($results)){
-    $t = $row['t_id'];
-    $s = $row['sub_id'];
-    $ans = array(0,0,0,0,0,0,0,0,0,0,0,0);
-    $rmrks = '';
-    $q = "SELECT * FROM feedback_temp WHERE t_id = '$t' AND sub_id = '$s';";
-    $res = mysqli_query($db, $q);
-    $length = mysqli_num_rows($res);
-    while($row1 = mysqli_fetch_assoc($res)){
-      $ans[0] = $ans[0] + (int)$row1['ques1'];
-      $ans[1] = $ans[1] + (int)$row1['ques2'];
-      $ans[2] = $ans[2] + (int)$row1['ques3'];
-      $ans[3] = $ans[3] + (int)$row1['ques4'];
-      $ans[4] = $ans[4] + (int)$row1['ques5'];
-      $ans[5] = $ans[5] + (int)$row1['ques6'];
-      $ans[6] = $ans[6] + (int)$row1['ques7'];
-      $ans[7] = $ans[7] + (int)$row1['ques8'];
-      $ans[8] = $ans[8] + (int)$row1['ques9'];
-      $ans[9] = $ans[9] + (int)$row1['ques10'];
-      $ans[10] = $ans[10] + (int)$row1['ques11'];
-      $ans[11] = $ans[11] + (int)$row1['ques12'];
-      $rmrks = $rmrks.'<->'.$row1['remark'];
+    $query = "SELECT DISTINCT t_id,sub_id FROM feedback_temp;";
+    $results = mysqli_query($db, $query);
+    while($row = mysqli_fetch_assoc($results)){
+        $t = $row['t_id'];
+        $s = $row['sub_id'];
+        $ans = array(0,0,0,0,0,0,0,0,0,0,0,0);
+        $rmrks = '';
+        $q = "SELECT * FROM feedback_temp WHERE t_id = '$t' AND sub_id = '$s';";
+        $res = mysqli_query($db, $q);
+        $length = mysqli_num_rows($res);
+        while($row1 = mysqli_fetch_assoc($res)){
+            $ans[0] = $ans[0] + (int)$row1['ques1'];
+            $ans[1] = $ans[1] + (int)$row1['ques2'];
+            $ans[2] = $ans[2] + (int)$row1['ques3'];
+            $ans[3] = $ans[3] + (int)$row1['ques4'];
+            $ans[4] = $ans[4] + (int)$row1['ques5'];
+            $ans[5] = $ans[5] + (int)$row1['ques6'];
+            $ans[6] = $ans[6] + (int)$row1['ques7'];
+            $ans[7] = $ans[7] + (int)$row1['ques8'];
+            $ans[8] = $ans[8] + (int)$row1['ques9'];
+            $ans[9] = $ans[9] + (int)$row1['ques10'];
+            $ans[10] = $ans[10] + (int)$row1['ques11'];
+            $ans[11] = $ans[11] + (int)$row1['ques12'];
+            $rmrks = $rmrks.'<->'.$row1['remark'];
+        }
+        $avg_ans = array();
+        for($i=0;$i<12;$i++){
+            $avg_ans[$i] = strval(round((float)$ans[$i]/(float)$length));
+        }
+        $yr = strval(date('Y'));
+        $qu = "INSERT INTO feedback(t_id, sub_id, year, score1, score2, score3, score4, score5, score6, score7, score8, score9, score10, score11, score12, remark)";
+        $qu = $qu."VALUES ('$t','$s','$yr','$avg_ans[0]','$avg_ans[1]','$avg_ans[2]','$avg_ans[3]','$avg_ans[4]','$avg_ans[5]','$avg_ans[6]','$avg_ans[7]','$avg_ans[8]','$avg_ans[9]','$avg_ans[10]','$avg_ans[11]','$rmrks')";
+
+        mysqli_query($db, $qu);
+        echo "<script type='text/javascript'>alert('UPLOADED');</script>";
+        header('location: ../index.php');
     }
-    $avg_ans = array();
-    for($i=0;$i<12;$i++){
-      $avg_ans[$i] = strval(round((float)$ans[$i]/(float)$length));
-    }
-    $yr = strval(date('Y'));
-    $qu = "INSERT INTO feedback(t_id, sub_id, year, score1, score2, score3, score4, score5, score6, score7, score8, score9, score10, score11, score12, remark)";
-    $qu = $qu."VALUES ('$t','$s','$yr','$avg_ans[0]','$avg_ans[1]','$avg_ans[2]','$avg_ans[3]','$avg_ans[4]','$avg_ans[5]','$avg_ans[6]','$avg_ans[7]','$avg_ans[8]','$avg_ans[9]','$avg_ans[10]','$avg_ans[11]','$rmrks')";
-    
-    mysqli_query($db, $qu);
-    echo "<script type='text/javascript'>alert('UPLOADED');</script>";
-    header('location: ../index.php');
-}
-  
+
 }
 
 ?>
@@ -80,12 +80,12 @@ if(isset($_POST['upload_fb'])){
 				<span class="contact100-form-title">
 					Feedback
 				</span>
-				
+
 				<div class="wrap-input100">
 					<center><label class="label-inputx">UPLOAD FEEDBACK DATA</label></center>
 				</div>
-				
-				
+
+
 				<div class="container-contact100-form-btn">
 					<button type="submit" class="contact100-form-btn" name="upload_fb">
 						<span>

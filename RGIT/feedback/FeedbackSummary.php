@@ -1,7 +1,113 @@
-<?php require('../dbconnect.php');
+<?php
+require('../dbconnect.php');
+require('FPDF/fpdf.php');
+
+class PDF extends FPDF{
+    // function Header()
+    // {
+    //     // Logo
+    //     $this->Image('data/RGIT.png',10,0,0,35);
+    //     // Arial bold 15
+    //     $this->SetFont('Arial','B',15);
+    //     // Move to the right
+    //     $this->Cell('Department of Computer Engineering');
+    // }
+}
+
+
+
+function createpdf($fbresults, $teacherresults, $subjectresults){
+    // Cell(float w , float h , string txt , mixed border , int ln , string align , boolean fill , mixed link)
+    global $db;
+    $pdf= new PDF('P','mm','A4');
+    $pdf->AddPage();
+
+    //HEADER only on page 1
+    $pdf->Image('data/RGIT.png',10,0,0,35);
+    $pdf->SetFont('Arial','B',15);
+
+    $pdf->SetXY(10,30);
+    $pdf->SetFont('Arial','B',15);
+    $pdf->Cell(0,10, 'DEPARTMENT OF '.strtoupper($teacherresults['teacher_dept']), 0,1,'C');
+
+    $pdf->SetFont('Arial','',12);
+    $pdf->Cell(35,5, 'Professor Name', 0,0,'L');
+    $pdf->Cell(100,5, ': '.strtoupper($teacherresults['teacher_name']), 0,1,'L');
+
+    $pdf->SetFont('Arial','',12);
+    $pdf->Cell(35,5, 'Subject Name', 0,0,'L');
+    $pdf->Cell(100,5, ': '.strtoupper($subjectresults['sub_name']), 0,1,'L');
+
+    $pdf->SetFont('Arial','',12);
+    $pdf->Cell(35,5, 'Year', 0,0,'L');
+    $pdf->Cell(100,5, ': '.strtoupper($fbresults['year']), 0,1,'L');
+
+    $pdf->Ln(5);
+
+    $pdf->SetFont('Arial','B',14);
+    $pdf->Cell(0,10, 'Feedback Questionnaire', 'T',1,'C');
+
+
+    $q = "SELECT * FROM feedback_ques";
+    $questions = mysqli_query($db, $q);
+    $ansindex = 1;
+
+    while($row = mysqli_fetch_assoc($questions)){
+        $pdf->SetFont('Arial','',12);
+        $pdf->MultiCell(0, 10, ucfirst(strtolower($row['question'])), 0,'L');
+        $pdf->SetFont('Arial','',11);
+        $fbscore = $fbresults['score'.$ansindex];
+        $pdf->SetXY(20, $pdf->GetY());
+        $pdf->Cell(0,0,'Average Feedback Score: '.$fbscore,0,1,'L');
+        $pdf->SetXY(20, $pdf->GetY());
+        $pdf->Cell(0,10,'Feedback Conversion: '.$row['ans'.$fbscore],0,1,'L');
+        $pdf->Ln(2);
+        $ansindex = $ansindex + 1;
+    }
+
+    $remarks = explode('<->', $fbresults['remark']);
+    $x = count($remarks)-1;
+    $pdf->SetFont('Arial','B',14);
+    $pdf->Cell(0,10, 'Student Reviews', 'T',1,'C');
+    while($x >= 0){
+        $pdf->SetFont('Arial','',12);
+        $pdf->SetXY(20, $pdf->GetY());
+        $pdf->MultiCell(0, 10, ucfirst(strtolower($remarks[$x])), 0,'L');
+        $x = $x-1;
+    }
+
+
+    $pdf->Output('PDF1'.$fbresults['fb_id'].'.pdf', 'F');
+
+}
+
+
 
 if(isset($_POST['summary_fb'])){
-  
+
+// feedback ->> SubjectID, TeacherID, Year and Scores
+// Get subject name form id
+// Get Teacher name from TeacherID
+
+    $q1 = "SELECT * FROM feedback";
+    $result = mysqli_query($db, $q1);
+
+    while($fbresults = mysqli_fetch_assoc($result)){
+        $subjectid = $fbresults['sub_id'];
+        $teacherid = $fbresults['t_id'];
+
+        $q2 = "SELECT * FROM teacher WHERE teacher_id = '$teacherid'";
+        $teacherresults = mysqli_query($db, $q2);
+        $teacherresults = mysqli_fetch_array($teacherresults);
+
+        $q3 = "SELECT * FROM subject WHERE sub_id = '$subjectid'";
+        $subjectresults = mysqli_query($db, $q3);
+        $subjectresults = mysqli_fetch_array($subjectresults);
+
+        createpdf($fbresults, $teacherresults, $subjectresults);
+    }
+    // $pdf->Output('xyz.pdf','F');
+    // ob_end_flush();
 }
 
 ?>
@@ -39,16 +145,16 @@ if(isset($_POST['summary_fb'])){
 
 	<div class="container-contact100">
 		<div class="wrap-contact100">
-			<form class="contact100-form validate-form" action="UploadFeedback.php" method="POST" enctype="multipart/form-data">
+			<form class="contact100-form validate-form" action="FeedbackSummary.php" method="POST" enctype="multipart/form-data">
 				<span class="contact100-form-title">
 					Feedback
 				</span>
-				
+
 				<div class="wrap-input100">
 					<center><label class="label-inputx">PRINT FEEDBACK DATA</label></center>
 				</div>
-				
-				
+
+
 				<div class="container-contact100-form-btn">
 					<button type="submit" class="contact100-form-btn" name="summary_fb">
 						<span>
