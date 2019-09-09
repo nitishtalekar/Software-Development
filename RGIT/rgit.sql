@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2019 at 02:32 AM
+-- Generation Time: Sep 09, 2019 at 06:39 AM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -145,24 +145,42 @@ CREATE TABLE `feedback` (
   `score10` varchar(200) NOT NULL,
   `score11` varchar(200) NOT NULL,
   `score12` varchar(200) NOT NULL,
-  `remark` varchar(1000) NOT NULL
+  `remark` varchar(50000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feedback_ques`
+--
+
+CREATE TABLE `feedback_ques` (
+  `fbq_id` int(200) NOT NULL,
+  `question` varchar(300) NOT NULL,
+  `ans1` varchar(200) NOT NULL,
+  `ans2` varchar(200) NOT NULL,
+  `ans3` varchar(200) NOT NULL,
+  `ans4` varchar(200) NOT NULL,
+  `ans5` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `feedback`
+-- Dumping data for table `feedback_ques`
 --
 
-INSERT INTO `feedback` (`fb_id`, `t_id`, `sub_id`, `year`, `score1`, `score2`, `score3`, `score4`, `score5`, `score6`, `score7`, `score8`, `score9`, `score10`, `score11`, `score12`, `remark`) VALUES
-(1, '201', 'S200', '2019', '4', '3', '3', '4', '4', '4', '4', '4', '3', '3', '3', '3', '<->acsad<->sdfdd<->sd'),
-(2, '202', 'S300', '2019', '4', '3', '3', '3', '3', '4', '4', '4', '3', '4', '4', '4', '<->asd<->--<->asd'),
-(3, '203', 'S400', '2019', '3', '2', '4', '4', '4', '4', '3', '3', '4', '3', '4', '4', '<->asdsad<->asd<->dsa'),
-(4, '204', 'S500', '2019', '4', '4', '3', '3', '4', '5', '3', '5', '3', '4', '4', '4', '<->addfsd<->qwe<->adsad'),
-(5, '100', 'S100', '2019', '1', '3', '2', '3', '4', '4', '3', '4', '3', '3', '3', '3', '<->gf'),
-(6, '200', 'S200', '2019', '4', '4', '4', '3', '3', '3', '2', '4', '2', '3', '3', '5', '<->fds'),
-(7, '300', 'S300', '2019', '3', '3', '4', '5', '2', '4', '3', '2', '3', '3', '4', '5', '<->--'),
-(8, '400', 'S400', '2019', '2', '1', '5', '5', '3', '4', '2', '3', '3', '3', '5', '4', '<->--'),
-(9, '500', 'S500', '2019', '2', '3', '5', '5', '3', '3', '5', '4', '3', '4', '3', '2', '<->ds'),
-(19, '201', 'S200', '2020', '3', '4', '5', '4', '3', '3', '4', '5', '4', '3', '4', '5', '3asd');
+INSERT INTO `feedback_ques` (`fbq_id`, `question`, `ans1`, `ans2`, `ans3`, `ans4`, `ans5`) VALUES
+(1, 'HOW DOES THE TEACHER EXPLAIN THE SUBJECT ?', 'Exceedingly Well', 'Adequately Well', 'Reasonably Well', 'Inadequate', 'Totally Inadequate'),
+(2, 'HOW IS THE LANGUAGE AND COMMUNICATION OF THE TEACHER ?', 'Excellent', 'Very Good', 'Good', 'Satisfactory', 'Poor'),
+(3, 'HOW MUCH OPPORTUNITY DOES THE TEACHER GIVE FOR Q & A ?', 'Ample Opportunity', 'Sufficient Opportunity', 'Occasional Opportunity', 'Rare Opportunity', 'Never'),
+(4, 'HOW IS THE TEACHER\'S CONTROL AND COMMAND OVER THE CLASS ?', 'Maintains Good Discipline', 'Maintains Reasonable Discipline', 'Some Disorder in class', 'Class is Frequently Disordered', 'Class is Noisy'),
+(5, 'HOW DOES THE TEACHER STIMULATE YOU TO THINK ABOUT THE SUBJECT ?', 'Highly Stimulating', 'Adequately Stimulating', ' Stimulating', 'Rarely Stimulating', 'Never'),
+(6, 'WHAT IS THE ATTITUDE OF THE TEACHER TOWARDS YOU ?', 'Usually Sympathetic and Helpful', 'Sometimes Sympathetic and Helpful', 'Sympathetic', 'Avoids Personal Contact', 'Appears Indifferent'),
+(7, 'HOW MUCH OF THE SYLLABUS DOES THE TEACHER COMPLETE ?', 'Above 90%', '75% - 90%', '60% - 75%', '50% - 60%', 'Below 50%'),
+(8, 'DOES THE TEACHER VICTIMIZE SOME STUDENTS ?', 'Always', 'Very Often', 'Frequently', 'Occasionally', 'Never'),
+(9, 'HOW MUCH OF CLASS TIME DOES TEACHER USE FOR TEACHING THE SUBJECT AND DOESNT DIVIATE ?', 'Above 90%', '75% - 90%', '60% - 75%', '50% - 60%', 'Below 50%'),
+(10, 'DOES THE TEACHER SHOW FAVOURITEISM TOWARDS THE STUDENTS IN OR OUTSIDE CLASS ?', 'Always', 'Very Often', 'Frequently', 'Occasionally', 'Never'),
+(11, 'WHEN DOES THE TEACHER RETURN THE CORRECTED PERIODIC TEST OR ASSIGNMENT ?', 'Within a Week', 'Within a Fortnight', 'Within 3 Weeks', 'After a Month', 'Never'),
+(12, 'HOW PUNTUAL IS THE TEACHER WHEN COMING TO THE CLASS ?', 'Always on time', 'Occasionally Late', 'Frequently Late', 'Often Late', 'Never on Time');
 
 -- --------------------------------------------------------
 
@@ -210,7 +228,11 @@ INSERT INTO `feedback_temp` (`fbt_id`, `t_id`, `sub_id`, `ques1`, `ques2`, `ques
 (14, '200', 'S200', '4', '4', '4', '3', '3', '3', '2', '4', '2', '3', '3', '5', 'fds'),
 (15, '300', 'S300', '3', '3', '4', '5', '2', '4', '3', '2', '3', '3', '4', '5', '--'),
 (16, '400', 'S400', '2', '1', '5', '5', '3', '4', '2', '3', '3', '3', '5', '4', '--'),
-(17, '500', 'S500', '2', '3', '5', '5', '3', '3', '5', '4', '3', '4', '3', '2', 'ds');
+(17, '500', 'S500', '2', '3', '5', '5', '3', '3', '5', '4', '3', '4', '3', '2', 'ds'),
+(18, '201', 'S200', '3', '3', '4', '2', '3', '4', '4', '3', '4', '3', '4', '2', '--'),
+(19, '202', 'S300', '4', '4', '4', '2', '5', '5', '1', '2', '1', '4', '4', '4', 'jhasjhsagdjhasd'),
+(20, '203', 'S400', '4', '3', '4', '3', '3', '4', '3', '2', '2', '3', '4', '4', 'hjghgg'),
+(21, '204', 'S500', '3', '3', '2', '3', '1', '4', '2', '4', '4', '4', '2', '3', '--');
 
 -- --------------------------------------------------------
 
@@ -440,6 +462,12 @@ ALTER TABLE `feedback`
   ADD UNIQUE KEY `t_id` (`t_id`,`sub_id`,`year`);
 
 --
+-- Indexes for table `feedback_ques`
+--
+ALTER TABLE `feedback_ques`
+  ADD PRIMARY KEY (`fbq_id`);
+
+--
 -- Indexes for table `feedback_temp`
 --
 ALTER TABLE `feedback_temp`
@@ -507,13 +535,19 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `fb_id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `fb_id` int(200) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `feedback_ques`
+--
+ALTER TABLE `feedback_ques`
+  MODIFY `fbq_id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `feedback_temp`
 --
 ALTER TABLE `feedback_temp`
-  MODIFY `fbt_id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `fbt_id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `placed_student`
