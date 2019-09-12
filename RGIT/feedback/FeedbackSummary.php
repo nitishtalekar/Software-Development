@@ -82,7 +82,7 @@ if(isset($_POST['summary_fb'])){
 
     while($fbresults = mysqli_fetch_assoc($result)){
         $subjectid = $fbresults['sub_id'];
-        $teacherid = $fbresults['t_id'];
+        $teacherid = $fbresults['teacher_id'];
 
         $q2 = "SELECT * FROM teacher WHERE teacher_id = '$teacherid'";
         $teacherresults = mysqli_query($db, $q2);

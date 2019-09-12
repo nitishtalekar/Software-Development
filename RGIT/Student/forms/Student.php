@@ -64,11 +64,11 @@
 				$g0 = '';
 				$g1 = 'selected';
 			}
-			if($sgen == 'Female'){
+			else if($sgen == 'Female'){
 				$g0 = '';
 				$g2 = 'selected';
 			}
-			if($sgen == 'Other'){
+			else if($sgen == 'Other'){
 				$g0 = '';
 				$g3 = 'selected';
 			}
@@ -78,15 +78,15 @@
 				$ten0 = '';
 				$ten1 = 'selected';
 			}
-			if($stenbrd == 'ICSE'){
+			else if($stenbrd == 'ICSE'){
 				$ten0 = '';
 				$ten2 = 'selected';
 			}
-			if($stenbrd == 'CBSE'){
+			else if($stenbrd == 'CBSE'){
 				$ten0 = '';
 				$ten3 = 'selected';
 			}
-			if($stenbrd == 'Other'){
+			else if($stenbrd == 'Other'){
 				$ten0 = '';
 				$ten4 = 'selected';
 			}
@@ -96,45 +96,45 @@
 				$twelve0 = '';
 				$twelve1 = 'selected';
 			}
-			if($stwelvebrd == 'ICSE'){
+			else if($stwelvebrd == 'ICSE'){
 				$twelve0 = '';
 				$twelve2 = 'selected';
 			}
-			if($stwelvebrd == 'CBSE'){
+			else if($stwelvebrd == 'CBSE'){
 				$twelve0 = '';
 				$twelve3 = 'selected';
 			}
-			if($stwelvebrd == 'Diploma'){
+			else if($stwelvebrd == 'Diploma'){
 				$twelve0 = '';
 				$twelve4 = 'selected';
 			}
-			if($stwelvebrd == 'Other'){
+			else if($stwelvebrd == 'Other'){
 				$twelve0 = '';
 				$twelve5 = 'selected';
 			}
 			$stwelveper = $row['twelfth_percent'];
 			$sdept = $row['student_dept'];
-			if($sdept == 'F.E'){
+			if($sdept == 'Applied Sciences'){
 				$dept0 = '';
 				$dept1 = 'selected';
 			}
-			if($sdept == 'Mech'){
+			else if($sdept == 'Mechanical Engineering'){
 				$dept0 = '';
 				$dept2 = 'selected';
 			}
-			if($sdept == 'Comps'){
+			else if($sdept == 'Computer Engineering'){
 				$dept0 = '';
 				$dept3 = 'selected';
 			}
-			if($sdept == 'EXTC'){
+			else if($sdept == 'Electronics and Telecommunication'){
 				$dept0 = '';
 				$dept4 = 'selected';
 			}
-			if($sdept == 'Instru'){
+			else if($sdept == 'Instrumentation Engingeering'){
 				$dept0 = '';
 				$dept5 = 'selected';
 			}
-			if($sdept == 'IT'){
+			else if($sdept == 'Information Technology'){
 				$dept0 = '';
 				$dept6 = 'selected';
 			}
@@ -143,31 +143,31 @@
 				$sem0 = '';
 				$sem1 = 'selected';
 			}
-			if($ssem == '2'){
+			else if($ssem == '2'){
 				$sem0 = '';
 				$sem2 = 'selected';
 			}
-			if($ssem == '3'){
+			else if($ssem == '3'){
 				$sem0 = '';
 				$sem3 = 'selected';
 			}
-			if($ssem == '4'){
+			else if($ssem == '4'){
 				$sem0 = '';
 				$sem4 = 'selected';
 			}
-			if($ssem == '5'){
+			else if($ssem == '5'){
 				$sem0 = '';
 				$sem5 = 'selected';
 			}
-			if($ssem == '6'){
+			else if($ssem == '6'){
 				$sem0 = '';
 				$sem6 = 'selected';
 			}
-			if($ssem == '7'){
+			else if($ssem == '7'){
 				$sem0 = '';
 				$sem7 = 'selected';
 			}
-			if($ssem == '8'){
+			else if($ssem == '8'){
 				$sem0 = '';
 				$sem8 = 'selected';
 			}
@@ -218,16 +218,16 @@
 		 if($pwd == $pwd2){
 				$query = "INSERT INTO student(grno, student_name, password, student_mail, student_phone, student_gen, student_dob, tenth_board, tenth_percent, twelfth_board, twelfth_percent, student_doj, student_dept, student_sem) VALUES ('$grno','$name','$pwd','$email','$phone','$gen','$dob','$tenbrd','$tenper','$twelvebrd','$twelveper','$doj','$dept','$sem')";
 		    $x = mysqli_query($db, $query);
-				$query2 = "INSERT INTO achievements(grno) VALUES ('$grno')";
+				$query2 = "INSERT INTO achievement(grno) VALUES ('$grno')";
 				mysqli_query($db, $query2);
 				$query3 = "INSERT INTO certification(grno) VALUES ('$grno')";
 				mysqli_query($db, $query3);
-				$query4 = "INSERT INTO internships(grno) VALUES ('$grno')";
+				$query4 = "INSERT INTO internship(grno) VALUES ('$grno')";
 				mysqli_query($db, $query4);
 		}
 		else{
 			echo "<script type='text/javascript'>alert('PASSWORDS DO NOT MATCH');</script>";
-			header('location: Student.php');
+			// header('location: Student.php');
 		}
 	}
 	else{
@@ -236,8 +236,13 @@
 	}
 		$_SESSION['GRNO'] = $grno;
 		$_SESSION['Name'] = $name;
+		if($_SESSION['exist']==1){
+			header('location: ../profile.php');
+		}
+		else{
+			header('location: Achievement.php');
+		}
 		
-		header('location: Achievement.php');
 	}
 
 ?>
@@ -378,17 +383,17 @@
 					<input class="input100" type="text" value="<?= $stwelveper ?>" name="twelvepercent" placeholder="%">
 				</div>
 				
-				<div class="wrap-input100 input100-select bg1">
+				<div class="wrap-input100 input100-select bg1 rs1-wrap-input100">
 					<span class="label-input100">Branch</span>
 					<div>
 						<select class="js-select2" name="dept" required>
 							<option <?= $dept0 ?> disabled value="">Choose Department</option>
-							<option <?= $dept1 ?>value="Applied Sciences">Applied Sciences</option>
-							<option <?= $dept2 ?>value="Mechanical Engingeering">Mechanical Engingeering</option>
-							<option <?= $dept3 ?>value="Computer Engingeering">Computer Engingeering</option>
-							<option <?= $dept4 ?>value="EXTC Engingeering">EXTC Engingeering</option>
-							<option <?= $dept5 ?>value="Instumentation Engingeering">Instumentation Engingeering</option>
-							<option <?= $dept6 ?>value="Information Technology">Information Technology</option>
+							<option <?= $dept1 ?> value="Applied Sciences">Applied Sciences</option>
+							<option <?= $dept2 ?> value="Mechanical Engineering">Mechanical Engineering</option>
+							<option <?= $dept3 ?> value="Computer Engineering">Computer Engineering</option>
+							<option <?= $dept4 ?> value="Electronics and Telecommunication">Electronics and Telecommunication</option>
+							<option <?= $dept5 ?> value="Instumentation Engineering">Instumentation Engineering</option>
+							<option <?= $dept6 ?> value="Information Technology">Information Technology</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>

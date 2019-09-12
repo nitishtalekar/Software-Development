@@ -23,7 +23,7 @@
 	$sletter3 = '';
 
 	if($_SESSION['exist']==1){
-		$query = "SELECT * FROM internships WHERE grno='$grno';";
+		$query = "SELECT * FROM internship WHERE grno='$grno';";
 	  $results = $conn ->query($query);
 	  $row = mysqli_fetch_assoc($results);
 		$scomp1 = $row['company1'];
@@ -206,7 +206,12 @@
 	        }
 				}
 		}
-		header('location: ../index.php');
+		if($_SESSION['exist']==1){
+			header('location: ../profile.php');
+		}
+		else{
+			header('location: ../index.php');
+		}
 	}
 	
 ?>

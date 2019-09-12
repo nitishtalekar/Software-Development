@@ -140,8 +140,13 @@
 	        }
 				}
 		}
-		
-        header('location: Internship.php');
+		if($_SESSION['exist']==1){
+			header('location: ../profile.php');
+		}
+		else{
+			header('location: Internship.php');
+		}
+        
     }
 	
 ?>

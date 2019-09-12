@@ -1,14 +1,14 @@
 <?php require('../dbconnect.php');
 
 if(isset($_POST['upload_fb'])){
-    $query = "SELECT DISTINCT t_id,sub_id FROM feedback_temp;";
+    $query = "SELECT DISTINCT teacher_id,sub_id FROM feedback_temp;";
     $results = mysqli_query($db, $query);
     while($row = mysqli_fetch_assoc($results)){
-        $t = $row['t_id'];
+        $t = $row['teacher_id'];
         $s = $row['sub_id'];
         $ans = array(0,0,0,0,0,0,0,0,0,0,0,0);
         $rmrks = '';
-        $q = "SELECT * FROM feedback_temp WHERE t_id = '$t' AND sub_id = '$s';";
+        $q = "SELECT * FROM feedback_temp WHERE teacher_id = '$t' AND sub_id = '$s';";
         $res = mysqli_query($db, $q);
         $length = mysqli_num_rows($res);
         while($row1 = mysqli_fetch_assoc($res)){
@@ -31,7 +31,7 @@ if(isset($_POST['upload_fb'])){
             $avg_ans[$i] = strval(round((float)$ans[$i]/(float)$length));
         }
         $yr = strval(date('Y'));
-        $qu = "INSERT INTO feedback(t_id, sub_id, year, score1, score2, score3, score4, score5, score6, score7, score8, score9, score10, score11, score12, remark)";
+        $qu = "INSERT INTO feedback(teacher_id, sub_id, year, score1, score2, score3, score4, score5, score6, score7, score8, score9, score10, score11, score12, remark)";
         $qu = $qu."VALUES ('$t','$s','$yr','$avg_ans[0]','$avg_ans[1]','$avg_ans[2]','$avg_ans[3]','$avg_ans[4]','$avg_ans[5]','$avg_ans[6]','$avg_ans[7]','$avg_ans[8]','$avg_ans[9]','$avg_ans[10]','$avg_ans[11]','$rmrks')";
 
         mysqli_query($db, $qu);

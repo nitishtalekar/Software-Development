@@ -61,10 +61,10 @@
 						<select class="js-select2" name="dept" required>
 							<option selected disabled value="">Choose Department</option>
 							<option value="Applied Sciences">Applied Sciences</option>
-							<option value="Mechanical Engingeering">Mechanical Engingeering</option>
-							<option value="Computer Engingeering">Computer Engingeering</option>
-							<option value="EXTC Engingeering">EXTC Engingeering</option>
-							<option value="Instumentation Engingeering">Instumentation Engingeering</option>
+							<option value="Mechanical Engineering">Mechanical Engineering</option>
+							<option value="Computer Engineering">Computer Engineering</option>
+							<option value="Electronics and Telecommunication">Electronics and Telecommunication</option>
+							<option value="Instumentation Engineering">Instumentation Engineering</option>
 							<option value="Information Technology">Information Technology</option>
 						</select>
 						<div class="dropDownSelect2"></div>

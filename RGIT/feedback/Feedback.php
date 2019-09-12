@@ -81,7 +81,7 @@ while($row = mysqli_fetch_assoc($results)){
 			$rmrk = "--";
 		}
 		
-		$q = "INSERT INTO feedback_temp(t_id, sub_id, ques1, ques2, ques3, ques4, ques5, ques6, ques7, ques8, ques9, ques10, ques11, ques12,remark) VALUES ('$tids[$iter]','$sids[$iter]','$ans1','$ans2','$ans3','$ans4','$ans5','$ans6','$ans7','$ans8','$ans9','$ans10','$ans11','$ans12','$rmrk');";
+		$q = "INSERT INTO feedback_temp(teacher_id, sub_id, ques1, ques2, ques3, ques4, ques5, ques6, ques7, ques8, ques9, ques10, ques11, ques12,remark) VALUES ('$tids[$iter]','$sids[$iter]','$ans1','$ans2','$ans3','$ans4','$ans5','$ans6','$ans7','$ans8','$ans9','$ans10','$ans11','$ans12','$rmrk');";
 		mysqli_query($db, $q);
 		
 		$_SESSION['iter'] = $_SESSION['iter']+1;

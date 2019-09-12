@@ -6,15 +6,14 @@
 		$mname = mysqli_real_escape_string($db, $_POST['mname']);
 		$lname = mysqli_real_escape_string($db, $_POST['lname']);
 		$tid = mysqli_real_escape_string($db, $_POST['tid']);
-		$pwd = mysqli_real_escape_string($db, $_POST['pwd']);
-		$pwd2 = mysqli_real_escape_string($db, $_POST['pwd2']);
+		$pwd = 'abc';
 		$email = mysqli_real_escape_string($db, $_POST['email']);
 		$phone = mysqli_real_escape_string($db, $_POST['phone']);
 		$gen = $_POST['gender'];
 		$dob = mysqli_real_escape_string($db, $_POST['dob']);
 		$dept = $_POST['dept'];
 		$doj = mysqli_real_escape_string($db, $_POST['doj']);
-		$priv = $_POST['privilage'];
+		$priv = $_POST['privilege'];
 		$name = $title." ".$fname." ".$mname." ".$lname;
 
 		$query = "INSERT INTO teacher(teacher_id, password, teacher_name, teacher_mail, teacher_phone, teacher_gen, teacher_dob, teacher_dept, teacher_doj) VALUES ('$tid','$pwd','$name','$email','$phone','$gen','$dob','$dept','$doj')";
@@ -149,12 +148,14 @@
 				<div class="wrap-input100 input100-select bg1">
 					<span class="label-input100">Role</span>
 					<div>
-						<select class="js-select2" name="privilage" required>
+						<select class="js-select2" name="privilege" required>
 							<option selected disabled value="">Choose Role</option>
+							<option value="Professor">Professor</option>
 							<option value="Result Analysis">Result Analysis</option>
 							<option value="Timetable">Timetable</option>
 							<option value="Internship">Internship</option>
-							<option value="Certicication">Certicication</option>
+							<option value="Certificate">Certicication</option>
+							<option value="Training and Placement">Training and Placement</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>

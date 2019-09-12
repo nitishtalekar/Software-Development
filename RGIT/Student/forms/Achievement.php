@@ -11,7 +11,7 @@
 	$sach_cert3 = '';
 	
 	if($_SESSION['exist']==1){
-		$query = "SELECT * FROM achievements WHERE grno='$grno';";
+		$query = "SELECT * FROM achievement WHERE grno='$grno';";
 	  $results = mysqli_query($db, $query);
 	  $row = mysqli_fetch_assoc($results);
 		$sach1 = $row['achievement1'];
@@ -119,7 +119,13 @@
 	        }
 				}
 		}
-        header('location: Certificate.php');
+		if($_SESSION['exist']==1){
+			header('location: ../profile.php');
+		}
+		else{
+			header('location: Certificate.php');
+		}
+        
     }
 
 

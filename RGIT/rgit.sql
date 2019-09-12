@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 12, 2019 at 10:38 AM
+-- Generation Time: Sep 12, 2019 at 01:49 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -37,6 +37,13 @@ CREATE TABLE `achievement` (
   `achievement3` varchar(100) NOT NULL,
   `ach_certi3` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `achievement`
+--
+
+INSERT INTO `achievement` (`grno`, `achievement1`, `ach_certi1`, `achievement2`, `ach_certi2`, `achievement3`, `ach_certi3`) VALUES
+('12345', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -205,7 +212,7 @@ INSERT INTO `feedback_ques` (`fbq_id`, `question`, `ans1`, `ans2`, `ans3`, `ans4
 
 CREATE TABLE `feedback_temp` (
   `fbt_id` int(200) NOT NULL,
-  `t_id` varchar(200) NOT NULL,
+  `teacher_id` varchar(200) NOT NULL,
   `sub_id` varchar(200) NOT NULL,
   `ques1` varchar(200) NOT NULL,
   `ques2` varchar(200) NOT NULL,
@@ -226,7 +233,7 @@ CREATE TABLE `feedback_temp` (
 -- Dumping data for table `feedback_temp`
 --
 
-INSERT INTO `feedback_temp` (`fbt_id`, `t_id`, `sub_id`, `ques1`, `ques2`, `ques3`, `ques4`, `ques5`, `ques6`, `ques7`, `ques8`, `ques9`, `ques10`, `ques11`, `ques12`, `remark`) VALUES
+INSERT INTO `feedback_temp` (`fbt_id`, `teacher_id`, `sub_id`, `ques1`, `ques2`, `ques3`, `ques4`, `ques5`, `ques6`, `ques7`, `ques8`, `ques9`, `ques10`, `ques11`, `ques12`, `remark`) VALUES
 (1, '201', 'S200', '3', '2', '2', '4', '4', '5', '4', '4', '3', '3', '3', '3', 'acsad'),
 (2, '202', 'S300', '5', '2', '3', '4', '4', '3', '4', '4', '3', '4', '4', '4', 'asd'),
 (3, '203', 'S400', '4', '3', '4', '4', '3', '5', '3', '3', '4', '5', '5', '4', 'asdsad'),
@@ -262,17 +269,27 @@ CREATE TABLE `internship` (
   `date_from1` date NOT NULL,
   `date_till1` date NOT NULL,
   `exp1` varchar(200) NOT NULL,
+  `letter1` varchar(200) NOT NULL,
   `company2` int(11) NOT NULL,
   `position2` int(11) NOT NULL,
   `date_from2` int(11) NOT NULL,
   `date_till2` int(11) NOT NULL,
   `exp2` int(11) NOT NULL,
+  `letter2` varchar(200) NOT NULL,
   `company3` int(11) NOT NULL,
   `position3` int(11) NOT NULL,
   `date_from3` int(11) NOT NULL,
   `date_till3` int(11) NOT NULL,
-  `exp3` int(11) NOT NULL
+  `exp3` int(11) NOT NULL,
+  `letter3` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `internship`
+--
+
+INSERT INTO `internship` (`grno`, `company1`, `position1`, `date_from1`, `date_till1`, `exp1`, `letter1`, `company2`, `position2`, `date_from2`, `date_till2`, `exp2`, `letter2`, `company3`, `position3`, `date_from3`, `date_till3`, `exp3`, `letter3`) VALUES
+('12345', '', '', '0000-00-00', '0000-00-00', '', '', 0, 0, 0, 0, 0, '', 0, 0, 0, 0, 0, '');
 
 -- --------------------------------------------------------
 
@@ -388,24 +405,24 @@ CREATE TABLE `teacher` (
   `teacher_dob` date NOT NULL,
   `teacher_dept` varchar(100) NOT NULL,
   `teacher_doj` date NOT NULL,
-  `teacher_privilage` varchar(200) NOT NULL
+  `teacher_privilege` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `teacher`
 --
 
-INSERT INTO `teacher` (`teacher_id`, `password`, `teacher_name`, `teacher_mail`, `teacher_phone`, `teacher_gen`, `teacher_dob`, `teacher_dept`, `teacher_doj`, `teacher_privilage`) VALUES
-('100', 'abc', 'Prof. Dilip M Dalgade', 'dmd@g.c', '90909090909', 'Male', '2019-09-07', 'Computer Engineering', '2019-09-07', ''),
-('200', 'abc', 'Mr. Satish Y Ket', 'sdf@gh.b', '98989877665', 'Male', '2019-07-07', 'Computer Engineering', '2019-04-07', ''),
-('201', 'abc', 'Dr. Praniti P Shete', 'afsdads@jghj.cc', '5675675679', 'Female', '2019-06-07', 'Computer Engineering', '2016-07-04', ''),
-('202', 'abc', 'Mr. Anna I Son', 'hgdfhg@dhgf.hh', '9879879877', 'Male', '2019-07-07', 'Computer Engineering', '2019-07-07', ''),
-('203', 'abc', 'Mrs. Priya P Parote', 'fdsd@gdf.v', '23423423457', 'Female', '2019-09-07', 'Computer Engineering', '2016-09-07', ''),
-('204', 'abc', 'Mr. Bhushan M Patil', 'gsf@gdgh.k', '6786787890', 'Male', '2019-09-07', 'Computer Engineering', '2019-07-07', ''),
-('205', 'abc', 'Mrs. Savita S Lade', 'ghgjg@e.g', '5674563452', 'Female', '2019-08-07', 'Computer Engineering', '2019-07-07', ''),
-('300', 'abc', 'Dr. Nitish P Talekar', 'asd@gg.v', '7654567654', 'Male', '2019-04-07', 'Computer Engineering', '2019-02-07', ''),
-('400', 'abc', 'Prof. Aayush I Singh', 'asds@ghg.p', '676897786', 'Male', '2019-09-07', 'Computer Engineering', '2019-05-07', ''),
-('500', 'abc', 'Mrs. Sonal S Sharma', 'esdf@ggg.o', '6786786780', 'Female', '2019-09-07', 'Computer Engineering', '2019-06-07', ''),
+INSERT INTO `teacher` (`teacher_id`, `password`, `teacher_name`, `teacher_mail`, `teacher_phone`, `teacher_gen`, `teacher_dob`, `teacher_dept`, `teacher_doj`, `teacher_privilege`) VALUES
+('100', 'abc', 'Prof. Dilip M Dalgade', 'dmd@g.c', '90909090909', 'Male', '2019-09-07', 'Computer Engineering', '2019-09-07', 'Professor'),
+('200', 'abc', 'Mr. Satish Y Ket', 'sdf@gh.b', '98989877665', 'Male', '2019-07-07', 'Computer Engineering', '2019-04-07', 'HOD'),
+('201', 'abc', 'Dr. Praniti P Shete', 'afsdads@jghj.cc', '5675675679', 'Female', '2019-06-07', 'Computer Engineering', '2016-07-04', 'Training and Placement'),
+('202', 'abc', 'Mr. Anna I Son', 'hgdfhg@dhgf.hh', '9879879877', 'Male', '2019-07-07', 'Computer Engineering', '2019-07-07', 'Professor'),
+('203', 'abc', 'Mrs. Priya P Parote', 'fdsd@gdf.v', '23423423457', 'Female', '2019-09-07', 'Computer Engineering', '2016-09-07', 'Cerificate'),
+('204', 'abc', 'Mr. Bhushan M Patil', 'gsf@gdgh.k', '6786787890', 'Male', '2019-09-07', 'Computer Engineering', '2019-07-07', 'Professor'),
+('205', 'abc', 'Mrs. Savita S Lade', 'ghgjg@e.g', '5674563452', 'Female', '2019-08-07', 'Computer Engineering', '2019-07-07', 'Internship'),
+('300', 'abc', 'Dr. Nitish P Talekar', 'asd@gg.v', '7654567654', 'Male', '2019-04-07', 'Computer Engineering', '2019-02-07', 'Timetable'),
+('400', 'abc', 'Prof. Aayush I Singh', 'asds@ghg.p', '676897786', 'Male', '2019-09-07', 'Computer Engineering', '2019-05-07', 'Result Analysis'),
+('500', 'abc', 'Mrs. Sonal S Sharma', 'esdf@ggg.o', '6786786780', 'Female', '2019-09-07', 'Computer Engineering', '2019-06-07', 'Professor'),
 ('600', 'abc', 'Ms. Akshi P Saxena', 'ada@gugj.b', '5675675679', 'Female', '2019-08-07', 'Computer Engineering', '2019-06-07', '');
 
 -- --------------------------------------------------------

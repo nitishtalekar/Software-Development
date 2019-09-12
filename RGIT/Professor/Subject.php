@@ -1,31 +1,29 @@
 <?php require('../dbconnect.php');
-	
-	if(isset($_POST['teacher_info'])){
-		$title = mysqli_real_escape_string($db, $_POST['title']);
-		$fname = mysqli_real_escape_string($db, $_POST['fname']);
-		$mname = mysqli_real_escape_string($db, $_POST['mname']);
-		$lname = mysqli_real_escape_string($db, $_POST['lname']);
-		$tid = mysqli_real_escape_string($db, $_POST['tid']);
-		$pwd = mysqli_real_escape_string($db, $_POST['pwd']);
-		$pwd2 = mysqli_real_escape_string($db, $_POST['pwd2']);
-		$email = mysqli_real_escape_string($db, $_POST['email']);
-		$phone = mysqli_real_escape_string($db, $_POST['phone']);
-		$gen = $_POST['gender'];
-		$dob = mysqli_real_escape_string($db, $_POST['dob']);
-		$dept = $_POST['dept'];
-		$doj = mysqli_real_escape_string($db, $_POST['doj']);
-		$priv = $_POST['privilage'];
-		$name = $title." ".$fname." ".$mname." ".$lname;
 
-		$query = "INSERT INTO teacher(teacher_id, password, teacher_name, teacher_mail, teacher_phone, teacher_gen, teacher_dob, teacher_dept, teacher_doj) VALUES ('$tid','$pwd','$name','$email','$phone','$gen','$dob','$dept','$doj')";
-    mysqli_query($db, $query);
-		header('location: index.php');
+	if(isset($_POST['subject_info'])){
+		$id = mysqli_real_escape_string($db, $_POST['courseid']);
+		$name = mysqli_real_escape_string($db, $_POST['name']);
+		$credit = mysqli_real_escape_string($db, $_POST['credit']);
+		$sem = $_POST['sem'];
+		$branch = $_POST['branch'];
+		$cb = isset($_POST['cb'])?1:0;
+		$int = mysqli_real_escape_string($db, $_POST['int']);
+		$ext = mysqli_real_escape_string($db, $_POST['ext']);
+		$tw = mysqli_real_escape_string($db, $_POST['tw']);
+		$oral = mysqli_real_escape_string($db, $_POST['oral']);
+		$dur = mysqli_real_escape_string($db, $_POST['dur']);
+		$total = mysqli_real_escape_string($db, $_POST['total']);
+
+		$qu = "INSERT INTO subject(sub_id, sub_name, sub_credits, sub_sem, sub_dept, sub_choicebased, sub_internal, sub_external, sub_termwork, sub_oral, sub_total, sub_duration) VALUES ('$id','$name','$credit','$sem','$branch','$cb','$int','$ext','$tw','$oral','$total','$dur');";
+		mysqli_query($db, $qu);
+		
+		header('location: Subject.php');
 	}
 
 ?>
 <html lang="en">
 <head>
-	<title>Teachers</title>
+	<title>Subjects</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -58,112 +56,108 @@
 
 	<div class="container-contact100">
 		<div class="wrap-contact100">
-			<form class="contact100-form validate-form" action="Teacher.php" method="POST" enctype="multipart/form-data">
+			<form class="contact100-form validate-form" action="Subject.php" method="POST" enctype="multipart/form-data">
 				<span class="contact100-form-title">
-					Teachers Information
+					Subjects
 				</span>
-
-				<div class="wrap-input100 input100-select bg1">
-					<span class="label-input100">Title</span>
-					<div>
-						<select class="js-select2" name="title" required>
-							<option selected disabled value="">Choose Title</option>
-							<option value="Prof." >Prof.</option>
-							<option value="Dr.">Dr.</option>
-							<option value="Mr.">Mr.</option>
-							<option value="Mrs.">Mrs.</option>
-							<option value="Ms.">Ms.</option>
-						</select>
-						<div class="dropDownSelect2"></div>
-					</div>
+				
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Course ID</span>
+					<input class="input100" type="text" name="courseid" placeholder="Course ID">
 				</div>
 				
-				<div class="wrap-input100 bg1 rs2-wrap-input100" data-validate="Please Fill Field">
-					<span class="label-input100">First Name</span>
-					<input class="input100" type="text" name="fname" placeholder="First Name">
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Course Name</span>
+					<input class="input100" type="text" name="name" placeholder="Course Name">
 				</div>
 				
-				<div class="wrap-input100 bg1 rs2-wrap-input100" data-validate="Please Fill Field">
-					<span class="label-input100">Middle Name</span>
-					<input class="input100" type="text" name="mname" placeholder="Middle Name">
-				</div>
-				
-				<div class="wrap-input100 bg1 rs2-wrap-input100" data-validate="Please Fill Field">
-					<span class="label-input100">Last Name</span>
-					<input class="input100" type="text" name="lname" placeholder="Last Name">
-				</div>
-				
-				<div class="wrap-input100 validate-input bg1" data-validate="Please Fill Field">
-					<span class="label-input100">Teacher ID</span>
-					<input class="input100" type="text" name="tid" placeholder="Enter Teachers ID">
-				</div>
-
-				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Please Fill Field">
-					<span class="label-input100">Email</span>
-					<input class="input100" type="text" name="email" placeholder="Enter Your Email ">
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100" data-validate="Please Fill Field">
-					<span class="label-input100">Phone</span>
-					<input class="input100" type="text" name="phone" placeholder="Enter Number Phone">
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Credits</span>
+					<input class="input100" type="text" name="credit" placeholder="Credits Assigned">
 				</div>
 				
 				<div class="wrap-input100 input100-select bg1 rs1-wrap-input100">
-					<span class="label-input100">Gender</span>
+					<span class="label-input100">Semester</span>
 					<div>
-						<select class="js-select2" name="gender" required>
-							<option selected disabled value="">Choose Gender</option>
-							<option value="Male">Male</option>
-							<option value="Female">Female</option>
-							<option value="Other">Others</option>
+						<select class="js-select2" name="sem" required>
+							<option selected disabled value="">Choose Sem</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
-				</div>
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">D.O.B</span>
-					<input class="input100" type="date" name="dob" placeholder="DOB">
 				</div>
 				
 				<div class="wrap-input100 input100-select bg1">
 					<span class="label-input100">Branch</span>
 					<div>
-						<select class="js-select2" name="dept" required>
+						<select class="js-select2" name="branch" required>
 							<option selected disabled value="">Choose Department</option>
-							<option value="Applied Sciences">Applied Sciences</option>
-							<option value="Mechanical Engineering">Mechanical Engineering</option>
-							<option value="Computer Engineering">Computer Engineering</option>
-							<option value="Electronics and Telecommunication">Electronics and Telecommunication</option>
-							<option value="Instumentation Engineering">Instumentation Engineering</option>
-							<option value="Information Technology">Information Technology</option>
+							<option value="F.E">Applied Sciences</option>
+							<option value="Mech">Mechanical</option>
+							<option value="Comps">Computers</option>
+							<option value="EXTC">EXTC</option>
+							<option value="Instru">Instumentation</option>
+							<option value="IT">IT</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
-				</div>
-
-				<div class="wrap-input100 bg1">
-					<span class="label-input100">Date of Joining</span>
-					<input class="input100" type="date" name="doj" placeholder="DOB">
 				</div>
 				
-				<div class="wrap-input100 input100-select bg1">
-					<span class="label-input100">Role</span>
-					<div>
-						<select class="js-select2" name="privilage" required>
-							<option selected disabled value="">Choose Role</option>
-							<option value="Result Analysis">Result Analysis</option>
-							<option value="Timetable">Timetable</option>
-							<option value="Internship">Internship</option>
-							<option value="Certicication">Certicication</option>
-						</select>
-						<div class="dropDownSelect2"></div>
-					</div>
+				<div class="wrap-input100 bg1">
+					<!-- <span class="label-input100">Choice Based</span> -->
+					<center>
+						<label class="label-inputx">Choice Based</label>
+						<input class="input50" type="checkbox" name="cb" placeholder="CB">
+					</center>
+				</div>
+				
+				<div class="wrap-input100 bg1">
+					<hr>
+					<center><label class="label-inputx">Examination Scheme</label></center>
+					<hr>
+				</div>
+				
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Internal Exam</span>
+					<input class="input100" type="text" name="int" placeholder="Internal Exam">
+				</div>
+				
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">External Exam</span>
+					<input class="input100" type="text" name="ext" placeholder="External Exam">
+				</div>
+				
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Term Work</span>
+					<input class="input100" type="text" name="tw" placeholder="Term Work">
+				</div>
+				
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Oral</span>
+					<input class="input100" type="text" name="oral" placeholder="Oral">
+				</div>
+				
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Exam Duration</span>
+					<input class="input100" type="text" name="dur" placeholder="Exam Duration">
+				</div>
+				
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Total Marks</span>
+					<input class="input100" type="text" name="total" placeholder="Total Marks">
 				</div>
 
 				<div class="container-contact100-form-btn">
-					<button type="submit" class="contact100-form-btn" name="teacher_info">
+					<button type="submit" class="contact100-form-btn" name="subject_info">
 						<span>
-							Submit
+							Add
 							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
 						</span>
 					</button>
