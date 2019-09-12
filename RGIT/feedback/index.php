@@ -55,17 +55,17 @@
 				<div class="wrap-input100">
 					<center><label class="label-inputx">ENTER INFORMATION</label></center>
 				</div>
-				<div class="wrap-input100 input100-select bg1 validate-input" data-validate="Please Fill Field">
-					<span class="label-input100">Department</span>
+        <div class="wrap-input100 input100-select bg1">
+					<span class="label-input100">Branch</span>
 					<div>
 						<select class="js-select2" name="dept" required>
 							<option selected disabled value="">Choose Department</option>
-              <option value="F.E">Applied Sciences</option>
-              <option value="Mech">Mechanical</option>
-              <option value="Comps">Computers</option>
-              <option value="EXTC">EXTC</option>
-              <option value="Instru">Instumentation</option>
-              <option value="IT">IT</option>
+							<option value="Applied Sciences">Applied Sciences</option>
+							<option value="Mechanical Engingeering">Mechanical Engingeering</option>
+							<option value="Computer Engingeering">Computer Engingeering</option>
+							<option value="EXTC Engingeering">EXTC Engingeering</option>
+							<option value="Instumentation Engingeering">Instumentation Engingeering</option>
+							<option value="Information Technology">Information Technology</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>

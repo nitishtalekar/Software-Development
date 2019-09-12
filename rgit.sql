@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2019 at 06:39 AM
+-- Generation Time: Sep 12, 2019 at 10:38 AM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -148,6 +148,21 @@ CREATE TABLE `feedback` (
   `remark` varchar(50000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`fb_id`, `t_id`, `sub_id`, `year`, `score1`, `score2`, `score3`, `score4`, `score5`, `score6`, `score7`, `score8`, `score9`, `score10`, `score11`, `score12`, `remark`) VALUES
+(1, '201', 'S200', '2019', '4', '3', '3', '4', '4', '4', '4', '4', '3', '3', '3', '3', '<->acsad<->sdfdd<->sd<->--'),
+(2, '202', 'S300', '2019', '4', '3', '4', '3', '4', '4', '3', '4', '3', '4', '4', '4', '<->asd<->--<->asd<->jhasjhsagdjhasd'),
+(3, '203', 'S400', '2019', '3', '3', '4', '4', '4', '4', '3', '3', '4', '3', '4', '4', '<->asdsad<->asd<->dsa<->hjghgg'),
+(4, '204', 'S500', '2019', '4', '4', '3', '3', '3', '5', '3', '5', '3', '4', '4', '4', '<->addfsd<->qwe<->adsad<->--'),
+(5, '100', 'S100', '2019', '1', '3', '2', '3', '4', '4', '3', '4', '3', '3', '3', '3', '<->gf'),
+(6, '200', 'S200', '2019', '4', '4', '4', '3', '3', '3', '2', '4', '2', '3', '3', '5', '<->fds'),
+(7, '300', 'S300', '2019', '3', '3', '4', '5', '2', '4', '3', '2', '3', '3', '4', '5', '<->--'),
+(8, '400', 'S400', '2019', '2', '1', '5', '5', '3', '4', '2', '3', '3', '3', '5', '4', '<->--'),
+(9, '500', 'S500', '2019', '2', '3', '5', '5', '3', '3', '5', '4', '3', '4', '3', '2', '<->ds');
+
 -- --------------------------------------------------------
 
 --
@@ -275,6 +290,24 @@ CREATE TABLE `placed_student` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `result`
+--
+
+CREATE TABLE `result` (
+  `grno` varchar(200) NOT NULL,
+  `sem1` varchar(100) NOT NULL,
+  `sem2` varchar(100) NOT NULL,
+  `sem3` varchar(100) NOT NULL,
+  `sem4` varchar(100) NOT NULL,
+  `sem5` varchar(100) NOT NULL,
+  `sem6` varchar(100) NOT NULL,
+  `sem7` varchar(100) NOT NULL,
+  `sem8` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `student`
 --
 
@@ -300,11 +333,11 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`grno`, `student_name`, `password`, `student_mail`, `student_phone`, `student_gen`, `student_dob`, `tenth_board`, `tenth_percent`, `twelfth_board`, `twelfth_percent`, `student_doj`, `student_dept`, `student_sem`) VALUES
-('1', 'sagar', 'a', 'sagarambilpure@gmail.com', '45454', 'M', '1999-04-27', 'SSC', 79.4, 'HSC', 74.6, '2016-08-08', 'Comps', 7),
-('12345', 'Nitish Pravin Talekar', 'nitish503', 'npt503@gmail.com', '9821340247', 'Male', '1998-11-19', 'SSC', 90, 'HSC', 90, '2019-09-04', 'Comps', 7),
-('2', 'maharaj', 'a', 'lol', '928154', 'M', '1999-04-27', '', 79, '', 74, '2016-08-08', 'comp', 7),
-('3', 'shano', 'a', '', '9878555', 'M', '2019-08-05', 'ssc', 78, 'hsc', 74, '2019-08-04', 'comps', 7),
-('4', 'rasp', 'a', 'allkandsonthis@gmail.com', '156488', 'M', '0000-00-00', '', 99, '', 99, '0000-00-00', 'comps', 7);
+('1', 'sagar', 'a', 'sagarambilpure@gmail.com', '45454', 'M', '1999-04-27', 'SSC', 79.4, 'HSC', 74.6, '2016-08-08', 'Computer Engineering', 7),
+('12345', 'Nitish Pravin Talekar', 'nitish503', 'npt503@gmail.com', '9821340247', 'Male', '1998-11-19', 'SSC', 90, 'HSC', 90, '2019-09-04', 'Computer Engineering', 7),
+('2', 'maharaj', 'a', 'lol', '928154', 'M', '1999-04-27', '', 79, '', 74, '2016-08-08', 'Computer Engineering', 7),
+('3', 'shano', 'a', '', '9878555', 'M', '2019-08-05', 'ssc', 78, 'hsc', 74, '2019-08-04', 'Computer Engineering', 7),
+('4', 'rasp', 'a', 'allkandsonthis@gmail.com', '156488', 'M', '0000-00-00', '', 99, '', 99, '0000-00-00', 'Computer Engineering', 7);
 
 -- --------------------------------------------------------
 
@@ -347,31 +380,33 @@ INSERT INTO `subject` (`sub_id`, `sub_name`, `sub_credits`, `sub_sem`, `sub_dept
 
 CREATE TABLE `teacher` (
   `teacher_id` varchar(100) NOT NULL,
+  `password` varchar(200) NOT NULL,
   `teacher_name` varchar(100) NOT NULL,
   `teacher_mail` varchar(100) NOT NULL,
   `teacher_phone` varchar(100) NOT NULL,
   `teacher_gen` varchar(100) NOT NULL,
   `teacher_dob` date NOT NULL,
   `teacher_dept` varchar(100) NOT NULL,
-  `teacher_doj` date NOT NULL
+  `teacher_doj` date NOT NULL,
+  `teacher_privilage` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `teacher`
 --
 
-INSERT INTO `teacher` (`teacher_id`, `teacher_name`, `teacher_mail`, `teacher_phone`, `teacher_gen`, `teacher_dob`, `teacher_dept`, `teacher_doj`) VALUES
-('100', 'Prof. Dilip M Dalgade', 'dmd@g.c', '90909090909', 'Male', '2019-09-07', 'Comps', '2019-09-07'),
-('200', 'Mr. Satish Y Ket', 'sdf@gh.b', '98989877665', 'Male', '2019-07-07', 'Comps', '2019-04-07'),
-('201', 'Dr. Praniti P Shete', 'afsdads@jghj.cc', '5675675679', 'Female', '2019-06-07', 'Comps', '2016-07-04'),
-('202', 'Mr. Anna I Son', 'hgdfhg@dhgf.hh', '9879879877', 'Male', '2019-07-07', 'Comps', '2019-07-07'),
-('203', 'Mrs. Priya P Parote', 'fdsd@gdf.v', '23423423457', 'Female', '2019-09-07', 'Comps', '2016-09-07'),
-('204', 'Mr. Bhushan M Patil', 'gsf@gdgh.k', '6786787890', 'Male', '2019-09-07', 'Comps', '2019-07-07'),
-('205', 'Mrs. Savita S Lade', 'ghgjg@e.g', '5674563452', 'Female', '2019-08-07', 'Comps', '2019-07-07'),
-('300', 'Dr. Nitish P Talekar', 'asd@gg.v', '7654567654', 'Male', '2019-04-07', 'Comps', '2019-02-07'),
-('400', 'Prof. Aayush I Singh', 'asds@ghg.p', '676897786', 'Male', '2019-09-07', 'Comps', '2019-05-07'),
-('500', 'Mrs. Sonal S Sharma', 'esdf@ggg.o', '6786786780', 'Female', '2019-09-07', 'Comps', '2019-06-07'),
-('600', 'Ms. Akshi P Saxena', 'ada@gugj.b', '5675675679', 'Female', '2019-08-07', 'Comps', '2019-06-07');
+INSERT INTO `teacher` (`teacher_id`, `password`, `teacher_name`, `teacher_mail`, `teacher_phone`, `teacher_gen`, `teacher_dob`, `teacher_dept`, `teacher_doj`, `teacher_privilage`) VALUES
+('100', 'abc', 'Prof. Dilip M Dalgade', 'dmd@g.c', '90909090909', 'Male', '2019-09-07', 'Computer Engineering', '2019-09-07', ''),
+('200', 'abc', 'Mr. Satish Y Ket', 'sdf@gh.b', '98989877665', 'Male', '2019-07-07', 'Computer Engineering', '2019-04-07', ''),
+('201', 'abc', 'Dr. Praniti P Shete', 'afsdads@jghj.cc', '5675675679', 'Female', '2019-06-07', 'Computer Engineering', '2016-07-04', ''),
+('202', 'abc', 'Mr. Anna I Son', 'hgdfhg@dhgf.hh', '9879879877', 'Male', '2019-07-07', 'Computer Engineering', '2019-07-07', ''),
+('203', 'abc', 'Mrs. Priya P Parote', 'fdsd@gdf.v', '23423423457', 'Female', '2019-09-07', 'Computer Engineering', '2016-09-07', ''),
+('204', 'abc', 'Mr. Bhushan M Patil', 'gsf@gdgh.k', '6786787890', 'Male', '2019-09-07', 'Computer Engineering', '2019-07-07', ''),
+('205', 'abc', 'Mrs. Savita S Lade', 'ghgjg@e.g', '5674563452', 'Female', '2019-08-07', 'Computer Engineering', '2019-07-07', ''),
+('300', 'abc', 'Dr. Nitish P Talekar', 'asd@gg.v', '7654567654', 'Male', '2019-04-07', 'Computer Engineering', '2019-02-07', ''),
+('400', 'abc', 'Prof. Aayush I Singh', 'asds@ghg.p', '676897786', 'Male', '2019-09-07', 'Computer Engineering', '2019-05-07', ''),
+('500', 'abc', 'Mrs. Sonal S Sharma', 'esdf@ggg.o', '6786786780', 'Female', '2019-09-07', 'Computer Engineering', '2019-06-07', ''),
+('600', 'abc', 'Ms. Akshi P Saxena', 'ada@gugj.b', '5675675679', 'Female', '2019-08-07', 'Computer Engineering', '2019-06-07', '');
 
 -- --------------------------------------------------------
 
@@ -486,6 +521,12 @@ ALTER TABLE `placed_student`
   ADD PRIMARY KEY (`placed_student_id`);
 
 --
+-- Indexes for table `result`
+--
+ALTER TABLE `result`
+  ADD PRIMARY KEY (`grno`);
+
+--
 -- Indexes for table `student`
 --
 ALTER TABLE `student`
@@ -535,7 +576,7 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `fb_id` int(200) NOT NULL AUTO_INCREMENT;
+  MODIFY `fb_id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `feedback_ques`

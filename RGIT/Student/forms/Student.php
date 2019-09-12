@@ -226,7 +226,7 @@
 				mysqli_query($db, $query4);
 		}
 		else{
-			alert("PASSWORDS DONT MATCH");
+			echo "<script type='text/javascript'>alert('PASSWORDS DO NOT MATCH');</script>";
 			header('location: Student.php');
 		}
 	}
@@ -378,17 +378,17 @@
 					<input class="input100" type="text" value="<?= $stwelveper ?>" name="twelvepercent" placeholder="%">
 				</div>
 				
-				<div class="wrap-input100 input100-select bg1 rs1-wrap-input100">
+				<div class="wrap-input100 input100-select bg1">
 					<span class="label-input100">Branch</span>
 					<div>
 						<select class="js-select2" name="dept" required>
 							<option <?= $dept0 ?> disabled value="">Choose Department</option>
-							<option <?= $dept1 ?> value="F.E">Applied Sciences</option>
-							<option <?= $dept2 ?> value="Mech">Mechanical</option>
-							<option <?= $dept3 ?> value="Comps">Computers</option>
-							<option <?= $dept4 ?> value="EXTC">EXTC</option>
-							<option <?= $dept5 ?> value="Instru">Instumentation</option>
-							<option <?= $dept6 ?> value="IT">IT</option>
+							<option <?= $dept1 ?>value="Applied Sciences">Applied Sciences</option>
+							<option <?= $dept2 ?>value="Mechanical Engingeering">Mechanical Engingeering</option>
+							<option <?= $dept3 ?>value="Computer Engingeering">Computer Engingeering</option>
+							<option <?= $dept4 ?>value="EXTC Engingeering">EXTC Engingeering</option>
+							<option <?= $dept5 ?>value="Instumentation Engingeering">Instumentation Engingeering</option>
+							<option <?= $dept6 ?>value="Information Technology">Information Technology</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>

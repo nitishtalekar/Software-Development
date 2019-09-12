@@ -2,19 +2,6 @@
 require('../dbconnect.php');
 require('FPDF/fpdf.php');
 
-class PDF extends FPDF{
-    // function Header()
-    // {
-    //     // Logo
-    //     $this->Image('data/RGIT.png',10,0,0,35);
-    //     // Arial bold 15
-    //     $this->SetFont('Arial','B',15);
-    //     // Move to the right
-    //     $this->Cell('Department of Computer Engineering');
-    // }
-}
-
-
 
 function createpdf($fbresults, $teacherresults, $subjectresults){
     // Cell(float w , float h , string txt , mixed border , int ln , string align , boolean fill , mixed link)

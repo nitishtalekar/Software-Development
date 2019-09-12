@@ -6,16 +6,24 @@
 		$mname = mysqli_real_escape_string($db, $_POST['mname']);
 		$lname = mysqli_real_escape_string($db, $_POST['lname']);
 		$tid = mysqli_real_escape_string($db, $_POST['tid']);
+		$pwd = mysqli_real_escape_string($db, $_POST['pwd']);
+		$pwd2 = mysqli_real_escape_string($db, $_POST['pwd2']);
 		$email = mysqli_real_escape_string($db, $_POST['email']);
 		$phone = mysqli_real_escape_string($db, $_POST['phone']);
 		$gen = $_POST['gender'];
 		$dob = mysqli_real_escape_string($db, $_POST['dob']);
 		$dept = $_POST['dept'];
 		$doj = mysqli_real_escape_string($db, $_POST['doj']);
+		$priv = $_POST['privilage'];
 		$name = $title." ".$fname." ".$mname." ".$lname;
 
-		$query = "INSERT INTO teacher(teacher_id, teacher_name, teacher_mail, teacher_phone, teacher_gen, teacher_dob, teacher_dept, teacher_doj) VALUES ('$tid','$name','$email','$phone','$gen','$dob','$dept','$doj')";
-    mysqli_query($db, $query);
+		if($pwd == $pwd2){
+			$query = "INSERT INTO teacher(teacher_id, password, teacher_name, teacher_mail, teacher_phone, teacher_gen, teacher_dob, teacher_dept, teacher_doj) VALUES ('$tid','$pwd','$name','$email','$phone','$gen','$dob','$dept','$doj')";
+	    mysqli_query($db, $query);
+		}
+		else{
+			echo "<script type='text/javascript'>alert('PASSWORDS DO NOT MATCH');</script>";
+		}
 		
 		header('location: Teacher.php');
 	}
@@ -95,6 +103,16 @@
 					<span class="label-input100">Teacher ID</span>
 					<input class="input100" type="text" name="tid" placeholder="Enter Teachers ID">
 				</div>
+				
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Please Fill Field">
+					<span class="label-input100">Password</span>
+					<input class="input100" type="password" name="pwd" placeholder="Enter Your Password ">
+				</div>
+				
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Please Fill Field">
+					<span class="label-input100">Comfirm Password</span>
+					<input class="input100" type="password" name="pwd2" placeholder="Re-Enter Your Password ">
+				</div>
 
 				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Please Fill Field">
 					<span class="label-input100">Email</span>
@@ -128,20 +146,34 @@
 					<div>
 						<select class="js-select2" name="dept" required>
 							<option selected disabled value="">Choose Department</option>
-							<option value="F.E">Applied Sciences</option>
-							<option value="Mech">Mechanical</option>
-							<option value="Comps">Computers</option>
-							<option value="EXTC">EXTC</option>
-							<option value="Instru">Instumentation</option>
-							<option value="IT">IT</option>
+							<option value="Applied Sciences">Applied Sciences</option>
+							<option value="Mechanical Engingeering">Mechanical Engingeering</option>
+							<option value="Computer Engingeering">Computer Engingeering</option>
+							<option value="EXTC Engingeering">EXTC Engingeering</option>
+							<option value="Instumentation Engingeering">Instumentation Engingeering</option>
+							<option value="Information Technology">Information Technology</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
 				</div>
-				
+
 				<div class="wrap-input100 bg1">
 					<span class="label-input100">Date of Joining</span>
 					<input class="input100" type="date" name="doj" placeholder="DOB">
+				</div>
+				
+				<div class="wrap-input100 input100-select bg1">
+					<span class="label-input100">Role</span>
+					<div>
+						<select class="js-select2" name="privilage" required>
+							<option selected disabled value="">Choose Role</option>
+							<option value="Result Analysis">Result Analysis</option>
+							<option value="Timetable">Timetable</option>
+							<option value="Internship">Internship</option>
+							<option value="Certicication">Certicication</option>
+						</select>
+						<div class="dropDownSelect2"></div>
+					</div>
 				</div>
 
 				<div class="container-contact100-form-btn">
