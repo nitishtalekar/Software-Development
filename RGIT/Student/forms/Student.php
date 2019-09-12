@@ -1,5 +1,5 @@
 <?php require('../../dbconnect.php');
-	
+
 	$grno = $_SESSION['GRNO'];
 	$exist = 0;
 	$query = "SELECT * FROM student WHERE grno='$grno';";
@@ -172,7 +172,7 @@
 				$sem8 = 'selected';
 			}
 			$sdoj = $row['student_doj'];
-	
+
   }else {
       $exist = 0;
   }
@@ -195,7 +195,7 @@
 		$sem = $_POST['sem'];
 		$doj = mysqli_real_escape_string($db, $_POST['doj']);
 		$name = $fname." ".$mname." ".$lname;
-		
+
 		// echo $name;
 		// $grno,$name,$email,$phone,$gen,$dob,$tenbrd,$tenper,$twelvebrd,$twelveper,$doj,$dept,$sem
 		// echo $grno;
@@ -242,7 +242,7 @@
 		else{
 			header('location: Achievement.php');
 		}
-		
+
 	}
 
 ?>
@@ -284,37 +284,37 @@
 				<span class="contact100-form-title">
 					Student Information
 				</span>
-				
+
 				<div class="wrap-input100">
 					<center><label class="label-inputx">GR. Number : <?= $grno ?></label></center>
 				</div>
-				
+
 				<!-- NAME -->
 				<div class="wrap-input100 bg1 validate-input rs2-wrap-input100" data-validate="Please Fill Field">
 					<span class="label-input100">First Name</span>
 					<input class="input100" type="text" name="fname" value="<?= $sfname ?>" placeholder="First Name">
 				</div>
-				
+
 				<div class="wrap-input100 bg1 validate-input rs2-wrap-input100" data-validate="Please Fill Field">
 					<span class="label-input100">Middle Name</span>
 					<input class="input100" type="text" name="mname" value="<?= $smname ?>" placeholder="Middle Name">
 				</div>
-				
+
 				<div class="wrap-input100 bg1 validate-input rs2-wrap-input100" data-validate="Please Fill Field">
 					<span class="label-input100">Last Name</span>
 					<input class="input100" type="text" name="lname" value="<?= $slname ?>" placeholder="Last Name">
 				</div>
-				
+
 				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Please Fill Field">
 					<span class="label-input100">Password</span>
 					<input class="input100" type="password" name="pwd" value="<?= $spwd ?>" placeholder="Enter Your Password ">
 				</div>
-				
+
 				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Please Fill Field">
 					<span class="label-input100">Comfirm Password</span>
 					<input class="input100" type="password" name="pwd2" value="<?= $spwd ?>" placeholder="Re-Enter Your Password ">
 				</div>
-				
+
 				<!-- CONTACT -->
 				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Please Fill Field">
 					<span class="label-input100">Email ID</span>
@@ -342,7 +342,7 @@
 					<span class="label-input100">D.O.B</span>
 					<input class="input100" type="date" value="<?= $sdob ?>" name="dob" placeholder="dd-mm-yyyy" required>
 				</div>
-				
+
 
 				<!-- 10th -->
 				<div class="wrap-input100 input100-select bg1 rs1-wrap-input100">
@@ -362,7 +362,7 @@
 					<span class="label-input100">Percentage</span>
 					<input class="input100" type="text" value="<?= $stenper ?>" name="tenpercent" placeholder="%">
 				</div>
-				
+
 				<!-- 12th -->
 				<div class="wrap-input100 input100-select bg1 rs1-wrap-input100" required>
 					<span class="label-input100">12th Board</span>
@@ -382,7 +382,7 @@
 					<span class="label-input100">Percentage</span>
 					<input class="input100" type="text" value="<?= $stwelveper ?>" name="twelvepercent" placeholder="%">
 				</div>
-				
+
 				<div class="wrap-input100 input100-select bg1 rs1-wrap-input100">
 					<span class="label-input100">Branch</span>
 					<div>
@@ -398,7 +398,7 @@
 						<div class="dropDownSelect2"></div>
 					</div>
 				</div>
-				
+
 				<div class="wrap-input100 input100-select bg1 rs1-wrap-input100">
 					<span class="label-input100">Semester</span>
 					<div>
@@ -416,12 +416,12 @@
 						<div class="dropDownSelect2"></div>
 					</div>
 				</div>
-				
+
 				<div class="wrap-input100 bg1">
 					<span class="label-input100">Date of Joining</span>
 					<input class="input100" value="<?= $sdoj ?>" type="date" name="doj" required>
 				</div>
-				
+
 				<div class="container-contact100-form-btn">
 					<button type="submit" class="contact100-form-btn" name="student_info">
 						<span>

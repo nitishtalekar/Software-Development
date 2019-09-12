@@ -5,23 +5,23 @@
   $results = mysqli_query($db, $query);
   $row = mysqli_fetch_assoc($results);
   if (mysqli_num_rows($results) == 1) {
-			$sname = $row['student_name'];
-			$spwd = $row['password'];
-			$nameexp = explode(" ",$sname);
-			$sfname = $nameexp[0];
-			$smname = $nameexp[1];
-			$slname = $nameexp[2];
-			$semail = $row['student_mail'];
-			$sphone = $row['student_phone'];
-			$sgen = $row['student_gen'];
-      $sdob = $row['student_dob'];
-      $stenbrd = $row['tenth_board'];
-      $stenper = $row['tenth_percent'];
-			$stwelvebrd = $row['twelfth_board'];
-      $stwelveper = $row['twelfth_percent'];
-			$sdept = $row['student_dept'];
-      $ssem = $row['student_sem'];
-      $sdoj = $row['student_doj'];
+    $sname = $row['student_name'];
+    $spwd = $row['password'];
+    $nameexp = explode(" ",$sname);
+    $sfname = $nameexp[0];
+    $smname = $nameexp[1];
+    $slname = $nameexp[2];
+    $semail = $row['student_mail'];
+    $sphone = $row['student_phone'];
+    $sgen = $row['student_gen'];
+    $sdob = $row['student_dob'];
+    $stenbrd = $row['tenth_board'];
+    $stenper = $row['tenth_percent'];
+    $stwelvebrd = $row['twelfth_board'];
+    $stwelveper = $row['twelfth_percent'];
+    $sdept = $row['student_dept'];
+    $ssem = $row['student_sem'];
+    $sdoj = $row['student_doj'];
     }
   $query = "SELECT * FROM achievement WHERE grno='$grno';";
   $results = mysqli_query($db, $query);
@@ -71,7 +71,7 @@
 		$sdesc3 = $row['exp3'];
 		$sletter3 = $row['letter3'];
     }
-      
+
  ?>
 
 <!DOCTYPE html>
@@ -252,7 +252,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
       <span class="d-block d-lg-none"><?= $sname ?></span>
-      
+
     </a>
     <div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -334,7 +334,7 @@
     	</div>
         </div>
     </section>
-    
+
     <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="education">
         <div class="w-100">
           <div class="row">
@@ -363,7 +363,7 @@
         </div>
       </div>
     </section>
-    
+
     <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="degree">
       <div class="w-100">
         <div class="row">
@@ -383,7 +383,7 @@
           </p>
         </div>
     </section>
-    
+
     <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="achievements">
       <div class="w-100">
         <div class="row">
@@ -403,7 +403,7 @@
           </p>
         </div>
     </section>
-    
+
     <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="certificates">
       <div class="w-100">
         <div class="row">
@@ -423,7 +423,7 @@
           </p>
         </div>
     </section>
-    
+
     <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="internships">
       <div class="w-100">
         <div class="row">
@@ -468,52 +468,6 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.js"></script>
   <script src="../style/profile/js/validation.js"></script>
 
-  <script>
-
-$(document).ready(function(){
-load_json_data('type');
-
-function load_json_data(id){
-   var html_code = '';
-   $.getJSON('../../json/industry.json', function(data){
-
-       function SortByName(x,y){
-           return (((x.name).toLowerCase() == (y.name).toLowerCase()) ? 0 : (((x.name).toLowerCase() > (y.name).toLowerCase()) ? 1 : -1 ));
-       }
-
-       // Call Sort By Name
-       data.sort(SortByName);
-
-       function removeDumplicateValue(myArray){
-           var newArray = [];
-
-           $.each(myArray, function(key, value) {
-               var exists = false;
-               $.each(newArray, function(k, val2) {
-                   if(value.name == val2.name){ exists = true };
-               });
-               if(exists == false && value.name != "") { newArray.push(value); }
-           });
-
-           return newArray;
-       }
-
-       data = removeDumplicateValue(data);
-       var count = Object.keys(data).length;
-       console.log(count);
-
-       html_code += '<option value="">Select Industry '+id+'</option>';
-       $.each(data, function(key, value){
-           if(value.name != "Others")
-               html_code += '<option value="'+value.name+'" id="'+value.name+'">'+value.name+'</option>';
-       });
-       html_code += '<option value="Others" id="Others">Others</option>';
-
-       $('#'+id).html(html_code);
-   });
-}
-});
-</script>
 
   </body>
 </html>

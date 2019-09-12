@@ -2,7 +2,7 @@
 
 	$grno = $_SESSION['GRNO'];
 	$name = $_SESSION['Name'];
-	
+
 	$scomp1 = '';
 	$spos1 = '';
 	$sfrom1 = '';
@@ -24,7 +24,7 @@
 
 	if($_SESSION['exist']==1){
 		$query = "SELECT * FROM internship WHERE grno='$grno';";
-	  $results = $conn ->query($query);
+	  $results = mysqli_query($db, $query);
 	  $row = mysqli_fetch_assoc($results);
 		$scomp1 = $row['company1'];
 		$spos1 = $row['position1'];
@@ -45,9 +45,9 @@
 		$sdesc3 = $row['exp3'];
 		$sletter3 = $row['letter3'];
 	}
-	
+
 	if(isset($_POST['student_int'])){
-		
+
 		if(isset($_POST['comp1'])){
 			$comp1 = mysqli_real_escape_string($db, $_POST['comp1']);
 			$q = "UPDATE internships SET company1='$comp1' where grno='$grno';";
@@ -100,7 +100,7 @@
 	        }
 				}
 		}
-		
+
 		if(isset($_POST['comp2'])){
 			$comp2 = mysqli_real_escape_string($db, $_POST['comp2']);
 			$q = "UPDATE internships SET company2='$comp2' where grno='$grno';";
@@ -153,7 +153,7 @@
 	        }
 				}
 		}
-		
+
 		if(isset($_POST['comp3'])){
 			$comp3 = mysqli_real_escape_string($db, $_POST['comp3']);
 			$q = "UPDATE internships SET company3='$comp3' where grno='$grno';";
@@ -213,7 +213,7 @@
 			header('location: ../index.php');
 		}
 	}
-	
+
 ?>
 <html lang="en">
 <head>
@@ -252,7 +252,7 @@
 				<span class="contact100-form-title">
 					Internships
 				</span>
-				
+
 				<div class="wrap-input100">
 					<center>
 						<label class="label-inputx">GR. Number : <?= $grno ?></label><br>
@@ -271,7 +271,7 @@
 					<span class="label-input100">Position</span>
 					<input class="input100" type="text" name="pos1" value="<?=$spos1?>" placeholder="Enter your Position">
 				</div>
-				
+
 				<div class="wrap-input100  bg1 rs1-wrap-input100" >
 					<span class="label-input100">Date From</span>
 					<input class="input100" type="date" name="from1" value="<?=$sfrom1?>" placeholder="Date From">
@@ -281,7 +281,7 @@
 					<span class="label-input100">Date Till</span>
 					<input class="input100" type="date" name="till1" value="<?=$still1?>" placeholder="Date Till">
 				</div>
-				
+
 				<div class="wrap-input100 bg1">
 					<center>
 						<?php
@@ -293,12 +293,12 @@
 					<input class="input50" type="file" name="letter1" placeholder="Upload Latter">
 				</center>
 				</div>
-				
+
 				<div class="wrap-input100  bg1 rs1-alert-validate" >
 					<span class="label-input100">Description</span>
 					<textarea class="input100" name="desc1" value="<?=$sdesc1?>" placeholder="Describe your experiance"></textarea>
 				</div>
-				
+
 				<!-- Internship 2 -->
 				<div class="wrap-input100">
 					<center><label class="label-inputx">Internship 2</label></center>
@@ -311,7 +311,7 @@
 					<span class="label-input100">Position</span>
 					<input class="input100" type="text" name="pos2" value="<?=$spos2?>" placeholder="Enter your Position">
 				</div>
-				
+
 				<div class="wrap-input100  bg1 rs1-wrap-input100" >
 					<span class="label-input100">Date From</span>
 					<input class="input100" type="date" name="from2" value="<?=$sfrom2?>" placeholder="Date From">
@@ -321,7 +321,7 @@
 					<span class="label-input100">Date Till</span>
 					<input class="input100" type="date" name="till2" value="<?=$still2?>" placeholder="Date Till">
 				</div>
-				
+
 				<div class="wrap-input100 bg1">
 					<center>
 						<?php
@@ -333,12 +333,12 @@
 					<input class="input50" type="file" name="letter2" placeholder="Upload Latter">
 				</center>
 				</div>
-				
+
 				<div class="wrap-input100  bg1 rs1-alert-validate" >
 					<span class="label-input100">Description</span>
 					<textarea class="input100" name="desc2" value="<?=$sdesc2?>" placeholder="Describe your experiance"></textarea>
 				</div>
-				
+
 				<!-- Internship 3 -->
 				<div class="wrap-input100">
 					<center><label class="label-inputx">Internship 3</label></center>
@@ -351,7 +351,7 @@
 					<span class="label-input100">Position</span>
 					<input class="input100" type="text" name="pos3" value="<?=$spos3?>" placeholder="Enter your Position">
 				</div>
-				
+
 				<div class="wrap-input100  bg1 rs1-wrap-input100" >
 					<span class="label-input100">Date From</span>
 					<input class="input100" type="date" name="from3" value="<?=$sfrom3?>" placeholder="Date From">
@@ -361,7 +361,7 @@
 					<span class="label-input100">Date Till</span>
 					<input class="input100" type="date" name="till3" value="<?=$still3?>" placeholder="Date Till">
 				</div>
-				
+
 				<div class="wrap-input100 bg1">
 					<center>
 						<?php
@@ -373,7 +373,7 @@
 					<input class="input50" type="file" name="letter3" placeholder="Upload Latter">
 				</center>
 				</div>
-				
+
 				<div class="wrap-input100  bg1 rs1-alert-validate" >
 					<span class="label-input100">Description</span>
 					<textarea class="input100" name="desc3" value="<?=$sdesc3?>" placeholder="Describe your experiance"></textarea>
