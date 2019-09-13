@@ -1,75 +1,24 @@
 <?php require('../dbconnect.php');
 
-  $grno = $_SESSION['GRNO'];
-  $query = "SELECT * FROM student WHERE grno='$grno';";
-  $results = mysqli_query($db, $query);
-  $row = mysqli_fetch_assoc($results);
-  if (mysqli_num_rows($results) == 1) {
-    $sname = $row['student_name'];
-    $spwd = $row['password'];
-    $nameexp = explode(" ",$sname);
-    $sfname = $nameexp[0];
-    $smname = $nameexp[1];
-    $slname = $nameexp[2];
-    $semail = $row['student_mail'];
-    $sphone = $row['student_phone'];
-    $sgen = $row['student_gen'];
-    $sdob = $row['student_dob'];
-    $stenbrd = $row['tenth_board'];
-    $stenper = $row['tenth_percent'];
-    $stwelvebrd = $row['twelfth_board'];
-    $stwelveper = $row['twelfth_percent'];
-    $sdept = $row['student_dept'];
-    $ssem = $row['student_sem'];
-    $sdoj = $row['student_doj'];
-    }
-  $query = "SELECT * FROM achievement WHERE grno='$grno';";
-  $results = mysqli_query($db, $query);
-  $row = mysqli_fetch_assoc($results);
-  if (mysqli_num_rows($results) == 1) {
-    $sach1 = $row['achievement1'];
-    $sach_cert1 = $row['ach_certi1'];
-    $sach2 = $row['achievement2'];
-    $sach_cert2 = $row['ach_certi2'];
-    $sach3 = $row['achievement3'];
-    $sach_cert3 = $row['ach_certi3'];
-    }
-  $query = "SELECT * FROM certification WHERE grno='$grno';";
-  $results = mysqli_query($db, $query);
-  $row = mysqli_fetch_assoc($results);
-  if (mysqli_num_rows($results) == 1) {
-		$scourse1 = $row['course1'];
-		$svalid1 = $row['validity1'];
-		$scourse_cert1 = $row['certificate1'];
-		$scourse2 = $row['course2'];
-		$svalid2 = $row['validity2'];
-		$scourse_cert2 = $row['certificate2'];
-		$scourse3 = $row['course3'];
-		$svalid3 = $row['validity3'];
-		$scourse_cert3 = $row['certificate3'];
-  }
-  $query = "SELECT * FROM internship WHERE grno='$grno';";
-  $results = $conn ->query($query);
-  $row = mysqli_fetch_assoc($results);
-  if (mysqli_num_rows($results) == 1) {
-		$scomp1 = $row['company1'];
-		$spos1 = $row['position1'];
-		$sfrom1 = $row['date_from1'];
-		$still1 = $row['date_till1'];
-		$sdesc1 = $row['exp1'];
-		$sletter1 = $row['letter1'];
-		$scomp2 = $row['company2'];
-		$spos2 = $row['position2'];
-		$sfrom2 = $row['date_from2'];
-		$still2 = $row['date_till2'];
-		$sdesc2 = $row['exp2'];
-		$sletter2 = $row['letter2'];
-		$scomp3 = $row['company3'];
-		$spos3 = $row['position3'];
-		$sfrom3 = $row['date_from3'];
-		$still3 = $row['date_till3'];
-		$sdesc3 = $row['exp3'];
-		$sletter3 = $row['letter3'];
+    $tid = $_SESSION['teacher_id'];
+    $query = "SELECT * FROM teacher WHERE teacher_id='$tid';";
+    $results = mysqli_query($db, $query);
+    $row = mysqli_fetch_assoc($results);
+    if (mysqli_num_rows($results) == 1) {
+        $name = $row['teacher_name'];
+        $pwd = $row['password'];
+        $nameexp = explode(" ",$name);
+        $tname = $nameexp[0];
+        $fname = $nameexp[1];
+        $mname = $nameexp[2];
+        $lname = $nameexp[3];
+        $email = $row['teacher_mail'];
+        $phone = $row['teacher_phone'];
+        $gen = $row['teacher_gen'];
+        $dob = $row['teacher_dob'];
+        $dept = $row['teacher_dept'];
+        $doj = $row['teacher_doj'];
+        $priv = $row['teacher_privilege'];
     }
 
  ?>
@@ -85,7 +34,7 @@
 	<meta name="author" content="">
 	<link href="../../img/divas.png" rel="icon">
 
-	<title><?=$sname?>'s Dashboard</title>
+	<title><?=$name?>'s Dashboard</title>
 
 	<!-- Bootstrap core CSS -->
 	<link href="../style/profile/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -113,7 +62,6 @@
 		    margin-left: 10px;
 		    margin-bottom: 5px;
     }
-
     @media (max-width: 768px) {
             .back-to-top {
                 bottom: 15px;
@@ -135,115 +83,11 @@
             transition: background 0.5s;
             z-index: 11;
         }
-
         .back-to-top i {
             padding-top: 12px;
             color: #fff;
         }
 	</style>
-
-	<script>
-	    $(document).ready(function(){
-
-	    load_json_data('country');
-
-	    function load_json_data(id,parent_id,state_id)
-	    {
-	       //console.log(parent_id);
-	       //console.log(id);
-	     var html_code = '';
-	     $.getJSON('../../json/location.json', function(data){
-
-	      html_code += '<option value="">Select '+id+'</option>';
-	      $.each(data, function(key, value){
-	       if(id == 'country')
-	       {
-
-	         html_code += '<option value="'+value.name+'" id="'+value.id+'">'+value.name+'</option>';
-	       }
-	       else if(id == 'state')
-	       {
-	           if(value.id == parent_id)
-	           {
-	               $.each(data[parent_id-1].states, function(key, value){
-	               html_code += '<option value="'+key+'">'+key+'</option>';
-	           });
-	           }
-	       }
-	       else
-	       {
-	           // console.log("Parent_id"+parent_id);
-	           // console.log("State_id"+state_id);
-
-	           if(value.id == parent_id)
-	           {
-	               $.each(data[parent_id-1].states, function(key, value){
-	               if(key == state_id)
-	               {
-	                   for (var i = 0;i < value.length;i++)
-	                   {
-	                       html_code += '<option value="'+value[i]+'">'+value[i]+'</option>';
-	                   }
-	               }
-	           });
-	       }
-	       }
-	      });
-	      $('#'+id).html(html_code);
-	     });
-
-	    }
-
-	    $(document).on('change', '#country', function(){
-	     var country_id = $('#country option:selected').attr('id');
-	     //console.log("Hello"+country_id);
-	     if(country_id != '')
-	     {
-	      load_json_data('state',country_id);
-	     }
-	     else
-	     {
-	      $('#state').html('<option value="">Select state</option>');
-	      $('#city').html('<option value="">Select city</option>');
-	     }
-	    });
-	    $(document).on('change', '#state', function(){
-
-	       var e = document.getElementById("country");
-	       var country_id = $('#country option:selected').attr('id');
-
-	       //console.log("dafafafadfa"+country_id);
-
-	       var e = document.getElementById("state");
-	       var state_id = e.options[e.selectedIndex].text;
-
-	   //   var state_id = $(this).val();
-	   //   var state_id = "Maharashtra";
-
-	     if(state_id != '')
-	     {
-	      load_json_data('city',country_id,state_id);
-	     }
-	     else
-	     {
-	      $('#city').html('<option value="">Select city</option>');
-	     }
-	    });
-     });
-
-     // Back to top button
-     $(window).scroll(function() {
-            if ($(this).scrollTop() > 100) {
-            $('.back-to-top').fadeIn('slow');
-            } else {
-            $('.back-to-top').fadeOut('slow');
-            }
-        });
-        $('.back-to-top').click(function(){
-            $('html, body').animate({scrollTop : 0},1500, 'easeInOutExpo');
-            return false;
-        });
-	</script>
 
 </head>
 
@@ -251,8 +95,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
-      <span class="d-block d-lg-none"><?= $sname ?></span>
-
+      <span class="d-block d-lg-none"><?= $name ?></span>
     </a>
     <div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -264,20 +107,10 @@
 
     </div>
 
-
-
-
-
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav">
         <li class="nav-item">
         <a class="nav-link js-scroll-trigger" href="#home">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#education">Education</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#degree">Degree Education</a>
         </li>
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="#achievements">Achievements</a>
@@ -290,7 +123,7 @@
         </li>
         </li>
         <li class="nav-item">
-          <a class="nav-link d-lg-none d-xl-none d-md-block d-sm-block" href="../logout.php">Logout</a>
+          <a class="nav-link" href="../logout.php">Logout</a>
         </li>
       </ul>
     </div>
@@ -298,7 +131,7 @@
 
   <div class="container-fluid p-0">
 
-    <section class="sticky-top shadow p-2 bg-white d-none d-lg-block ">
+    <!-- <section class="sticky-top shadow p-2 bg-white d-none d-lg-block ">
       <div class="row m-0">
         <div class="col-12 text-right">
         <button class="btn" >RGIT</button>
@@ -310,146 +143,37 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="home">
-      <div class="w-100">
-	      <div class="row">
-	        <h1 class="mb-0 col-md-12">
-	          <span class="text-primary"><?= $sname ?></span>
-	        </h1>
-	        <!-- <div class="text-right col-md-3">
-	          <button class="btn btn-member" onclick="window.open('../browse/browsestartup.php')">Browse Startups</button>
-	        </div> -->
-	      </div>
-
-        <div class="subheading mb-5">RAJIV GANDHI INSTITUTE OF TECHNOLOGY.
-  		</div>
-          <p class="lead mb-2" style="text-transform:uppercase;">
-            DEPARTMENT OF <?= $sdept ?>
-            <!-- <a href="student_profile.php"> LINK TO companies</a> -->
-          </p>
-      <div class="subheading mb-5">
-        <a href="forms/Student.php"> EDIT PROFILE </a>
-    	</div>
-        </div>
-    </section>
-
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="education">
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center border" id="home">
         <div class="w-100">
-          <div class="row">
-            <h1 class="mb-0 col-md-12">
-              <span class="text-primary">EDUCATION</span>
-            </h1>
-          </div>
+            <div class="row">
+                <h1 class="mb-0 col-md-12">
+                    <span class="text-primary"><?= $name ?></span>
+                </h1>
+            </div>
 
-          <div class="subheading mb-5">
-            CLASS 10TH:
-            <br>
-            <p class="lead mb-2">
-              BOARD : <?=$stenbrd?><br>
-              PERCENTAGE : <?=$stenper?>
-              <!-- <a href="student_profile.php"> LINK TO companies</a> -->
+            <div class="subheading mb-1">
+                RAJIV GANDHI INSTITUTE OF TECHNOLOGY.
+            </div>
+            <div class="subheading mb-3">
+                <a href="forms/Student.php"> EDIT PROFILE </a>
+            </div>
+
+            <p class="lead mb-2" style="text-transform:uppercase;">
+                DEPARTMENT OF <?= $dept ?><br>
+                DATE OF BIRTH: <?= $dob ?><br>
+                DATE OF JOINING: <?= $doj ?><br>
             </p>
-        </div>
-        <div class="subheading mb-5">
-          CLASS 12TH:
-          <br>
-          <p class="lead mb-2">
-            BOARD : <?=$stwelvebrd?><br>
-            PERCENTAGE : <?=$stwelveper?>
-            <!-- <a href="student_profile.php"> LINK TO companies</a> -->
-          </p>
-        </div>
-      </div>
-    </section>
+            
+            <p class="lead mb-2" style="text-transform:uppercase;">
+              PRIVILEGE => <?= $priv ?><br>
+            </p>
 
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="degree">
-      <div class="w-100">
-        <div class="row">
-          <h1 class="mb-0 col-md-12">
-            <span class="text-primary"><?= $sname ?></span>
-          </h1>
-          <!-- <div class="text-right col-md-3">
-            <button class="btn btn-member" onclick="window.open('../browse/browsestartup.php')">Browse Startups</button>
-          </div> -->
-        </div>
-
-        <div class="subheading mb-5">RAJIV GANDHI INSTITUTE OF TECHNOLOGY.
-      </div>
-          <p class="lead mb-2">
-            DEPARTMENT OF <?= $sdept ?>
-            <!-- <a href="student_profile.php"> LINK TO companies</a> -->
-          </p>
         </div>
     </section>
 
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="achievements">
-      <div class="w-100">
-        <div class="row">
-          <h1 class="mb-0 col-md-12">
-            <span class="text-primary"><?= $sname ?></span>
-          </h1>
-          <!-- <div class="text-right col-md-3">
-            <button class="btn btn-member" onclick="window.open('../browse/browsestartup.php')">Browse Startups</button>
-          </div> -->
-        </div>
 
-        <div class="subheading mb-5">RAJIV GANDHI INSTITUTE OF TECHNOLOGY.
-      </div>
-          <p class="lead mb-2">
-            DEPARTMENT OF <?= $sdept ?>
-            <!-- <a href="student_profile.php"> LINK TO companies</a> -->
-          </p>
-        </div>
-    </section>
-
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="certificates">
-      <div class="w-100">
-        <div class="row">
-          <h1 class="mb-0 col-md-12">
-            <span class="text-primary"><?= $sname ?></span>
-          </h1>
-          <!-- <div class="text-right col-md-3">
-            <button class="btn btn-member" onclick="window.open('../browse/browsestartup.php')">Browse Startups</button>
-          </div> -->
-        </div>
-
-        <div class="subheading mb-5">RAJIV GANDHI INSTITUTE OF TECHNOLOGY.
-      </div>
-          <p class="lead mb-2">
-            DEPARTMENT OF <?= $sdept ?>
-            <!-- <a href="student_profile.php"> LINK TO companies</a> -->
-          </p>
-        </div>
-    </section>
-
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="internships">
-      <div class="w-100">
-        <div class="row">
-          <h1 class="mb-0 col-md-12">
-            <span class="text-primary"><?= $sname ?></span>
-          </h1>
-          <!-- <div class="text-right col-md-3">
-            <button class="btn btn-member" onclick="window.open('../browse/browsestartup.php')">Browse Startups</button>
-          </div> -->
-        </div>
-
-        <div class="subheading mb-5">RAJIV GANDHI INSTITUTE OF TECHNOLOGY.
-      </div>
-          <p class="lead mb-2">
-            DEPARTMENT OF <?= $sdept ?>
-            <!-- <a href="student_profile.php"> LINK TO companies</a> -->
-          </p>
-        </div>
-    </section>
-
-    <hr class="m-0">
-
-  </div>
-  <a href="#" class="back-to-top" style="display:inline"><i class="fa fa-chevron-up"></i></a>
-
-  <!-- Bootstrap core JavaScript -->
   <script src="../style/profile/vendor/jquery/jquery.min.js"></script>
   <script src="../style/profile/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 

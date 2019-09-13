@@ -1,5 +1,5 @@
 <?php
-  $grno = $_POST['grno'];
+  $id = $_POST['id'];
   $password = $_POST['pwd'];
   $type = $_POST['type'];
 
@@ -10,7 +10,7 @@
   else{
 
       if($type == 'student'){
-          $query = "SELECT * FROM student WHERE grno='$grno' AND password='$password'";
+          $query = "SELECT * FROM student WHERE grno='$id' AND password='$password'";
           $results = $conn ->query($query);
           if ($results -> num_rows ===0) {
               header('Location: /RGIT/Student/student_login.php?invalid=1');
@@ -19,14 +19,24 @@
               $userid = $row['grno'];
               session_start();
               $_SESSION['userid'] = $userid;
-              $_SESSION['username'] = $username;
-              $_SESSION['placement_higherstudies'] = $row['placement_higherstudies'];
               $_SESSION['type'] = 'student';
-              $_SESSION['GRNO'] = $grno;
+              $_SESSION['GRNO'] = $id;
               header('Location: /RGIT/Student/profile.php');
             }
       }elseif($type == 'teacher'){
-
+          $query = "SELECT * FROM teacher WHERE teacher_id='$id' AND password='$password'";
+          $results = $conn ->query($query);
+          if ($results -> num_rows ===0) {
+              header('Location: /RGIT/Professor/index.php?invalid=1');
+            }else {
+              $row = $results -> fetch_assoc();
+              $userid = $row['grno'];
+              session_start();
+              $_SESSION['userid'] = $userid;
+              $_SESSION['type'] = 'teacher';
+              $_SESSION['teacher_id'] = $id;
+              header('Location: /RGIT/Professor/profile.php');
+            }
       }else{
 
           // $query = "select company_id from company where company_name='$username' and password='$password'";
