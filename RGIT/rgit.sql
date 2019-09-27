@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.1
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 12, 2019 at 01:49 PM
--- Server version: 10.1.33-MariaDB
--- PHP Version: 7.2.6
+-- Generation Time: Sep 27, 2019 at 07:02 PM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -65,11 +65,9 @@ CREATE TABLE `applied_student` (
 --
 
 INSERT INTO `applied_student` (`applied_company_id`, `student_grno`, `company_id`, `date`, `selected_notselected`, `selected_notselected_date`) VALUES
-(14, 1, 1, '2019-07-26', -1, '2019-08-15'),
-(15, 1, 2, '2019-07-26', 1, '0000-00-00'),
-(16, 2, 2, '2019-07-26', 1, '0000-00-01'),
-(17, 2, 1, '2019-07-26', 1, '0000-00-00'),
-(18, 3, 3, '2019-08-16', 1, '2019-08-16');
+(22, 1, 3, '2019-09-27', 1, '2019-09-27'),
+(23, 1, 1, '2019-09-27', 1, '2019-09-27'),
+(24, 1, 2, '2019-09-27', 1, '2019-09-27');
 
 -- --------------------------------------------------------
 
@@ -126,7 +124,7 @@ CREATE TABLE `company` (
 
 INSERT INTO `company` (`company_id`, `company_name`, `minimum_percentage_eng`, `annual_package`, `minimum_percentage_tenth`, `minimum_percentage_twelfth`, `minimum_percentage_diploma`, `minimum_percentage_ug`, `minimum_percentage_pg`, `gap_criteria`, `active_kt`) VALUES
 (1, 'L and T', 60, 450000, 60, 60, 60, 60, 60, 2, 1),
-(2, 'google', 60, 720000, 60, 60, 60, 60, 60, 2, 1),
+(2, 'google', 60, 500000, 60, 60, 60, 60, 60, 2, 1),
 (3, 'Facebook', 50, 1200000, 50, 50, 50, 50, 50, 0, 0);
 
 -- --------------------------------------------------------
@@ -304,6 +302,13 @@ CREATE TABLE `placed_student` (
   `placed_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `placed_student`
+--
+
+INSERT INTO `placed_student` (`placed_student_id`, `student_grno`, `company_id`, `placed_date`) VALUES
+(2, 1, 3, '2019-09-27');
+
 -- --------------------------------------------------------
 
 --
@@ -342,19 +347,20 @@ CREATE TABLE `student` (
   `twelfth_percent` double NOT NULL,
   `student_doj` date NOT NULL,
   `student_dept` varchar(100) NOT NULL,
-  `student_sem` int(50) NOT NULL
+  `student_sem` int(50) NOT NULL,
+  `placement_higherstudies` int(16) NOT NULL DEFAULT '-1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`grno`, `student_name`, `password`, `student_mail`, `student_phone`, `student_gen`, `student_dob`, `tenth_board`, `tenth_percent`, `twelfth_board`, `twelfth_percent`, `student_doj`, `student_dept`, `student_sem`) VALUES
-('1', 'sagar', 'a', 'sagarambilpure@gmail.com', '45454', 'M', '1999-04-27', 'SSC', 79.4, 'HSC', 74.6, '2016-08-08', 'Computer Engineering', 7),
-('12345', 'Nitish Pravin Talekar', 'nitish503', 'npt503@gmail.com', '9821340247', 'Male', '1998-11-19', 'SSC', 90, 'HSC', 90, '2019-09-04', 'Computer Engineering', 7),
-('2', 'maharaj', 'a', 'lol', '928154', 'M', '1999-04-27', '', 79, '', 74, '2016-08-08', 'Computer Engineering', 7),
-('3', 'shano', 'a', '', '9878555', 'M', '2019-08-05', 'ssc', 78, 'hsc', 74, '2019-08-04', 'Computer Engineering', 7),
-('4', 'rasp', 'a', 'allkandsonthis@gmail.com', '156488', 'M', '0000-00-00', '', 99, '', 99, '0000-00-00', 'Computer Engineering', 7);
+INSERT INTO `student` (`grno`, `student_name`, `password`, `student_mail`, `student_phone`, `student_gen`, `student_dob`, `tenth_board`, `tenth_percent`, `twelfth_board`, `twelfth_percent`, `student_doj`, `student_dept`, `student_sem`, `placement_higherstudies`) VALUES
+('1', 'sagar surendra ambilpure', 'a', 'sagarambilpure@gmail.com', '45454', 'Male', '1999-04-27', 'SSC', 79.4, 'HSC', 74.6, '2016-08-08', 'Computer Engineering', 7, 2),
+('12345', 'Nitish Pravin Talekar', 'nitish503', 'npt503@gmail.com', '9821340247', 'Male', '1998-11-19', 'SSC', 90, 'HSC', 90, '2019-09-04', 'Computer Engineering', 7, -1),
+('2', 'maharaj', 'a', 'lol', '928154', 'M', '1999-04-27', '', 79, '', 74, '2016-08-08', 'Computer Engineering', 7, -1),
+('3', 'shano', 'a', '', '9878555', 'M', '2019-08-05', 'ssc', 78, 'hsc', 74, '2019-08-04', 'Computer Engineering', 7, -1),
+('4', 'rasp', 'a', 'allkandsonthis@gmail.com', '156488', 'M', '0000-00-00', '', 99, '', 99, '0000-00-00', 'Computer Engineering', 7, -1);
 
 -- --------------------------------------------------------
 
@@ -581,7 +587,7 @@ ALTER TABLE `tpo`
 -- AUTO_INCREMENT for table `applied_student`
 --
 ALTER TABLE `applied_student`
-  MODIFY `applied_company_id` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `applied_company_id` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `company`
@@ -611,7 +617,7 @@ ALTER TABLE `feedback_temp`
 -- AUTO_INCREMENT for table `placed_student`
 --
 ALTER TABLE `placed_student`
-  MODIFY `placed_student_id` int(40) NOT NULL AUTO_INCREMENT;
+  MODIFY `placed_student_id` int(40) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `teaching`

@@ -1,16 +1,16 @@
 <?php
 
-  if(isset($_POST['student'])){
-    header('location: Student/index.php');
-  }
-  
-  if(isset($_POST['professor'])){
-    header('location: Professor/index.php');
-  }
-  
-  if(isset($_POST['tpo'])){
-    header('location: TPO/index.php');
-  }
+if (isset($_POST['student'])) {
+  header('location: Student/index.php');
+}
+
+if (isset($_POST['professor'])) {
+  header('location: Professor/index.php');
+}
+
+if (isset($_POST['tpo'])) {
+  header('location: TPO/index.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +24,7 @@
 
   <title>RGIT-Home</title>
 
-  <!-- Bootstrap core CSS --> 
+  <!-- Bootstrap core CSS -->
   <link href="style/home/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
@@ -32,6 +32,7 @@
   <link rel="stylesheet" type="text/css" href="style/forms/css/main.css">
 
 </head>
+
 <body>
 
   <!-- Page Content -->
@@ -70,14 +71,14 @@
           </div>
           <form class="contact100-form validate-form" action="index.php" method="POST" enctype="multipart/form-data">
             <div class="container-contact100-form-btn mx-2 my-2">
-    					<button type="submit" class="contact100-form-btn" name="student">
-    						<span>
-    							Enter
-    							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
-    						</span>
-    					</button>
-    				</div>
-    			</form>
+              <button type="submit" class="contact100-form-btn" name="student">
+                <span>
+                  Enter
+                  <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
       <!-- /.col-md-4 -->
@@ -89,17 +90,17 @@
           </div>
           <form class="contact100-form validate-form" action="index.php" method="POST" enctype="multipart/form-data">
             <div class="container-contact100-form-btn mx-2 my-2">
-    					<button type="submit" class="contact100-form-btn" name="professor">
-    						<span>
-    							Enter
-    							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
-    						</span>
-    					</button>
-    				</div>
-    			</form>
+              <button type="submit" class="contact100-form-btn" name="professor">
+                <span>
+                  Enter
+                  <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-      
+
       <div class="col-md-4 mb-5">
         <div class="card h-100">
           <div class="card-body">
@@ -108,18 +109,35 @@
           </div>
           <form class="contact100-form validate-form" action="index.php" method="POST" enctype="multipart/form-data">
             <div class="container-contact100-form-btn mx-2 my-2">
-    					<button type="submit" class="contact100-form-btn" name="tpo">
-    						<span>
-    							Enter
-    							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
-    						</span>
-    					</button>
-    				</div>
-    			</form>
+              <button type="submit" class="contact100-form-btn" name="tpo">
+                <span>
+                  Enter
+                  <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
       <!-- /.col-md-4 -->
-
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title">Feedback</h2>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+          </div>
+          <form class="contact100-form validate-form" action="/RGIT/feedback" method="POST" enctype="multipart/form-data">
+            <div class="container-contact100-form-btn mx-2 my-2">
+              <button type="submit" class="contact100-form-btn" name="tpo">
+                <span>
+                  Enter
+                  <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
     <!-- /.row -->
 

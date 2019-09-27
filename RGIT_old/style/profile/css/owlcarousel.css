@@ -1,0 +1,213 @@
+/*
+ * 	Core Owl Carousel CSS File
+ *	v1.3.3
+ */
+
+/* clearfix */
+.owl-carousel .owl-wrapper:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+/* display none until init */
+.owl-carousel{
+	display: none;
+	position: relative;
+	width: 100%;
+	-ms-touch-action: pan-y;
+}
+.owl-carousel .owl-wrapper{
+	display: none;
+	position: relative;
+	-webkit-transform: translate3d(0px, 0px, 0px);
+}
+.owl-carousel .owl-wrapper-outer{
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+}
+.owl-carousel .owl-wrapper-outer.autoHeight{
+	-webkit-transition: height 500ms ease-in-out;
+	-moz-transition: height 500ms ease-in-out;
+	-ms-transition: height 500ms ease-in-out;
+	-o-transition: height 500ms ease-in-out;
+	transition: height 500ms ease-in-out;
+}
+
+.owl-carousel .owl-item{
+	float: left;
+}
+.owl-controls .owl-page,
+.owl-controls .owl-buttons div{
+	cursor: pointer;
+}
+.owl-controls {
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* mouse grab icon */
+.grabbing {
+    cursor:url(grabbing.png) 8 8, move;
+}
+
+/* fix */
+.owl-carousel  .owl-wrapper,
+.owl-carousel  .owl-item{
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility:    hidden;
+	-ms-backface-visibility:     hidden;
+  -webkit-transform: translate3d(0,0,0);
+  -moz-transform: translate3d(0,0,0);
+  -ms-transform: translate3d(0,0,0);
+}
+
+.owl-controls .owl-page{
+    display: inline-block;
+    }
+
+.owl-controls .owl-page span{
+    width: 4px;
+    height: 4px;
+    background: #000;
+    margin-right: 10px;
+    display: block;
+    border-radius: 100%;
+    opacity: .3;
+    }
+
+.owl-controls .owl-page.active span{
+    opacity: 1;
+    box-shadow: 0 0 0 1px #000;
+    }
+
+
+
+
+
+
+
+#review .owl-wrapper .owl-item{
+    padding-right: 20px;
+    }
+#review .media-left{
+    padding-right: 15px;
+    }
+#review .media-left img{
+    width: 50px;
+    border-radius: 3px;
+    }
+
+#review .user-name{
+    color: #444;
+    font-weight: 500;
+    }
+
+#review .review-text{
+    margin: 10px 0;
+    }
+
+/* rating */
+
+#review .rating{
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    }
+
+#review .rating::after{
+    content: attr(data-star_rating);
+    padding: 3px 5px 0;
+    color: #444;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 21px;
+    border-radius: 2px;
+    margin-left: 5px;
+    }
+
+#review .rating-total{
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    position: relative;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    width: 80px;
+    height: 16px;
+    margin-top: -2px;
+    }
+
+#review .rating-progress{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    }
+
+#review .rating-progress::after,
+#review .rating-progress::before{
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-size: 80px 16px;
+    background-repeat: no-repeat;
+    content: "";
+    }
+
+#review .rating-progress::before{
+    background-image: url("../img/rating-background.svg");
+    }
+
+#review .rating-progress::after{
+    background-image: url("../img/rating-foreground.svg");
+    }
+
+#review .rating-progress.rate-0::after{
+    width: 0;
+    }
+
+/* Rating Percent */
+
+#review .rating-progress.rate-1::after{
+    width: 20%;
+    }
+
+#review .rating-progress.rate-2::after{
+    width: 40%;
+    }
+
+#review .rating-progress.rate-3::after{
+    width: 60%;
+    }
+
+#review .rating-progress.rate-4::after{
+    width: 80%;
+    }
+
+#review .rating-progress.rate-5::after{
+    width: 100%;
+    }
