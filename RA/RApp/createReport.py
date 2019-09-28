@@ -111,7 +111,7 @@ class PDF(FPDF, HTMLMixin):
 
 
 # pdf.cell(w, h = 0, txt = '', border = 0, ln = 0, align = '', fill = False, link = '')
-def createreport(df, imgpath, subimgpath, path2, dept):
+def createreport(df, imgpath, subimgpath, outputpath, department):
 	for i in df.columns[2:-3]:
 		df[i] = df[i].apply(lambda x: int(x))
 	# df = pd.read_excel('TotalMarks.xlsx').iloc[:, 1:]
@@ -120,7 +120,7 @@ def createreport(df, imgpath, subimgpath, path2, dept):
 	pdf.add_page()
 	pdf.dashed_line(10, 35, 200, 35)
 	pdf.set_font('Arial', 'B', 14)
-	pdf.cell(0, 5, 'DEPARTMENT OF '+ dept, 0, 1, 'C')
+	pdf.cell(0, 5, 'DEPARTMENT OF '+ department, 0, 1, 'C')
 
 	#####################################################
 
@@ -216,4 +216,4 @@ def createreport(df, imgpath, subimgpath, path2, dept):
 
 
 
-	pdf.output(path2 + '/ResultAnalysis.pdf', 'F')
+	pdf.output(outputpath + '/ResultAnalysis.pdf', 'F')
