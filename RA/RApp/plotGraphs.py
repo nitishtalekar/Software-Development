@@ -19,9 +19,8 @@ def createplots(marks):
 	df1 = [['1. <50', cols[i], histogram[i][0]] for i in range(len(cols))]
 	df1 = df1 + [['2. 5060', cols[i], histogram[i][1]] for i in range(len(cols))]
 	df1 = df1 + [['3. 60+', cols[i], histogram[i][2]] for i in range(len(cols))]
-	df1 = df1 + [['4. Total', cols[i], len(marks.iloc[:, 2:i])] for i in range(len(cols))]
-	df1 = df1 + [['5. Passed', cols[i], sum(marks.iloc[:, 2 + i].apply(lambda x: int(x) > 35))] for i in
-	             range(len(cols))]
+	df1 = df1 + [['4. Total', cols[i], sum(marks.iloc[:, 2+i].apply(lambda x: int(x) > 0))] for i in range(len(cols))]
+	df1 = df1 + [['5. Passed', cols[i], sum(marks.iloc[:, 2 + i].apply(lambda x: int(x) > 35))] for i in range(len(cols))]
 
 	df1 = pd.DataFrame(df1, columns = ['Ranges', 'Subject', 'No.of Students'])
 
@@ -58,7 +57,6 @@ def createplots(marks):
 	imgpath.append(path)
 
 	for i in marks.columns[2:-3]:
-		print(i)
 		subject = [['Less Than 40', sum(marks[i].apply(lambda x: float(x)< 40))],
 					['Between 40 & 50', sum(marks[i].apply(lambda x: float(x) >= 40 and float(x) <50))],
 					['Between 50 & 60', sum(marks[i].apply(lambda x: float(x) >= 50 and float(x) <60))],

@@ -11,7 +11,6 @@ $i = 0;
 $a = array('answer1','answer2','answer3','answer4','answer5','answer6','answer7','answer8','answer9','answer10','answer11','answer12');
 
 $iter = $_SESSION['iter'];
-
 $query = "SELECT * FROM teaching WHERE dept='$dept' AND sem='$sem' AND lec_div='$div';";
 $results = mysqli_query($db, $query);
 while($row = mysqli_fetch_assoc($results)){
@@ -29,10 +28,10 @@ while($row = mysqli_fetch_assoc($results)){
 	$sids[$i] = $sid;
 	$i = $i+1;
 	}
-	
+
 	$arrlength = count($teach);
 	$_SESSION['count'] = $arrlength-1;
-	
+
 	//
 	// for($x = 0; $x < $arrlength; $x++) {
 	//     echo $teach[$x];
@@ -56,11 +55,11 @@ while($row = mysqli_fetch_assoc($results)){
 	// INSERT INTO feedback_ques(question, ans1, ans2, ans3, ans4, ans5) VALUES ("DOES THE TEACHER SHOW FAVOURITEISM TOWARDS THE STUDENTS IN OR OUTSIDE CLASS ?","Always","Very Often","Frequently","Occasionally","Never");
 	// INSERT INTO feedback_ques(question, ans1, ans2, ans3, ans4, ans5) VALUES ("WHEN DOES THE TEACHER RETURN THE CORRECTED PERIODIC TEST OR ASSIGNMENT ?","Within a Week","Within a Fortnight","Within 3 Weeks","After a Month","Never");
 	// INSERT INTO feedback_ques(question, ans1, ans2, ans3, ans4, ans5) VALUES ("HOW PUNTUAL IS THE TEACHER WHEN COMING TO THE CLASS ?","Always on time","Occasionally Late","Frequently Late","Often Late","Never on Time");
-	
-	
+
+
 	if(isset($_POST['feedback'])){
-		
-		
+
+
 		$ans1 = $_POST['answer1'];
 		$ans2 = $_POST['answer2'];
 		$ans3 = $_POST['answer3'];
@@ -73,17 +72,17 @@ while($row = mysqli_fetch_assoc($results)){
 		$ans10 = $_POST['answer10'];
 		$ans11 = $_POST['answer11'];
 		$ans12 = $_POST['answer12'];
-		
+
 		if ($_POST['remark']){
 			$rmrk = mysqli_real_escape_string($db, $_POST['remark']);
 		}
 		else{
 			$rmrk = "--";
 		}
-		
+
 		$q = "INSERT INTO feedback_temp(teacher_id, sub_id, ques1, ques2, ques3, ques4, ques5, ques6, ques7, ques8, ques9, ques10, ques11, ques12,remark) VALUES ('$tids[$iter]','$sids[$iter]','$ans1','$ans2','$ans3','$ans4','$ans5','$ans6','$ans7','$ans8','$ans9','$ans10','$ans11','$ans12','$rmrk');";
 		mysqli_query($db, $q);
-		
+
 		$_SESSION['iter'] = $_SESSION['iter']+1;
 		if($_SESSION['iter']==$_SESSION['count']){
 			header('location: complete.php');
@@ -132,9 +131,9 @@ while($row = mysqli_fetch_assoc($results)){
 				<span class="contact100-form-title">
 					Feedback Form
 				</span>
-				
+
 				<div class="fb2-wrap-input100">
-					<center><label class="label-inputx">Deapartment:<br><?= $dept ?></label></center>
+					<center><label class="label-inputx">Department:<br><?= $dept ?></label></center>
 				</div>
 				<div class="fb2-wrap-input100">
 					<center><label class="label-inputx">Semester: <br><?= $sem ?></label></center>
@@ -149,10 +148,10 @@ while($row = mysqli_fetch_assoc($results)){
 					<center><label class="label-inputx">QUESTIONS</label></center>
 				</div>
 				<!-- QUESTIONS sections -->
-				<?php 
+				<?php
 					$que = "SELECT * FROM feedback_ques";
 					$result = mysqli_query($db, $que);
-					$x = 0;
+					$x = 1;
 					while($rowq = mysqli_fetch_assoc($result)){
 						echo "<hr width=100%>";
 						echo "<div class='wrap-input100'>";
@@ -161,7 +160,7 @@ while($row = mysqli_fetch_assoc($results)){
 						echo "<div class='wrap-input100 input100-select bg1 validate-input' data-validate='Please Fill Field'>";
 							echo "<span class='label-input100'>Answer</span>";
 							echo "<div>";
-								echo "<select class='js-select2' name=".$a[$x]." required>";
+								echo "<select class='js-select2' name='answer".$x."' required>";
 									echo "<option selected disabled value=''>Choose Option</option>";
 									echo "<option value='5'>".$rowq['ans1']."</option>";
 									echo "<option value='4'>".$rowq['ans2']."</option>";
@@ -172,15 +171,16 @@ while($row = mysqli_fetch_assoc($results)){
 								echo "<div class='dropDownSelect2'></div>";
 						echo "</div>";
 					echo "</div>";
+					$x = $x+1;
 					}
 					?>
-				
+
         <hr width=100%>
 				<div class="wrap-input100  bg1 rs1-alert-validate" >
 					<span class="label-input100">Comments</span>
 					<textarea class="input100" name="remark" placeholder="Enter Comments Here"></textarea>
 				</div>
-				
+
 				<hr width=100%>
 				<div class="container-contact100-form-btn">
 					<button type="submit" class="contact100-form-btn" name="feedback">

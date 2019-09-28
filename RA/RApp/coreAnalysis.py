@@ -3,10 +3,11 @@ import pandas as pd
 
 final_analysis = pd.DataFrame()
 
-def exportData(listOfDataFrames):
-    pass
+def exportData(outputpath, **listOfDataFrames):
+    for name, df in listOfDataFrames.items():
+        df.to_excel(outputpath + '/' + name + '.xlsx')
 
-def checkpass(x,val, i):
+def checkpass(x,val):
     if x == 'Ab':
         return 0
     return int(int(x)>val)
@@ -159,7 +160,7 @@ def createFinalAnalysisDF(dftotalmarks):
     passing['Topper'] = dftotalmarks.loc[:, 'SGPI'].apply(lambda x: int(float(x) > 9.3))
 
     for i in totalcols[2:-3]:
-        passing[i.replace('TOT', 'PASSED')] = dftotalmarks[i].apply(lambda x: checkpass(x, 40, i))
+        passing[i.replace('TOT', 'PASSED')] = dftotalmarks[i].apply(lambda x: checkpass(x, 40))
 
     for i in totalcols[2:-3]:
         passing[i.replace('TOT', '40<X<50')] = dftotalmarks[i].apply(lambda x: checkrange(x, 40, 50))

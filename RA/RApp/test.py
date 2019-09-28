@@ -40,6 +40,11 @@ def file_submit():
     global inputpath1, inputpath2, outputpath, department
     if inputpath2 == '':
         dftotalmarks = createTotalMarksDF(inputpath1)
+
+        passAnalysis = createFinalAnalysisDF(dftotalmarks)
+
+        exportData(outputpath, TotalMarks = dftotalmarks, PassingAnalysis = passAnalysis)
+
         imgpath, subimgpath = createplots(dftotalmarks)
         createreport(dftotalmarks, imgpath, subimgpath, outputpath, department.get())
     else:
@@ -52,9 +57,15 @@ def file_submit():
         col2 = list(dftotalmarks2.columns[2:-3])
         column = col[:-3] + [i for i in col2 if i not in col] + col[-3:]
         dftotalmarks = newdf[column]
+        dftotalmarks = dftotalmarks.fillna(0)
+
+        passAnalysis = createFinalAnalysisDF(dftotalmarks)
+
+        exportData(outputpath, TotalMarks = dftotalmarks, PassingAnalysis = passAnalysis)
 
         imgpath, subimgpath = createplots(dftotalmarks)
         createreport(dftotalmarks, imgpath, subimgpath, outputpath, department.get())
+
 
 
 class Page(Frame):
