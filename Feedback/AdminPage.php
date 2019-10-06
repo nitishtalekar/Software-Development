@@ -82,18 +82,19 @@ if(isset($_POST['upload_fb'])){
         $qu = $qu."VALUES ('$t','$s','$yr','$avg_ans[0]','$avg_ans[1]','$avg_ans[2]','$avg_ans[3]','$avg_ans[4]','$avg_ans[5]','$avg_ans[6]','$avg_ans[7]','$avg_ans[8]','$avg_ans[9]','$avg_ans[10]','$avg_ans[11]','$rmrks')";
         mysqli_query($db, $qu);
         
-        // echo "<script type='text/javascript'>alert('UPLOADED');</script>";
-        
     }
+    
+    $qt = "TRUNCATE table feedback_temp";
+    mysqli_query($db, $qt);
 
 }
 
 require('FPDF/fpdf.php');
 
-function createpdf($fbresults, $teacherresults, $subjectresults){
+function createpdf($fbresults, $teacherresults, $subjectresults,$subjectid,$teacherid){
     // Cell(float w , float h , string txt , mixed border , int ln , string align , boolean fill , mixed link)
     global $db;
-    $pdf= new PDF('P','mm','A4');
+    $pdf= new FPDF('P','mm','A4');
     $pdf->AddPage();
 
     //HEADER only on page 1
@@ -131,14 +132,64 @@ function createpdf($fbresults, $teacherresults, $subjectresults){
         $pdf->MultiCell(0, 15, 'Q.'.$ansindex.' '.ucfirst(strtolower($row['question'])), 0,'L');
         $pdf->SetFont('Arial','',11);
         $fbscore = $fbresults['score'.$ansindex];
-        // $pdf->SetXY(20, $pdf->GetY());
-        // $pdf->Cell(0,0,'Average Feedback Score: '.$fbscore,0,1,'L');
         $pdf->SetXY(20, $pdf->GetY());
         $pdf->Cell(0,0,'Feedback: '.$row['ans'.$fbscore],0,1,'L');
         $pdf->Ln(2);
         $ansindex = $ansindex + 1;
     }
+    
+   //  //--------------------------//
+    $pdf->AddPage();
+    
+    $pdf->Image('data/RGIT.png',10,0,0,35);
+    $pdf->SetFont('Arial','B',15);
 
+    $pdf->SetXY(10,30);
+    $pdf->SetFont('Arial','B',15);
+    $pdf->Cell(0,10, 'DEPARTMENT OF '.strtoupper($teacherresults['teacher_dept']), 0,1,'C');
+    
+    $pdf->Ln(5);
+    
+    $width_cell=array(35,20,20,20,20,20,20,30);
+    $pdf->SetFont('Arial','',12);
+
+    //Background color of header//
+    $pdf->SetFillColor(255,255,255);
+    $pdf->SetXY(10,40);
+    // Header starts /// 
+    //First header column //
+    $pdf->Cell($width_cell[0],10,'Question no',1,0,'C',true);
+    //Second header column//
+    $pdf->Cell($width_cell[1],10,'OP1',1,0,'C',true);
+    //Third header column//
+    $pdf->Cell($width_cell[2],10,'OP2',1,0,'C',true); 
+    //Fourth header column//
+    $pdf->Cell($width_cell[3],10,'OP3',1,0,'C',true);
+    //Third header column//
+    $pdf->Cell($width_cell[4],10,'OP4',1,0,'C',true);
+    $pdf->Cell($width_cell[5],10,'OP5',1,0,'C',true);
+    $pdf->Cell($width_cell[6],10,'Total',1,0,'C',true);
+    $pdf->Cell($width_cell[7],10,'Average',1,1,'C',true);
+   
+    $q = "SELECT * FROM feedback_count where teacher_id='$teacherid' and sub_id='$subjectid' ";
+    $questions = mysqli_query($db, $q);
+    
+    $fill=false;
+    
+    while($row = mysqli_fetch_assoc($questions)){
+      
+      $pdf->Cell($width_cell[0],10,$row['question_no'],1,0,'C',$fill);
+      $pdf->Cell($width_cell[1],10,$row['count_1'],1,0,'C',$fill);
+      $pdf->Cell($width_cell[2],10,$row['count_2'],1,0,'C',$fill);
+      $pdf->Cell($width_cell[3],10,$row['count_3'],1,0,'C',$fill);
+      $pdf->Cell($width_cell[4],10,$row['count_4'],1,0,'C',$fill);
+      $pdf->Cell($width_cell[5],10,$row['count_5'],1,0,'C',$fill);
+      $sum = $row['count_1'] + $row['count_2'] + $row['count_3'] + $row['count_4'] + $row['count_5'] ;
+      $avg = $row['count_1'] + $row['count_2'] * 2 + $row['count_3'] * 3 + $row['count_4'] * 4 + $row['count_5'] * 5 ;
+      $pdf->Cell($width_cell[6],10,$sum,1,0,'C',$fill);
+      $pdf->Cell($width_cell[7],10,round($avg/(int)5),1,1,'C',$fill);
+    }
+    
     $pdf->AddPage();
     $remarks = explode('<->', $fbresults['remark']);
     $x = count($remarks)-1;
@@ -150,7 +201,7 @@ function createpdf($fbresults, $teacherresults, $subjectresults){
         $pdf->MultiCell(0, 10, ucfirst(strtolower($remarks[$x])), 0,'L');
         $x = $x-1;
     }
-    $pdf->Output('FeedbackForProf/'.$teacherresults['teacher_name'].'-'.$subjectresults['sub_name'].'-'.$fbresults['year'].'.pdf', 'F');
+    $pdf->Output('FeedBackOutputs/'.$teacherresults['teacher_dept'].'-'.$teacherresults['teacher_name'].'-'.$subjectresults['sub_name'].'-'.$fbresults['year'].'.pdf', 'F');
 
 }
 
@@ -173,14 +224,18 @@ if(isset($_POST['summary_fb'])){
         $subjectresults = mysqli_query($db, $q3);
         $subjectresults = mysqli_fetch_array($subjectresults);
 
-        createpdf($fbresults, $teacherresults, $subjectresults);
+        createpdf($fbresults, $teacherresults, $subjectresults,$subjectid,$teacherid);
+        
     }
+    $qtr = "TRUNCATE table feedback_count";
+    mysqli_query($db, $qtr);
 }
-
 if(isset($_POST['trunc_fb'])){
 
     $q1 = "TRUNCATE table feedback_temp";
     mysqli_query($db, $q1);
+    $qt = "TRUNCATE table feedback_count";
+    mysqli_query($db, $qt);
     
 }
 
