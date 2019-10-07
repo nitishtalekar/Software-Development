@@ -38,7 +38,7 @@ while($row = mysqli_fetch_assoc($results)){
 		$qu1 = "SELECT * FROM teacher WHERE teacher_id='$tid';";
 		$res1 = mysqli_query($db, $qu1);
 		$row1 = mysqli_fetch_assoc($res1);
-		$eteach[$i] = $row1['teacher_name'];
+		$eteach[$j] = $row1['teacher_name'];
 		$qu2 = "SELECT * FROM subject WHERE sub_id='$sid';";
 		$res2 = mysqli_query($db, $qu2);
 		$row2 = mysqli_fetch_assoc($res2);
@@ -50,12 +50,11 @@ while($row = mysqli_fetch_assoc($results)){
 	}
 }
 	
-	
 	$arrlength = count($teach);
 	$arrlength2 = count($eteach);
 	
 	if($arrlength2 > 0){
-	$_SESSION['count'] = $arrlength+1;
+	$_SESSION['count'] = $arrlength + 1;
 }
 else{
 	$_SESSION['count'] = $arrlength;
@@ -160,10 +159,10 @@ else{
 				<?php 
 				if($_SESSION['iter']<$_SESSION['count']-1){
 				echo '<div class="wrap-input100 bg3">';
-					echo '<center><label class="label-inputx4">Subject: <br>'.$sub[$iter].'</label></center>';
+					echo '<center><label class="label-inputx4">Subject: <br>'.$sub[$_SESSION['iter']].'</label></center>';
 				echo '</div>';
 				}
-				else{
+				elseif($_SESSION['count-elec'] > 0){
 					echo "<div class='wrap-input100 input100-select bg2 validate-input' data-validate='Please Fill Field'>";
 						echo "<span class='label-input100'>Elective</span>";
 						echo "<div>";
@@ -176,7 +175,6 @@ else{
 							echo "<div class='dropDownSelect2'></div>";
 					echo "</div>";
 				echo "</div>";
-				
 				}
 				?>
 
