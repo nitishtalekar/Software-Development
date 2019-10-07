@@ -6,7 +6,10 @@ $div = $_SESSION['Div'];
 
 $teach = array();
 $sub = array();
+$eteach = array();
+$esub = array();
 $i = 0;
+$j = 0;
 
 $a = array('answer1','answer2','answer3','answer4','answer5','answer6','answer7','answer8','answer9','answer10','answer11','answer12');
 
@@ -17,25 +20,50 @@ $results = mysqli_query($db, $query);
 while($row = mysqli_fetch_assoc($results)){
 	$tid = $row['teacher_id'];
 	$sid = $row['sub_id'];
-	$qu1 = "SELECT * FROM teacher WHERE teacher_id='$tid';";
-	$res1 = mysqli_query($db, $qu1);
-	$row1 = mysqli_fetch_assoc($res1);
-	$teach[$i] = $row1['teacher_name'];
-	$qu2 = "SELECT * FROM subject WHERE sub_id='$sid';";
-	$res2 = mysqli_query($db, $qu2);
-	$row2 = mysqli_fetch_assoc($res2);
-	$sub[$i] = $row2['sub_name'];
-	$tids[$i] = $tid;
-	$sids[$i] = $sid;
-	$i = $i+1;
+	$stat = $row['status'];
+	if($stat != '10'){
+		$qu1 = "SELECT * FROM teacher WHERE teacher_id='$tid';";
+		$res1 = mysqli_query($db, $qu1);
+		$row1 = mysqli_fetch_assoc($res1);
+		$teach[$i] = $row1['teacher_name'];
+		$qu2 = "SELECT * FROM subject WHERE sub_id='$sid';";
+		$res2 = mysqli_query($db, $qu2);
+		$row2 = mysqli_fetch_assoc($res2);
+		$sub[$i] = $row2['sub_name'];
+		$tids[$i] = $tid;
+		$sids[$i] = $sid;
+		$i = $i+1;
+		}
+	else{
+		$qu1 = "SELECT * FROM teacher WHERE teacher_id='$tid';";
+		$res1 = mysqli_query($db, $qu1);
+		$row1 = mysqli_fetch_assoc($res1);
+		$eteach[$i] = $row1['teacher_name'];
+		$qu2 = "SELECT * FROM subject WHERE sub_id='$sid';";
+		$res2 = mysqli_query($db, $qu2);
+		$row2 = mysqli_fetch_assoc($res2);
+		$esub[$j] = $row2['sub_name'];
+		$etids[$j] = $tid;
+		$esids[$j] = $sid;
+		$j = $j+1;
+		$i = $i+1;
 	}
+}
+	
 	
 	$arrlength = count($teach);
+	$arrlength2 = count($eteach);
+	
+	if($arrlength2 > 0){
+	$_SESSION['count'] = $arrlength+1;
+}
+else{
 	$_SESSION['count'] = $arrlength;
+}
+	$_SESSION['count-elec'] = $arrlength2;
 	
 	
 	if(isset($_POST['feedback'])){
-		
 		
 		$ans1 = $_POST['answer1'];
 		$ans2 = $_POST['answer2'];
@@ -49,7 +77,16 @@ while($row = mysqli_fetch_assoc($results)){
 		$ans10 = $_POST['answer10'];
 		$ans11 = $_POST['answer11'];
 		$ans12 = $_POST['answer12'];
-		
+		if(isset($_POST['elective'])){
+			$elec = mysqli_real_escape_string($db, $_POST['elective']);
+			$elec_explode = explode('---', $elec);
+			$subject = $elec_explode[0];
+			$teacher = $elec_explode[1];
+		}
+		else{
+			$subject = $sids[$iter];
+			$teacher = $tids[$iter];
+		}
 		if ($_POST['remark']){
 			$rmrk = mysqli_real_escape_string($db, $_POST['remark']);
 		}
@@ -58,7 +95,7 @@ while($row = mysqli_fetch_assoc($results)){
 		}
 		
 		$q = "INSERT INTO feedback_temp(teacher_id, sub_id, ques1, ques2, ques3, ques4, ques5, ques6, ques7, ques8, ques9, ques10, ques11, ques12,remark)";
-		$q = $q."VALUES ('$tids[$iter]','$sids[$iter]','$ans1','$ans2','$ans3','$ans4','$ans5','$ans6','$ans7','$ans8','$ans9','$ans10','$ans11','$ans12','$rmrk');";
+		$q = $q."VALUES ('$teacher','$subject','$ans1','$ans2','$ans3','$ans4','$ans5','$ans6','$ans7','$ans8','$ans9','$ans10','$ans11','$ans12','$rmrk');";
 		mysqli_query($db, $q);
 		
 		$_SESSION['iter'] = $_SESSION['iter']+1;
@@ -120,14 +157,29 @@ while($row = mysqli_fetch_assoc($results)){
 				<div class="fb2-wrap-input100">
 					<center><label class="label-inputx">Division: <br><?= $div ?></label></center>
 				</div>
-				<div class="wrap-input100 bg3">
-					<center><label class="label-inputx4">Subject: <br><?= $sub[$iter] ?> </label></center>
-				</div>
-				<!-- <div class="wrap-input100">
-					<center><label class="label-inputx">QUESTIONS</label></center>
-				</div> -->
+				<?php 
+				if($_SESSION['iter']<$_SESSION['count']-1){
+				echo '<div class="wrap-input100 bg3">';
+					echo '<center><label class="label-inputx4">Subject: <br>'.$sub[$iter].'</label></center>';
+				echo '</div>';
+				}
+				else{
+					echo "<div class='wrap-input100 input100-select bg2 validate-input' data-validate='Please Fill Field'>";
+						echo "<span class='label-input100'>Elective</span>";
+						echo "<div>";
+							echo "<select class='js-select2' style='color:white' name=elective required>";
+								echo "<option selected disabled value=''>Choose Elective</option>";
+								for($i=0;$i<$_SESSION['count-elec'];$i++){
+								echo "<option value=".$esids[$i]."---".$etids[$i].">".$esub[$i]."</option>";
+							}
+							echo "</select>";
+							echo "<div class='dropDownSelect2'></div>";
+					echo "</div>";
+				echo "</div>";
 				
-				<!-- QUESTIONS sections -->
+				}
+				?>
+
 				<?php 
 					$que = "SELECT * FROM feedback_ques";
 					$result = mysqli_query($db, $que);
