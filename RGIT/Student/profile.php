@@ -2,7 +2,13 @@
 $db = mysqli_connect($database_host, $database_username, $database_password, $database_name);
 session_start();
 
-$grno = $_SESSION['GRNO'];
+
+if (!isset($_SESSION['userid'])) {
+
+  header('Location: /RGIT/');
+}
+
+$grno = $_SESSION['userid'];
 $query = "SELECT * FROM student WHERE grno='$grno';";
 $results = mysqli_query($db, $query);
 $row = mysqli_fetch_assoc($results);
@@ -24,6 +30,9 @@ if (mysqli_num_rows($results) == 1) {
   $dept = $row['student_dept'];
   $sem = $row['student_sem'];
   $doj = $row['student_doj'];
+  $ep = $row['eng_percentage'];
+  $ak = $row['active_kt'];
+  $gap =  $row['gap'];
 }
 $query = "SELECT * FROM achievement WHERE grno='$grno';";
 $results = mysqli_query($db, $query);
@@ -242,6 +251,9 @@ if (mysqli_num_rows($results) == 1) {
           CURRENT SEMESTER: <?= $sem ?><br>
           DATE OF BIRTH: <?= $dob ?><br>
           DATE OF JOINING: <?= $doj ?><br>
+          ENGINEERING PERCENTAGE: <?= $ep ?><br>
+          ACTIVE KT: <?= $ak ?><br>
+          GAP YEAR: <?= $gap ?><br>
 
           <!-- <a href="student_profile.php"> LINK TO companies</a> -->
         </p>

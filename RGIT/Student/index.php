@@ -1,7 +1,7 @@
 <?php
-  if(isset($_POST['new_student'])){
-    header('location: forms/index.php');
-  }
+if (isset($_POST['new_student'])) {
+  header('location: forms/index.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -63,14 +63,14 @@
           </div>
           <form class="contact100-form validate-form" action="student_login.php" method="POST" enctype="multipart/form-data">
             <div class="container-contact100-form-btn mx-2 my-2">
-    					<button type="submit" class="contact100-form-btn" name="student_id">
-    						<span>
-    							Enter
-    							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
-    						</span>
-    					</button>
-    				</div>
-    			</form>
+              <button type="submit" class="contact100-form-btn" name="student_id">
+                <span>
+                  Enter
+                  <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
       <!-- /.col-md-4 -->
@@ -82,17 +82,17 @@
           </div>
           <form class="contact100-form validate-form" action="index.php" method="POST" enctype="multipart/form-data">
             <div class="container-contact100-form-btn mx-2 my-2">
-    					<button type="submit" class="contact100-form-btn" name="new_student">
-    						<span>
-    							Enter
-    							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
-    						</span>
-    					</button>
-    				</div>
-    			</form>
+              <button type="submit" class="contact100-form-btn" name="new_student">
+                <span>
+                  Enter
+                  <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-      
+
       <!-- /.col-md-4 -->
     </div>
     <!-- /.row -->
