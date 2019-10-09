@@ -1,3 +1,15 @@
+<?php
+$exist = false;
+
+if (isset($_GET['exist']) && $_GET['exist'] == 1) {
+  $exist = true;
+}
+if ($exist) {
+  $message = "Login! You are already Registered";
+  echo "<script type='text/javascript'>alert('$message');</script>";
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,27 +69,27 @@
           </div>
           <form class="contact100-form validate-form" action="../authenticate.php" method="POST" enctype="multipart/form-data">
             <div class="wrap-input100 validate-input bg1 mx-3 my-3" data-validate="Please Fill Field">
-    					<span class="label-input100">Student - ID:</span>
-    					<input class="input100" type="text" name="id" placeholder="Enter Student Id">
-    				</div>
+              <span class="label-input100">Student - ID:</span>
+              <input class="input100" type="text" name="id" placeholder="Enter Student Id">
+            </div>
             <div class="wrap-input100 validate-input bg1 mx-3 my-3" data-validate="Please Fill Field">
-    					<span class="label-input100">PASSWORD:</span>
-    					<input class="input100" type="password" name="pwd" placeholder="Enter Password">
-    				</div>
+              <span class="label-input100">PASSWORD:</span>
+              <input class="input100" type="password" name="pwd" placeholder="Enter Password">
+            </div>
             <input type="text" name="type" value="student" hidden>
             <div class="container-contact100-form-btn mx-2 my-2">
-    					<button type="submit" class="contact100-form-btn" name="student_id">
-    						<span>
-    							Login
-    							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
-    						</span>
-    					</button>
-    				</div>
-    			</form>
+              <button type="submit" class="contact100-form-btn" name="student_id">
+                <span>
+                  Login
+                  <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
       <!-- /.col-md-4 -->
-      
+
       <!-- /.col-md-4 -->
     </div>
     <!-- /.row -->

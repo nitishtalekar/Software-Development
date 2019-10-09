@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 27, 2019 at 07:02 PM
+-- Generation Time: Oct 08, 2019 at 08:53 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -43,7 +43,9 @@ CREATE TABLE `achievement` (
 --
 
 INSERT INTO `achievement` (`grno`, `achievement1`, `ach_certi1`, `achievement2`, `ach_certi2`, `achievement3`, `ach_certi3`) VALUES
-('12345', '', '', '', '', '', '');
+('11', '', '', '', '', '', ''),
+('12345', '', '', '', '', '', ''),
+('15', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -93,10 +95,12 @@ CREATE TABLE `certification` (
 --
 
 INSERT INTO `certification` (`grno`, `course1`, `validity1`, `certificate1`, `course2`, `validity2`, `certificate2`, `course3`, `validity3`, `certificate3`) VALUES
+('11', '', 0, '', '', 0, '', '', 0, ''),
 ('123', '', 0, '', '', 0, '', '', 0, ''),
 ('1234', '', 0, '', '', 0, '', '', 0, ''),
 ('12344', '', 0, '', '', 0, '', '', 0, ''),
-('12345', '', 0, '', '', 0, '', '', 0, '');
+('12345', '', 0, '', '', 0, '', '', 0, ''),
+('15', '', 0, '', '', 0, '', '', 0, '');
 
 -- --------------------------------------------------------
 
@@ -287,7 +291,9 @@ CREATE TABLE `internship` (
 --
 
 INSERT INTO `internship` (`grno`, `company1`, `position1`, `date_from1`, `date_till1`, `exp1`, `letter1`, `company2`, `position2`, `date_from2`, `date_till2`, `exp2`, `letter2`, `company3`, `position3`, `date_from3`, `date_till3`, `exp3`, `letter3`) VALUES
-('12345', '', '', '0000-00-00', '0000-00-00', '', '', 0, 0, 0, 0, 0, '', 0, 0, 0, 0, 0, '');
+('11', '', '', '0000-00-00', '0000-00-00', '', '', 0, 0, 0, 0, 0, '', 0, 0, 0, 0, 0, ''),
+('12345', '', '', '0000-00-00', '0000-00-00', '', '', 0, 0, 0, 0, 0, '', 0, 0, 0, 0, 0, ''),
+('15', '', '', '0000-00-00', '0000-00-00', '', '', 0, 0, 0, 0, 0, '', 0, 0, 0, 0, 0, '');
 
 -- --------------------------------------------------------
 
@@ -348,19 +354,24 @@ CREATE TABLE `student` (
   `student_doj` date NOT NULL,
   `student_dept` varchar(100) NOT NULL,
   `student_sem` int(50) NOT NULL,
-  `placement_higherstudies` int(16) NOT NULL DEFAULT '-1'
+  `placement_higherstudies` int(16) NOT NULL DEFAULT '-1',
+  `eng_percentage` varchar(16) NOT NULL,
+  `active_kt` int(16) NOT NULL DEFAULT '0',
+  `gap` int(16) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`grno`, `student_name`, `password`, `student_mail`, `student_phone`, `student_gen`, `student_dob`, `tenth_board`, `tenth_percent`, `twelfth_board`, `twelfth_percent`, `student_doj`, `student_dept`, `student_sem`, `placement_higherstudies`) VALUES
-('1', 'sagar surendra ambilpure', 'a', 'sagarambilpure@gmail.com', '45454', 'Male', '1999-04-27', 'SSC', 79.4, 'HSC', 74.6, '2016-08-08', 'Computer Engineering', 7, 2),
-('12345', 'Nitish Pravin Talekar', 'nitish503', 'npt503@gmail.com', '9821340247', 'Male', '1998-11-19', 'SSC', 90, 'HSC', 90, '2019-09-04', 'Computer Engineering', 7, -1),
-('2', 'maharaj', 'a', 'lol', '928154', 'M', '1999-04-27', '', 79, '', 74, '2016-08-08', 'Computer Engineering', 7, -1),
-('3', 'shano', 'a', '', '9878555', 'M', '2019-08-05', 'ssc', 78, 'hsc', 74, '2019-08-04', 'Computer Engineering', 7, -1),
-('4', 'rasp', 'a', 'allkandsonthis@gmail.com', '156488', 'M', '0000-00-00', '', 99, '', 99, '0000-00-00', 'Computer Engineering', 7, -1);
+INSERT INTO `student` (`grno`, `student_name`, `password`, `student_mail`, `student_phone`, `student_gen`, `student_dob`, `tenth_board`, `tenth_percent`, `twelfth_board`, `twelfth_percent`, `student_doj`, `student_dept`, `student_sem`, `placement_higherstudies`, `eng_percentage`, `active_kt`, `gap`) VALUES
+('1', 'sagar surendra ambilpure', 'a', 'sagarambilpure@gmail.com', '45454', 'Male', '1999-04-27', 'SSC', 79.4, 'HSC', 74.6, '2016-08-08', 'Computer Engineering', 7, 2, '0', 0, 0),
+('11', 'Uzair offo gadha', 'a', 'uzairchhapra@gmail.com', '9874563210', 'Male', '2019-10-03', 'ICSE', 82, 'HSC', 0, '2019-10-04', 'Computer Engineering', 6, -1, '75', 0, 0),
+('12345', 'Nitish Pravin Talekar', 'nitish503', 'npt503@gmail.com', '9821340247', 'Male', '1998-11-19', 'SSC', 90, 'HSC', 90, '2019-09-04', 'Computer Engineering', 7, -1, '0', 0, 0),
+('15', '33 ff ss', 'a', 'sagarambilpure@gmail.com', '7894561230', 'Male', '2019-10-16', 'CBSE', 82, 'ICSE', 41, '2019-10-09', 'Mechanical Engineering', 1, -1, '55', 0, 0),
+('2', 'maharaj', 'a', 'lol', '928154', 'M', '1999-04-27', 'SSC', 79, 'HSC', 74, '2016-08-08', 'Computer Engineering', 7, -1, '0', 0, 0),
+('3', 'shano saas sfsf', 'a', 'sagarambilpure@gmail.com', '9878555', 'Male', '2019-08-05', 'SSC', 78, 'HSC', 74, '2019-08-04', 'Computer Engineering', 7, -1, '0', 0, 0),
+('4', 'rasp', 'a', 'allkandsonthis@gmail.com', '156488', 'M', '0000-00-00', 'SSC', 99, 'HSC', 99, '0000-00-00', 'Computer Engineering', 7, -1, '0', 0, 0);
 
 -- --------------------------------------------------------
 
