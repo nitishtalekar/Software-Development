@@ -194,14 +194,14 @@ function createpdf($fbresults, $teacherresults, $subjectresults,$subjectid,$teac
       $pdf->Cell($width_cell[5],10,$row['count_1'],1,0,'C',$fill);
       $sum = $row['count_1'] + $row['count_2'] + $row['count_3'] + $row['count_4'] + $row['count_5'] ;
       $avg = $row['count_1'] + $row['count_2'] * 2 + $row['count_3'] * 3 + $row['count_4'] * 4 + $row['count_5'] * 5 ;
-      $rndavg = round($avg/(int)5);
+      $rndavg = ($avg/(int)$sum)*20;
       $totalsum = $totalsum + $rndavg;
       $pdf->Cell($width_cell[6],10,$sum,1,0,'C',$fill);
       $pdf->Cell($width_cell[7],10,$rndavg."%",1,1,'C',$fill);
     }
     
     $pdf->SetFont('Arial','B',20);
-    $pdf->Cell(0,10, 'Overall Average :'.round($totalsum/(int)12)."%", 'T',1,'C');
+    $pdf->Cell(0,10, 'Overall Average :'.($totalsum/(int)12)."%", 'T',1,'C');
     
     $pdf->AddPage();
     $remarks = explode('<->', $fbresults['remark']);

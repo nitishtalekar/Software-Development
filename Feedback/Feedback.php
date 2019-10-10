@@ -144,6 +144,9 @@ else{
 			<form class="contact100-form validate-form" action="Feedback.php" method="POST" enctype="multipart/form-data">
 				<span class="contact100-form-title">
 					Feedback Form
+					<?= $_SESSION['count'];?>
+					<?= $_SESSION['count-elec'];?>
+					<?= $_SESSION['iter'];?>
 				</span>
 				
 				<div class="fb2-wrap-input100">
@@ -159,7 +162,7 @@ else{
 				<?php 
 				if($_SESSION['iter']<$_SESSION['count']-1){
 				echo '<div class="wrap-input100 bg3">';
-					echo '<center><label class="label-inputx4">Subject: <br>'.$sub[$_SESSION['iter']].'</label></center>';
+					echo '<center><label class="label-inputx4">Subject '.$_SESSION['iter'].': <br>'.$sub[$_SESSION['iter']].'</label></center>';
 				echo '</div>';
 				}
 				elseif($_SESSION['count-elec'] > 0){
