@@ -53,10 +53,10 @@ while($row = mysqli_fetch_assoc($results)){
 		$i = $i+1;
 	}
 }
-	
+
 	$arrlength = count($teach);
 	$arrlength2 = count($eteach);
-	
+
 	if($arrlength2 > 0){
 	$_SESSION['count'] = $arrlength + 1;
 }
@@ -64,10 +64,10 @@ else{
 	$_SESSION['count'] = $arrlength;
 }
 	$_SESSION['count-elec'] = $arrlength2;
-	
-	
+
+
 	if(isset($_POST['feedback'])){
-		
+
 		$ans1 = $_POST['answer1'];
 		$ans2 = $_POST['answer2'];
 		$ans3 = $_POST['answer3'];
@@ -91,16 +91,16 @@ else{
 			$teacher = $tids[$iter];
 		}
 		if ($_POST['remark']){
-			$rmrk = mysqli_real_escape_string($db, $_POST['remark']);
+			$rmrk = mysqli_real_escape_string($db, $temp);
 		}
 		else{
 			$rmrk = "--";
 		}
-		
+
 		$_SESSION['qu'][$_SESSION['iter']] = "INSERT INTO feedback_temp(teacher_id, sub_id, ques1, ques2, ques3, ques4, ques5, ques6, ques7, ques8, ques9, ques10, ques11, ques12,remark)";
 		$_SESSION['qu'][$_SESSION['iter']] = $_SESSION['qu'][$_SESSION['iter']]."VALUES ('$teacher','$subject','$ans1','$ans2','$ans3','$ans4','$ans5','$ans6','$ans7','$ans8','$ans9','$ans10','$ans11','$ans12','$rmrk');";
 		// mysqli_query($db, $q);
-		
+
 		$_SESSION['iter'] = $_SESSION['iter']+1;
 		if($_SESSION['iter']==$_SESSION['count']){
 			header('location: complete.php');
@@ -149,7 +149,7 @@ else{
 				<span class="contact100-form-title">
 					Feedback Form
 				</span>
-				
+
 				<div class="fb2-wrap-input100">
 					<center><label class="label-inputx">Department:</label></center>
 					<center><label class="label-inputx3"><?= $dept ?></label></center>
@@ -160,7 +160,7 @@ else{
 				<div class="fb2-wrap-input100">
 					<center><label class="label-inputx">Division: <br><?= $div ?></label></center>
 				</div>
-				<?php 
+				<?php
 				if($_SESSION['iter']<$_SESSION['count']-1){
 				echo '<div class="wrap-input100 bg3">';
 					echo '<center><label class="label-inputx4">Subject '.($_SESSION['iter']+1).': <br>'.$sub[$_SESSION['iter']].'</label></center>';
@@ -182,7 +182,7 @@ else{
 				}
 				?>
 
-				<?php 
+				<?php
 					$que = "SELECT * FROM feedback_ques";
 					$result = mysqli_query($db, $que);
 					$x = 0;
@@ -208,13 +208,13 @@ else{
 					$x = $x+1;
 					}
 					?>
-				
+
         <hr width=100%>
 				<div class="wrap-input100  bg2 rs1-alert-validate" >
 					<span class="label-input100">Comments</span>
 					<textarea class="input100" name="remark" placeholder="Enter Comments Here"></textarea>
 				</div>
-				
+
 				<hr width=100%>
 				<div class="container-contact100-form-btn">
 					<button type="submit" class="contact100-form-btn" name="feedback">
