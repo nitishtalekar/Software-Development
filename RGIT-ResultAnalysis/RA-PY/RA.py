@@ -2,9 +2,12 @@
 import pandas as pd
 from tkinter import *
 from tkinter import filedialog
+from tkinter import messagebox
 import matplotlib.pyplot as plt
 import numpy as np
 from fpdf import FPDF, HTMLMixin
+import PIL.Image
+import PIL.ImageTk
 
 
 
@@ -552,12 +555,14 @@ inputFileVar = StringVar()
 outputFolderVar = StringVar()
 department = StringVar()
 progressVar = StringVar()
+stepsVar = StringVar()
+aboutVar = StringVar()
 
 inputpath = ''
 outputpath = ''
 
 windowWidth = 900
-windowHeight = 300
+windowHeight = 350
 positionRight = int(root.winfo_screenwidth() / 2 - windowWidth / 2)
 positionDown = int(root.winfo_screenheight() / 2 - windowHeight / 2)
 
@@ -575,67 +580,99 @@ def select_output_folder():
     outputFolderVar.set(outputpath)
 
 def file_submit():
-    global progressVar
+    global progressVar, root
     global inputpath, outputpath, department
     global totalCols, endsSemCols, iaCols, endSemMarks, iaMarks, totalMarks, subjectcodes
+
     if len(inputpath) > 0:
-        dftotalMarks = pd.DataFrame()
-        dfendSemMarks = pd.DataFrame()
-        dfiaMarks = pd.DataFrame()
-        for i in range(len(inputpath)):
-            progressVar.set('Reading File ' + str(i+1))
-            endSemMarks, iaMarks, totalMarks = CreateMarkList(inputpath[i])
+        try:
+            dftotalMarks = pd.DataFrame()
+            dfendSemMarks = pd.DataFrame()
+            dfiaMarks = pd.DataFrame()
+            for i in range(len(inputpath)):
+                progressVar.set('Reading File ' + str(i+1))
+                endSemMarks, iaMarks, totalMarks = CreateMarkList(inputpath[i])
 
-            dfendSemMarks = pd.concat([dfendSemMarks, endSemMarks], sort=False)
-            dfiaMarks = pd.concat([dfiaMarks, iaMarks], sort=False)
-            dftotalMarks = pd.concat([dftotalMarks, totalMarks], sort=False)
+                dfendSemMarks = pd.concat([dfendSemMarks, endSemMarks], sort=False)
+                dfiaMarks = pd.concat([dfiaMarks, iaMarks], sort=False)
+                dftotalMarks = pd.concat([dftotalMarks, totalMarks], sort=False)
 
-            if i > 0:
-                col = list(endSemMarks.columns)
-                col2 = list(dfendSemMarks.columns[2:-3])
-                column = col[:-3] + [i for i in col2 if i not in col] + col[-3:]
-                dfendSemMarks = dfendSemMarks[column]
-                dfendSemMarks = dfendSemMarks.fillna(0)
-                dfendSemMarks.index = pd.RangeIndex(1, len(dfendSemMarks.index)+1)
+                if i > 0:
+                    col = list(endSemMarks.columns)
+                    col2 = list(dfendSemMarks.columns[2:-3])
+                    column = col[:-3] + [i for i in col2 if i not in col] + col[-3:]
+                    dfendSemMarks = dfendSemMarks[column]
+                    dfendSemMarks = dfendSemMarks.fillna(0)
+                    dfendSemMarks.index = pd.RangeIndex(1, len(dfendSemMarks.index)+1)
 
-                col = list(iaMarks.columns)
-                col2 = list(dfiaMarks.columns[2:-3])
-                column = col[:-3] + [i for i in col2 if i not in col] + col[-3:]
-                dfiaMarks = dfiaMarks[column]
-                dfiaMarks = dfiaMarks.fillna(0)
-                dfiaMarks.index = pd.RangeIndex(1, len(dfiaMarks.index)+1)
+                    col = list(iaMarks.columns)
+                    col2 = list(dfiaMarks.columns[2:-3])
+                    column = col[:-3] + [i for i in col2 if i not in col] + col[-3:]
+                    dfiaMarks = dfiaMarks[column]
+                    dfiaMarks = dfiaMarks.fillna(0)
+                    dfiaMarks.index = pd.RangeIndex(1, len(dfiaMarks.index)+1)
 
-                col = list(totalMarks.columns)
-                col2 = list(dftotalMarks.columns[2:-3])
-                column = col[:-3] + [i for i in col2 if i not in col] + col[-3:]
-                dftotalMarks = dftotalMarks[column]
-                dftotalMarks = dftotalMarks.fillna(0)
-                dftotalMarks.index = pd.RangeIndex(1, len(dftotalMarks.index)+1)
+                    col = list(totalMarks.columns)
+                    col2 = list(dftotalMarks.columns[2:-3])
+                    column = col[:-3] + [i for i in col2 if i not in col] + col[-3:]
+                    dftotalMarks = dftotalMarks[column]
+                    dftotalMarks = dftotalMarks.fillna(0)
+                    dftotalMarks.index = pd.RangeIndex(1, len(dftotalMarks.index)+1)
+        except:
+            messagebox.showerror("Error", 'Unable to Read File(s).\nThe software will quit once you click the button')
+            root.destroy()
+            return
 
-        progressVar.set('Creating Pass Analysis')
-        passAnalysis = createFinalAnalysisDF(dftotalMarks, totalCols)
+        try:
+            progressVar.set('Creating Pass Analysis')
+            passAnalysis = createFinalAnalysisDF(dftotalMarks, totalCols)
+        except:
+            messagebox.showerror("Error", 'Unable to Process Data.\nThe software will quit once you click the button')
+            root.destroy()
+            return
 
-        progressVar.set('Exporting Files')
-        exportData(outputpath, TotalMarks = dftotalMarks, PassingAnalysis = passAnalysis, ESEMarks = dfendSemMarks, IAMarks = dfiaMarks)
+        try:
+            progressVar.set('Exporting Files')
+            exportData(outputpath, TotalMarks = dftotalMarks, PassingAnalysis = passAnalysis, ESEMarks = dfendSemMarks, IAMarks = dfiaMarks)
+        except:
+            messagebox.showerror("Error", 'Unable to Export Files.\nThe software will quit once you click the button')
+            root.destroy()
+            return
 
-        progressVar.set('Plotting the data')
-        imgpath, subimgpath = createplots(dftotalMarks)
+        try:
+            progressVar.set('Plotting the data')
+            imgpath, subimgpath = createplots(dftotalMarks)
+        except:
+            messagebox.showerror("Error", 'Unable to Plot Data.\nThe software will quit once you click the button')
+            root.destroy()
+            return
 
-        progressVar.set('Creating Result Report')
-        createreport(dftotalMarks, dfendSemMarks, dfiaMarks, imgpath, subimgpath, outputpath, department.get())
+        try:
+            progressVar.set('Creating Result Report')
+            createreport(dftotalMarks, dfendSemMarks, dfiaMarks, imgpath, subimgpath, outputpath, department.get())
+        except:
+            messagebox.showerror("Error", 'Unable to Create Report.\nThe software will quit once you click the button')
+            root.destroy()
+            return
 
-        progressVar.set('Finding Internal KT Students')
-        ktIA = {}
-        for i in dfiaMarks.columns[2:-3]:
-            ktIA[i] = dfiaMarks[(dfiaMarks[i] < 8) & (dfiaMarks[i] > 0)][i]
 
-        ktStudent = {}
-        for k, v in ktIA.items():
-            ktStudent[k] = []
-            for i in list(v.index.values):
-                ktStudent[k].append(dfiaMarks.iloc[i-1,1])
-        progressVar.set('Creating KT Students List')
-        CreateKT(outputpath, ktStudent, department.get())
+        try:
+            progressVar.set('Finding Internal KT Students')
+            ktIA = {}
+            for i in dfiaMarks.columns[2:-3]:
+                ktIA[i] = dfiaMarks[(dfiaMarks[i] < 8) & (dfiaMarks[i] > 0)][i]
+
+            ktStudent = {}
+            for k, v in ktIA.items():
+                ktStudent[k] = []
+                for i in list(v.index.values):
+                    ktStudent[k].append(dfiaMarks.iloc[i-1,1])
+            progressVar.set('Creating KT Students List')
+            CreateKT(outputpath, ktStudent, department.get())
+        except:
+            messagebox.showerror("Error", 'Unable to Process Data to find KT Students.\nThe software will quit once you click the button')
+            root.destroy()
+            return
 
         progressVar.set('Analysis Complete. Proceed to Next Set of Results, if any.')
 
@@ -649,14 +686,54 @@ class Page(Frame):
 class Page1(Page):
     def __init__(self, *args, **kwargs):
         Page.__init__(self, *args, **kwargs)
+        try:
+            im = PIL.Image.open("media/RGIT.png")
+            im = im.resize((600, 100))
+            photo = PIL.ImageTk.PhotoImage(im)
+
+            logo = Label(self, image=photo)
+            logo.image = photo  # keep a reference!
+            logo.pack()
+        except:
+            messagebox.showerror("Error", 'Resource Missing.\nThe software will quit once you click the button')
+            global root
+            root.destroy()
+            return
+
+        steps = '''STEPS OF EXECUTION OF RESULT ANALYSIS
+                    \n1. Select Results(one or more, if elective subject present) to Analyse.
+                    \n2. Select the folder of desired output files.
+                    \n3. Select Department Name.
+                    \n4. Click on Submit button and wait for a few minutes.'''
+        stepsVar.set(steps)
+        stepsLabel = Label(self, textvariable = stepsVar, font = "Helvetica 14 bold", pady=40).pack()
+
+
+class Page2(Page):
+    def __init__(self, *args, **kwargs):
+        Page.__init__(self, *args, **kwargs)
+        try:
+            im = PIL.Image.open("media/RGIT.png")
+            im = im.resize((600, 100))
+            photo = PIL.ImageTk.PhotoImage(im)
+
+            logo = Label(self, image=photo)
+            logo.image = photo  # keep a reference!
+            logo.pack()
+        except:
+            messagebox.showerror("Error", 'Resource Missing.\nThe software will quit once you click the button')
+            global root
+            root.destroy()
+            return
 
         X = 40
-        Y = 40
+        Y = 100
+        # font = "Times 24 bold"
 
-        MainLabel = Label(self, text = 'RESULT ANALYSIS', width = 200, font = "Helvetica 24 bold", pady=10).pack()
+        # MainLabel = Label(self, text = 'RESULT ANALYSIS', width = 200, font = font, pady=10).pack()
 
-        progressVar.set('Select All Results and Output Folder and Submit')
-        progressLabel = Label(self, textvariable = progressVar, width = 200,font = "Helvetica 12 bold", pady=5).pack()
+        # progressVar.set('Select All Results and Output Folder and Submit')
+        # progressLabel = Label(self, textvariable = progressVar, width = 200,font = "Helvetica 12 bold", pady=5).pack()
 
         # Y = Y + 40
         #
@@ -667,21 +744,21 @@ class Page1(Page):
 
         labelName1 = Label(self, text = 'Select Results (Excel File)', width = 20, justify = LEFT, anchor = 'w')
         labelName1.place(x = X, y = Y)
-        entryName1 = Entry(self, textvariable = inputFileVar, width = 50)
-        entryName1.place(x = X + 210, y = Y)
-        buttonBrowse1 = Button(self, text = "Browse file", command = open_input_file, relief=RAISED )
-        buttonBrowse1.place(x = X + 700, y = Y + 2)
+        entryName1 = Entry(self, textvariable = inputFileVar, width = 40)
+        entryName1.place(x = X + 200, y = Y)
+        buttonBrowse1 = Button(self, text = "Browse file", command = open_input_file, relief=RAISED, width = 12 )
+        buttonBrowse1.place(x = X + 600, y = Y + 2)
 
         Y = Y + 40
 
-        labelRollList = Label(self, text = 'Select Output Folder', width = 20, justify = LEFT, anchor = 'w')
-        labelRollList.place(x = X, y = Y)
+        labelOutput = Label(self, text = 'Select Output Folder', width = 20, justify = LEFT, anchor = 'w')
+        labelOutput.place(x = X, y = Y)
 
-        entryRoll = Entry(self, textvariable = outputFolderVar, width = 50)
-        entryRoll.place(x = X + 210, y = Y)
+        entryOutput = Entry(self, textvariable = outputFolderVar, width = 40)
+        entryOutput.place(x = X + 200, y = Y)
 
-        buttonBrowse3 = Button(self, text = "Browse Folder", command = select_output_folder, relief=RAISED )
-        buttonBrowse3.place(x = X + 700, y = Y + 2)
+        buttonBrowse3 = Button(self, text = "Browse Folder", command = select_output_folder, relief=RAISED, width = 12 )
+        buttonBrowse3.place(x = X + 600, y = Y + 2)
 
         Y = Y + 40
 
@@ -689,76 +766,77 @@ class Page1(Page):
         labelDept.place(x = X, y = Y)
 
         radioDept1 = Radiobutton(self, text="COMPS", variable=department,value='COMPUTER ENGINEERING')
-        radioDept1.place(x = X + 210, y = Y)
+        radioDept1.place(x = X + 200, y = Y)
 
         radioDept2 = Radiobutton(self,text="EXTC", variable=department, value='ELECTRONICS AND TELECOMMUNICATION ENGINEERING')
-        radioDept2.place(x = X + 320, y = Y)
+        radioDept2.place(x = X + 300, y = Y)
 
         radioDept3 = Radiobutton(self,text="INSTR", variable=department, value='INSTRUMENTATION ENGINEERING')
-        radioDept3.place(x = X + 410, y = Y)
+        radioDept3.place(x = X + 400, y = Y)
 
         radioDept4 = Radiobutton(self,text="IT", variable=department, value='INFORMATION TECHNOLOGY ENGINEERING')
         radioDept4.place(x = X + 500, y = Y)
 
         radioDept5 = Radiobutton(self,text="MECH", variable=department, value='MECHANICAL ENGINEERING')
-        radioDept5.place(x = X + 590, y = Y)
+        radioDept5.place(x = X + 600, y = Y)
 
         Y = Y + 40
 
         buttonSubmit = Button(self, text = "Submit", command = file_submit, width = 10, relief=RAISED )
-        buttonSubmit.place(x = (windowWidth - 100) // 2, y = windowHeight - 100)
+        buttonSubmit.place(x = (windowWidth - 100) // 2, y = windowHeight - 80)
 
-# class Page2(Page):
-#     def __init__(self, *args, **kwargs):
-#         Page.__init__(self, *args, **kwargs)
-#
-#
-# class Page3(Page):
-#     def __init__(self, *args, **kwargs):
-#         Page.__init__(self, *args, **kwargs)
+class Page3(Page):
+    def __init__(self, *args, **kwargs):
+        Page.__init__(self, *args, **kwargs)
+        about = '''Developed by Students of 2020 Batch:
+                    \n1. Aayush Singh
+                    \n2. Nitish Talekar
+                    \n3. Sagar Ambilpure
+                    \nin association with RGIT-CODECELL
+                    '''
+        aboutVar.set(about)
+        aboutLabel = Label(self, textvariable = aboutVar, font = "Helvetica 13 bold", pady=60).pack()
 
 
 class MainView(Frame):
     def __init__(self, *args, **kwargs):
         Frame.__init__(self, *args, **kwargs)
         p1 = Page1(self)
-        # p2 = Page2(self)
-        # p3 = Page3(self)
+        p2 = Page2(self)
+        p3 = Page3(self)
 
         buttonframe = Frame(self)
         container = Frame(self)
-        buttonframe.pack(side="top", fill="x", expand=False)
-        container.pack(side="top", fill="both", expand=True)
+        buttonframe.pack(side=LEFT, fill="y", expand=False)
+        container.pack(side=LEFT, fill="both", expand=True)
 
         p1.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
-        # p2.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
-        # p3.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
+        p2.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
+        p3.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
 
-        b1 = Button(buttonframe, text="Analyse Departmental Results", command=p1.lift)
-        b1.config(bd=5, relief=RAISED)
-        # b2 = Button(buttonframe, text="Find KT Students", command=p2.lift)
-        # b2.config(bd=5, relief=RAISED)
-        # b2.config(fg='red')
-        # b3 = Button(buttonframe, text="Page 3", command=p3.lift)
-        # b3.config(bd=5, relief=RAISED)
-        # b3.config(fg='blue')
+        b1 = Button(buttonframe, text="Steps", command=p1.lift, padx=10)
+        b1.config(bd=5, relief=GROOVE)
+        b2 = Button(buttonframe, text="Analyse", command=p2.lift, padx=10)
+        b2.config(bd=5, relief=GROOVE)
+        b2.config(fg='red')
+        b3 = Button(buttonframe, text="About", command=p3.lift, padx=10)
+        b3.config(bd=5, relief=GROOVE)
+        b3.config(fg='blue')
 
-        b1.pack(side = LEFT, expand = True, fill = BOTH)
-        # b2.pack(side = LEFT, expand = True, fill = BOTH)
-        # b3.pack(side = LEFT, expand = True, fill = BOTH)
+        b1.pack(side = TOP, expand = True, fill = BOTH)
+        b2.pack(side = TOP, expand = True, fill = BOTH)
+        b3.pack(side = TOP, expand = True, fill = BOTH)
 
         p1.show()
 
 def main_function():
     main = MainView(root)
 
-    # Gets the requested values of the height and widht.
-
     main.pack(side="top", fill="both", expand=True)
 
     root.title('Result Analysis')
     root.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, positionRight, positionDown))
-
+    root.resizable(0,0)
     root.mainloop()
 
 
