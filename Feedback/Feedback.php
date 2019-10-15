@@ -15,6 +15,10 @@ $a = array('answer1','answer2','answer3','answer4','answer5','answer6','answer7'
 
 $iter = $_SESSION['iter'];
 
+// if($_SESSION['iter']>0){
+// echo $_SESSION['qu'][$_SESSION['iter']-1];
+// }
+
 $query = "SELECT * FROM teaching WHERE dept='$dept' AND sem='$sem' AND lec_div='$div';";
 $results = mysqli_query($db, $query);
 while($row = mysqli_fetch_assoc($results)){
@@ -93,9 +97,9 @@ else{
 			$rmrk = "--";
 		}
 		
-		$q = "INSERT INTO feedback_temp(teacher_id, sub_id, ques1, ques2, ques3, ques4, ques5, ques6, ques7, ques8, ques9, ques10, ques11, ques12,remark)";
-		$q = $q."VALUES ('$teacher','$subject','$ans1','$ans2','$ans3','$ans4','$ans5','$ans6','$ans7','$ans8','$ans9','$ans10','$ans11','$ans12','$rmrk');";
-		mysqli_query($db, $q);
+		$_SESSION['qu'][$_SESSION['iter']] = "INSERT INTO feedback_temp(teacher_id, sub_id, ques1, ques2, ques3, ques4, ques5, ques6, ques7, ques8, ques9, ques10, ques11, ques12,remark)";
+		$_SESSION['qu'][$_SESSION['iter']] = $_SESSION['qu'][$_SESSION['iter']]."VALUES ('$teacher','$subject','$ans1','$ans2','$ans3','$ans4','$ans5','$ans6','$ans7','$ans8','$ans9','$ans10','$ans11','$ans12','$rmrk');";
+		// mysqli_query($db, $q);
 		
 		$_SESSION['iter'] = $_SESSION['iter']+1;
 		if($_SESSION['iter']==$_SESSION['count']){
@@ -144,9 +148,6 @@ else{
 			<form class="contact100-form validate-form" action="Feedback.php" method="POST" enctype="multipart/form-data">
 				<span class="contact100-form-title">
 					Feedback Form
-					<?= $_SESSION['count'];?>
-					<?= $_SESSION['count-elec'];?>
-					<?= $_SESSION['iter'];?>
 				</span>
 				
 				<div class="fb2-wrap-input100">
@@ -162,7 +163,7 @@ else{
 				<?php 
 				if($_SESSION['iter']<$_SESSION['count']-1){
 				echo '<div class="wrap-input100 bg3">';
-					echo '<center><label class="label-inputx4">Subject '.$_SESSION['iter'].': <br>'.$sub[$_SESSION['iter']].'</label></center>';
+					echo '<center><label class="label-inputx4">Subject '.$_SESSION['iter']+1.': <br>'.$sub[$_SESSION['iter']].'</label></center>';
 				echo '</div>';
 				}
 				elseif($_SESSION['count-elec'] > 0){
@@ -227,6 +228,7 @@ else{
 		</div>
 	</div>
 
+<?php require "include/footer.php"?>
 
 
 	<!--===============================================================================================-->

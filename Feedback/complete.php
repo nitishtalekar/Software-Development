@@ -2,6 +2,13 @@
 
   
   if(isset($_POST['complete_fb'])){
+    
+    for ($i=0; $i < $_SESSION['count']; $i++) {
+      $q = $_SESSION['qu'][$i];
+      // echo $q;
+      mysqli_query($db, $q);
+    }
+    
 		header('location: index.php');
 	}
 ?>
@@ -40,7 +47,7 @@
 
 	<div class="container-contact100">
 		<div class="wrap-contact100">
-			<form class="contact100-form validate-form" action="index.php" method="POST" enctype="multipart/form-data">
+			<form class="contact100-form validate-form" action="complete.php" method="POST" enctype="multipart/form-data">
 				<span class="contact100-form-title">
 					Feedback
 				</span>
@@ -61,6 +68,8 @@
 			</form>
 		</div>
 	</div>
+  
+  <?php require "include/footer.php"?>
 
 
 

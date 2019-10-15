@@ -9,6 +9,7 @@
     $_SESSION['Sem'] = $sem;
     $_SESSION['Div'] = $div;
     $_SESSION['iter'] = 0;
+    $_SESSION['qu'] = array();
 		header('location: Feedback.php');
 	}
 ?>
@@ -120,6 +121,7 @@
 		</div>
 	</div>
 
+  <?php require "include/footer.php"?>
 
 
 	<!--===============================================================================================-->

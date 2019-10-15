@@ -334,6 +334,8 @@ if(isset($_POST['trunc_fb'])){
 			</form>
 		</div>
 	</div>
+  
+  <?php require "include/footer.php"?>
 
 
 

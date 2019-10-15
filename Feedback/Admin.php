@@ -83,6 +83,8 @@ if(isset($_POST['admin'])){
 			</form>
 		</div>
 	</div>
+  
+  <?php require "include/footer.php"?>
 
 
 
