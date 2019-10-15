@@ -163,7 +163,7 @@ else{
 				<?php 
 				if($_SESSION['iter']<$_SESSION['count']-1){
 				echo '<div class="wrap-input100 bg3">';
-					echo '<center><label class="label-inputx4">Subject '.$_SESSION['iter']+1.': <br>'.$sub[$_SESSION['iter']].'</label></center>';
+					echo '<center><label class="label-inputx4">Subject '.($_SESSION['iter']+1).': <br>'.$sub[$_SESSION['iter']].'</label></center>';
 				echo '</div>';
 				}
 				elseif($_SESSION['count-elec'] > 0){
