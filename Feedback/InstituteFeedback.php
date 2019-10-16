@@ -1,20 +1,23 @@
 <?php require('dbconnect.php');
 
-  
-  if(isset($_POST['complete_fb'])){
-    
-    for ($i=0; $i < $_SESSION['count']; $i++) {
-      $q = $_SESSION['qu'][$i];
-      // echo $q;
-      mysqli_query($db, $q);
-    }
-    $q1 = $_SESSION['inst_fb'];
-    mysqli_query($db, $q1);
-    
-		header('location: index.php');
-	}
-?>
+$dept = $_SESSION['Dept'];
+$sem = $_SESSION['Sem'];
+$div = $_SESSION['Div'];
 
+	if(isset($_POST['inst_feedback'])){
+		if ($_POST['inst_remark']){
+			$irmrk = mysqli_real_escape_string($db, $_POST['inst_remark']);
+		}
+		else{
+			$irmrk = "--";
+		}
+		
+		$_SESSION['inst_fb'] = "INSERT INTO feedback_inst_temp( dept, sem, div_id, comment) VALUES ('$dept','$sem','$div','$irmrk')";
+		
+		header('location: complete.php');
+	}
+
+?>
 <html lang="en">
 <head>
 	<title>Feedback</title>
@@ -49,20 +52,36 @@
 
 	<div class="container-contact100">
 		<div class="wrap-contact100">
-			<form class="contact100-form validate-form" action="complete.php" method="POST" enctype="multipart/form-data">
+			<form class="contact100-form validate-form" action="InstituteFeedback.php" method="POST" enctype="multipart/form-data">
 				<span class="contact100-form-title">
-					Feedback
+					Feedback Form
 				</span>
 				
-				<div class="wrap-input100">
-					<center><label class="label-inputx">FEEDBACK COMPLETE</label></center>
+				<div class="fb2-wrap-input100">
+					<center><label class="label-inputx">Department:</label></center>
+					<center><label class="label-inputx3"><?= $dept ?></label></center>
+				</div>
+				<div class="fb2-wrap-input100">
+					<center><label class="label-inputx">Semester: <br><?= $sem ?></label></center>
+				</div>
+				<div class="fb2-wrap-input100">
+					<center><label class="label-inputx">Division: <br><?= $div ?></label></center>
+				</div>
+				<div class="wrap-input100 bg3">
+					<center><label class="label-inputx4">Institutional Feedback</label></center>
 				</div>
 				
+        <hr width=100%>
+				<div class="wrap-input100  bg2 rs1-alert-validate" >
+					<span class="label-input100">Comments</span>
+					<textarea class="input100" name="inst_remark" placeholder="Enter Comments Here"></textarea>
+				</div>
 				
+				<hr width=100%>
 				<div class="container-contact100-form-btn">
-					<button type="submit" class="contact100-form-btn" name="complete_fb">
+					<button type="submit" class="contact100-form-btn" name="inst_feedback">
 						<span>
-							End
+							Next
 							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
 						</span>
 					</button>
@@ -70,9 +89,8 @@
 			</form>
 		</div>
 	</div>
-  
-  <?php require "include/footer.php"?>
 
+<?php require "include/footer.php"?>
 
 
 	<!--===============================================================================================-->
