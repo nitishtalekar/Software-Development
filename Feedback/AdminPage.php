@@ -1,4 +1,291 @@
 <?php require('dbconnect.php');
+require('FPDF/fpdf.php');
+
+
+function InstituteCompleteFeedback(){
+    // Cell(float w , float h , string txt , mixed border , int ln , string align , boolean fill , mixed link)
+    global $db;
+    $pdf2= new FPDF('P','mm','A4');
+
+    $pdf2->AddPage();
+
+    $pdf2->Image('data/RGIT.png',10,0,0,35);
+    $pdf2->SetFont('Arial','B',15);
+
+    $pdf2->SetXY(10,30);
+    $pdf2->SetFont('Arial','B',15);
+    $pdf2->Cell(0,10, 'Institute Reviews', 0,1,'C');
+
+    $q = "SELECT * from feedback_inst";
+    $result = mysqli_query($db, $q);
+    while($row = mysqli_fetch_assoc($result)){
+      if($row['comment']!='-'){
+        $pdf2->SetFont('Arial','',12);
+        $pdf2->MultiCell(0, 8, ucfirst(strtolower($row['comment'])), 'T','L');
+      }
+    }
+    $pdf2->SetFont('Arial','',12);
+    $pdf2->MultiCell(0, 8, "", 'T','L');
+    $pdf2->Output('OUTPUT/InstituteSummary/AllFeedback.pdf', 'F');
+}
+
+function InstituteDivWiseFeedback($idept,$isem,$idiv,$ir,$y){
+    // Cell(float w , float h , string txt , mixed border , int ln , string align , boolean fill , mixed link)
+    global $db;
+    $pdf2= new FPDF('P','mm','A4');
+
+    $pdf2->AddPage();
+
+    $pdf2->Image('data/RGIT.png',10,0,0,35);
+    $pdf2->SetFont('Arial','B',15);
+
+    $pdf2->SetXY(10,30);
+    $pdf2->SetFont('Arial','B',15);
+    $pdf2->Cell(0,10, 'DEPARTMENT OF '.strtoupper($idept), 0,1,'C');
+
+    $pdf2->SetFont('Arial','',12);
+    $pdf2->Cell(35,5, 'SEMESTER', 0,0,'L');
+    $pdf2->Cell(100,5, ': '.strtoupper($isem), 0,1,'L');
+
+    $pdf2->SetFont('Arial','',12);
+    $pdf2->Cell(35,5, 'Year', 0,0,'L');
+    $pdf2->Cell(100,5, ': '.strtoupper($y)."    Div   :    ".$idiv, 0,1,'L');
+
+    $remarks = explode('0-0', $ir);
+    $x = count($remarks)-1;
+    $pdf2->SetFont('Arial','B',14);
+    $pdf2->Cell(0,10, 'Student Reviews - Institute', 'T',1,'C');
+    while($x >= 0){
+      if($remarks[$x]!='--'){
+        $pdf2->SetFont('Arial','',12);
+        $pdf2->MultiCell(0, 8, ucfirst(strtolower($remarks[$x])), 0,'L');
+      }
+      $x = $x-1;
+    }
+    $pdf2->Output('OUTPUT/InstituteResults/'.$idept.'-'.$isem.'-'.$idiv.'.pdf', 'F');
+
+}
+
+function SubjectDivWiseFeedback($fbresults, $teacherresults, $subjectresults,$subjectid,$teacherid,$divisionid){
+    global $db;
+    $pdf= new FPDF('P','mm','A4');
+    $pdf->AddPage();
+
+    //HEADER only on page 1
+    $pdf->Image('data/RGIT.png',10,0,0,35);
+    $pdf->SetFont('Arial','B',15);
+
+    $pdf->SetXY(10,30);
+    $pdf->SetFont('Arial','B',15);
+    $pdf->Cell(0,10, 'DEPARTMENT OF '.strtoupper($teacherresults['teacher_dept']), 0,1,'C');
+
+    $pdf->SetFont('Arial','',12);
+    $pdf->Cell(35,5, 'Professor Name', 0,0,'L');
+    $pdf->Cell(100,5, ': '.strtoupper($teacherresults['teacher_name']), 0,1,'L');
+
+    $pdf->SetFont('Arial','',12);
+    $pdf->Cell(35,5, 'Subject Name', 0,0,'L');
+    $pdf->Cell(100,5, ': '.strtoupper($subjectresults['sub_name']), 0,1,'L');
+
+    $pdf->SetFont('Arial','',12);
+    $pdf->Cell(35,5, 'Year', 0,0,'L');
+    $pdf->Cell(100,5, ': '.strtoupper($fbresults['year'])."    Div   :    ".$divisionid, 0,1,'L');
+
+    $pdf->Ln(5);
+
+    $pdf->Image('data/RGIT.png',10,0,0,35);
+    $pdf->SetFont('Arial','B',15);
+
+    $pdf->SetXY(10,30);
+    $pdf->SetFont('Arial','B',15);
+    $pdf->Cell(0,10, 'DEPARTMENT OF '.strtoupper($teacherresults['teacher_dept']), 0,1,'C');
+
+    $pdf->Ln(5);
+
+    $width_cell=array(35,20,20,20,20,20,20,30);
+    $pdf->SetFont('Arial','',12);
+
+    //Background color of header//
+    $pdf->SetFillColor(255,255,255);
+    // $pdf->SetXY(10,40);
+    // Header starts ///
+    //First header column //
+    $pdf->Cell($width_cell[0],10,'Question no',1,0,'C',true);
+    //Second header column//
+    $pdf->Cell($width_cell[1],10,'A',1,0,'C',true);
+    //Third header column//
+    $pdf->Cell($width_cell[2],10,'B',1,0,'C',true);
+    //Fourth header column//
+    $pdf->Cell($width_cell[3],10,'C',1,0,'C',true);
+    //Third header column//
+    $pdf->Cell($width_cell[4],10,'D',1,0,'C',true);
+    $pdf->Cell($width_cell[5],10,'E',1,0,'C',true);
+    $pdf->Cell($width_cell[6],10,'Total',1,0,'C',true);
+    $pdf->Cell($width_cell[7],10,'Average %',1,1,'C',true);
+
+    $q = "SELECT * FROM feedback_count where teacher_id='$teacherid' and div_id='$divisionid' and sub_id='$subjectid' ORDER BY question_no; ";
+    $questions = mysqli_query($db, $q);
+
+    $fill=false;
+
+    $totalsum = 0;
+
+    while($row = mysqli_fetch_assoc($questions)){
+
+      $pdf->Cell($width_cell[0],10,$row['question_no'],1,0,'C',$fill);
+      $pdf->Cell($width_cell[1],10,$row['count_5'],1,0,'C',$fill);
+      $pdf->Cell($width_cell[2],10,$row['count_4'],1,0,'C',$fill);
+      $pdf->Cell($width_cell[3],10,$row['count_3'],1,0,'C',$fill);
+      $pdf->Cell($width_cell[4],10,$row['count_2'],1,0,'C',$fill);
+      $pdf->Cell($width_cell[5],10,$row['count_1'],1,0,'C',$fill);
+      $sum = $row['count_1'] + $row['count_2'] + $row['count_3'] + $row['count_4'] + $row['count_5'] ;
+      $avg = $row['count_1'] + $row['count_2'] * 2 + $row['count_3'] * 3 + $row['count_4'] * 4 + $row['count_5'] * 5 ;
+      $rndavg = ($avg/(int)$sum)*20;
+      $totalsum = $totalsum + $rndavg;
+      $pdf->Cell($width_cell[6],10,$sum,1,0,'C',$fill);
+      $pdf->Cell($width_cell[7],10,round($rndavg,2)."%",1,1,'C',$fill);
+    }
+
+    $pdf->SetFont('Arial','B',20);
+    $pdf->Cell(0,10, 'Overall Average :'.round(($totalsum/(int)12),2)."%", 'T',1,'C');
+
+    $pdf->AddPage();
+    $remarks = explode('0-0', $fbresults['remark']);
+    $x = count($remarks)-1;
+    $pdf->SetFont('Arial','B',14);
+    $pdf->Cell(0,10, 'Student Reviews', 'T',1,'C');
+    while($x >= 0){
+      if($remarks[$x]!='--'){
+        $pdf->SetFont('Arial','',10);
+        $pdf->MultiCell(0, 8, ucfirst(strtolower($remarks[$x])), 'T','L');
+      }
+      $x = $x-1;
+    }
+    $pdf->Output('OUTPUT/FeedbackResults/'.$teacherresults['teacher_dept'].'-'.$subjectresults['sub_name'].'-'.$divisionid.'-'.$teacherresults['teacher_name'].'-'.$fbresults['year'].'.pdf', 'F');
+
+}
+
+function SubjectDivWiseCompleteFeedback($fbresults, $teacherresults, $subjectresults,$subjectid,$teacherid,$divisionid){
+    // Cell(float w , float h , string txt , mixed border , int ln , string align , boolean fill , mixed link)
+    global $db;
+    $pdf= new FPDF('P','mm','A4');
+    $pdf->AddPage();
+
+    //HEADER only on page 1
+    $pdf->Image('data/RGIT.png',10,0,0,35);
+    $pdf->SetFont('Arial','B',15);
+
+    $pdf->SetXY(10,30);
+    $pdf->SetFont('Arial','B',15);
+    $pdf->Cell(0,10, 'DEPARTMENT OF '.strtoupper($teacherresults['teacher_dept']), 0,1,'C');
+
+    $pdf->SetFont('Arial','',12);
+    $pdf->Cell(35,5, 'Professor Name', 0,0,'L');
+    $pdf->Cell(100,5, ': '.strtoupper($teacherresults['teacher_name']), 0,1,'L');
+
+    $pdf->SetFont('Arial','',12);
+    $pdf->Cell(35,5, 'Subject Name', 0,0,'L');
+    $pdf->Cell(100,5, ': '.strtoupper($subjectresults['sub_name']), 0,1,'L');
+
+    $pdf->SetFont('Arial','',12);
+    $pdf->Cell(35,5, 'Year', 0,0,'L');
+    $pdf->Cell(100,5, ': '.strtoupper($fbresults['year'])."    Div   :    ".$divisionid, 0,1,'L');
+
+    $pdf->Ln(5);
+
+    $pdf->SetFont('Arial','B',14);
+    $pdf->Cell(0,10, 'Feedback Questionnaire', 'T',1,'C');
+
+
+    $q = "SELECT * FROM feedback_ques";
+    $questions = mysqli_query($db, $q);
+    $ansindex = 1;
+
+    while($row = mysqli_fetch_assoc($questions)){
+        $pdf->SetFont('Arial','',12);
+        $pdf->MultiCell(0, 15, 'Q.'.$ansindex.' '.ucfirst(strtolower($row['question'])), 0,'L');
+        $pdf->SetFont('Arial','',11);
+        $fbscore = $fbresults['score'.$ansindex];
+        $pdf->SetXY(20, $pdf->GetY());
+        $pdf->Cell(0,0,'Feedback: '.$row['ans'.(6-$fbscore)],0,1,'L');
+        $pdf->Ln(2);
+        $ansindex = $ansindex + 1;
+    }
+
+   //  //--------------------------//
+    $pdf->AddPage();
+
+    $pdf->Image('data/RGIT.png',10,0,0,35);
+    $pdf->SetFont('Arial','B',15);
+
+    $pdf->SetXY(10,30);
+    $pdf->SetFont('Arial','B',15);
+    $pdf->Cell(0,10, 'DEPARTMENT OF '.strtoupper($teacherresults['teacher_dept']), 0,1,'C');
+
+    $pdf->Ln(5);
+
+    $width_cell=array(35,20,20,20,20,20,20,30);
+    $pdf->SetFont('Arial','',12);
+
+    //Background color of header//
+    $pdf->SetFillColor(255,255,255);
+    $pdf->SetXY(10,40);
+    // Header starts ///
+    //First header column //
+    $pdf->Cell($width_cell[0],10,'Question no',1,0,'C',true);
+    //Second header column//
+    $pdf->Cell($width_cell[1],10,'A',1,0,'C',true);
+    //Third header column//
+    $pdf->Cell($width_cell[2],10,'B',1,0,'C',true);
+    //Fourth header column//
+    $pdf->Cell($width_cell[3],10,'C',1,0,'C',true);
+    //Third header column//
+    $pdf->Cell($width_cell[4],10,'D',1,0,'C',true);
+    $pdf->Cell($width_cell[5],10,'E',1,0,'C',true);
+    $pdf->Cell($width_cell[6],10,'Total',1,0,'C',true);
+    $pdf->Cell($width_cell[7],10,'Average %',1,1,'C',true);
+
+    $q = "SELECT * FROM feedback_count where teacher_id='$teacherid' and div_id='$divisionid' and sub_id='$subjectid' ORDER BY question_no; ";
+    $questions = mysqli_query($db, $q);
+
+    $fill=false;
+
+    $totalsum = 0;
+
+    while($row = mysqli_fetch_assoc($questions)){
+
+      $pdf->Cell($width_cell[0],10,$row['question_no'],1,0,'C',$fill);
+      $pdf->Cell($width_cell[1],10,$row['count_5'],1,0,'C',$fill);
+      $pdf->Cell($width_cell[2],10,$row['count_4'],1,0,'C',$fill);
+      $pdf->Cell($width_cell[3],10,$row['count_3'],1,0,'C',$fill);
+      $pdf->Cell($width_cell[4],10,$row['count_2'],1,0,'C',$fill);
+      $pdf->Cell($width_cell[5],10,$row['count_1'],1,0,'C',$fill);
+      $sum = $row['count_1'] + $row['count_2'] + $row['count_3'] + $row['count_4'] + $row['count_5'] ;
+      $avg = $row['count_1'] + $row['count_2'] * 2 + $row['count_3'] * 3 + $row['count_4'] * 4 + $row['count_5'] * 5 ;
+      $rndavg = ($avg/(int)$sum)*20;
+      $totalsum = $totalsum + $rndavg;
+      $pdf->Cell($width_cell[6],10,$sum,1,0,'C',$fill);
+      $pdf->Cell($width_cell[7],10,round($rndavg,2)."%",1,1,'C',$fill);
+    }
+
+    $pdf->SetFont('Arial','B',20);
+    $pdf->Cell(0,10, 'Overall Average :'.round(($totalsum/(int)12),2)."%", 'T',1,'C');
+
+    $pdf->AddPage();
+    $remarks = explode('0-0', $fbresults['remark']);
+    $x = count($remarks)-1;
+    $pdf->SetFont('Arial','B',14);
+    $pdf->Cell(0,10, 'Student Reviews', 'T',1,'C');
+    while($x >= 0){
+      if($remarks[$x]!='--'){
+        $pdf->SetFont('Arial','',12);
+        $pdf->MultiCell(0, 8, ucfirst(strtolower($remarks[$x])), 0,'L');
+      }
+      $x = $x-1;
+    }
+    $pdf->Output('OUTPUT/FeedbackSummary/'.$teacherresults['teacher_dept'].'-'.$subjectresults['sub_name'].'-'.$divisionid.'-'.$teacherresults['teacher_name'].'-'.$fbresults['year'].'.pdf', 'F');
+
+}
 
 if($_SESSION['admin'] == 0){
   header('location: index.php');
@@ -126,168 +413,6 @@ if(isset($_POST['upload_fb'])){
 
 }
 
-require('FPDF/fpdf.php');
-
-
-function createpdf($fbresults, $teacherresults, $subjectresults,$subjectid,$teacherid,$divisionid){
-    // Cell(float w , float h , string txt , mixed border , int ln , string align , boolean fill , mixed link)
-    global $db;
-    $pdf= new FPDF('P','mm','A4');
-    $pdf->AddPage();
-
-    //HEADER only on page 1
-    $pdf->Image('data/RGIT.png',10,0,0,35);
-    $pdf->SetFont('Arial','B',15);
-
-    $pdf->SetXY(10,30);
-    $pdf->SetFont('Arial','B',15);
-    $pdf->Cell(0,10, 'DEPARTMENT OF '.strtoupper($teacherresults['teacher_dept']), 0,1,'C');
-
-    $pdf->SetFont('Arial','',12);
-    $pdf->Cell(35,5, 'Professor Name', 0,0,'L');
-    $pdf->Cell(100,5, ': '.strtoupper($teacherresults['teacher_name']), 0,1,'L');
-
-    $pdf->SetFont('Arial','',12);
-    $pdf->Cell(35,5, 'Subject Name', 0,0,'L');
-    $pdf->Cell(100,5, ': '.strtoupper($subjectresults['sub_name']), 0,1,'L');
-
-    $pdf->SetFont('Arial','',12);
-    $pdf->Cell(35,5, 'Year', 0,0,'L');
-    $pdf->Cell(100,5, ': '.strtoupper($fbresults['year'])."    Div   :    ".$divisionid, 0,1,'L');
-
-    $pdf->Ln(5);
-
-    $pdf->SetFont('Arial','B',14);
-    $pdf->Cell(0,10, 'Feedback Questionnaire', 'T',1,'C');
-
-
-    $q = "SELECT * FROM feedback_ques";
-    $questions = mysqli_query($db, $q);
-    $ansindex = 1;
-
-    while($row = mysqli_fetch_assoc($questions)){
-        $pdf->SetFont('Arial','',12);
-        $pdf->MultiCell(0, 15, 'Q.'.$ansindex.' '.ucfirst(strtolower($row['question'])), 0,'L');
-        $pdf->SetFont('Arial','',11);
-        $fbscore = $fbresults['score'.$ansindex];
-        $pdf->SetXY(20, $pdf->GetY());
-        $pdf->Cell(0,0,'Feedback: '.$row['ans'.(6-$fbscore)],0,1,'L');
-        $pdf->Ln(2);
-        $ansindex = $ansindex + 1;
-    }
-
-   //  //--------------------------//
-    $pdf->AddPage();
-
-    $pdf->Image('data/RGIT.png',10,0,0,35);
-    $pdf->SetFont('Arial','B',15);
-
-    $pdf->SetXY(10,30);
-    $pdf->SetFont('Arial','B',15);
-    $pdf->Cell(0,10, 'DEPARTMENT OF '.strtoupper($teacherresults['teacher_dept']), 0,1,'C');
-
-    $pdf->Ln(5);
-
-    $width_cell=array(35,20,20,20,20,20,20,30);
-    $pdf->SetFont('Arial','',12);
-
-    //Background color of header//
-    $pdf->SetFillColor(255,255,255);
-    $pdf->SetXY(10,40);
-    // Header starts ///
-    //First header column //
-    $pdf->Cell($width_cell[0],10,'Question no',1,0,'C',true);
-    //Second header column//
-    $pdf->Cell($width_cell[1],10,'A',1,0,'C',true);
-    //Third header column//
-    $pdf->Cell($width_cell[2],10,'B',1,0,'C',true);
-    //Fourth header column//
-    $pdf->Cell($width_cell[3],10,'C',1,0,'C',true);
-    //Third header column//
-    $pdf->Cell($width_cell[4],10,'D',1,0,'C',true);
-    $pdf->Cell($width_cell[5],10,'E',1,0,'C',true);
-    $pdf->Cell($width_cell[6],10,'Total',1,0,'C',true);
-    $pdf->Cell($width_cell[7],10,'Average %',1,1,'C',true);
-
-    $q = "SELECT * FROM feedback_count where teacher_id='$teacherid' and div_id='$divisionid' and sub_id='$subjectid' ORDER BY question_no; ";
-    $questions = mysqli_query($db, $q);
-
-    $fill=false;
-
-    $totalsum = 0;
-
-    while($row = mysqli_fetch_assoc($questions)){
-
-      $pdf->Cell($width_cell[0],10,$row['question_no'],1,0,'C',$fill);
-      $pdf->Cell($width_cell[1],10,$row['count_5'],1,0,'C',$fill);
-      $pdf->Cell($width_cell[2],10,$row['count_4'],1,0,'C',$fill);
-      $pdf->Cell($width_cell[3],10,$row['count_3'],1,0,'C',$fill);
-      $pdf->Cell($width_cell[4],10,$row['count_2'],1,0,'C',$fill);
-      $pdf->Cell($width_cell[5],10,$row['count_1'],1,0,'C',$fill);
-      $sum = $row['count_1'] + $row['count_2'] + $row['count_3'] + $row['count_4'] + $row['count_5'] ;
-      $avg = $row['count_1'] + $row['count_2'] * 2 + $row['count_3'] * 3 + $row['count_4'] * 4 + $row['count_5'] * 5 ;
-      $rndavg = ($avg/(int)$sum)*20;
-      $totalsum = $totalsum + $rndavg;
-      $pdf->Cell($width_cell[6],10,$sum,1,0,'C',$fill);
-      $pdf->Cell($width_cell[7],10,round($rndavg,2)."%",1,1,'C',$fill);
-    }
-
-    $pdf->SetFont('Arial','B',20);
-    $pdf->Cell(0,10, 'Overall Average :'.round(($totalsum/(int)12),2)."%", 'T',1,'C');
-
-    $pdf->AddPage();
-    $remarks = explode('0-0', $fbresults['remark']);
-    $x = count($remarks)-1;
-    $pdf->SetFont('Arial','B',14);
-    $pdf->Cell(0,10, 'Student Reviews', 'T',1,'C');
-    while($x >= 0){
-      if($remarks[$x]!='--'){
-        $pdf->SetFont('Arial','',12);
-        $pdf->MultiCell(0, 8, ucfirst(strtolower($remarks[$x])), 0,'L');
-      }
-      $x = $x-1;
-    }
-    $pdf->Output('FeedbackOutputs/'.$teacherresults['teacher_dept'].'-'.$subjectresults['sub_name'].'-'.$divisionid.'-'.$teacherresults['teacher_name'].'-'.$fbresults['year'].'.pdf', 'F');
-
-}
-
-function createpdf_inst($idept,$isem,$idiv,$ir,$y){
-    // Cell(float w , float h , string txt , mixed border , int ln , string align , boolean fill , mixed link)
-    global $db;
-    $pdf2= new FPDF('P','mm','A4');
-
-    $pdf2->AddPage();
-
-    $pdf2->Image('data/RGIT.png',10,0,0,35);
-    $pdf2->SetFont('Arial','B',15);
-
-    $pdf2->SetXY(10,30);
-    $pdf2->SetFont('Arial','B',15);
-    $pdf2->Cell(0,10, 'DEPARTMENT OF '.strtoupper($idept), 0,1,'C');
-
-    $pdf2->SetFont('Arial','',12);
-    $pdf2->Cell(35,5, 'SEMESTER', 0,0,'L');
-    $pdf2->Cell(100,5, ': '.strtoupper($isem), 0,1,'L');
-
-    $pdf2->SetFont('Arial','',12);
-    $pdf2->Cell(35,5, 'Year', 0,0,'L');
-    $pdf2->Cell(100,5, ': '.strtoupper($y)."    Div   :    ".$idiv, 0,1,'L');
-
-    $remarks = explode('0-0', $ir);
-    $x = count($remarks)-1;
-    $pdf2->SetFont('Arial','B',14);
-    $pdf2->Cell(0,10, 'Student Reviews - Institute', 'T',1,'C');
-    while($x >= 0){
-      if($remarks[$x]!='--'){
-        $pdf2->SetFont('Arial','',12);
-        $pdf2->MultiCell(0, 8, ucfirst(strtolower($remarks[$x])), 0,'L');
-      }
-      $x = $x-1;
-    }
-    $pdf2->Output('InstituteFeedbackOutputs/'.$idept.'-'.$isem.'-'.$idiv.'.pdf', 'F');
-
-}
-
 
 
 if(isset($_POST['summary_fb'])){
@@ -309,7 +434,8 @@ if(isset($_POST['summary_fb'])){
           $subjectresults = mysqli_query($db, $q3);
           $subjectresults = mysqli_fetch_array($subjectresults);
 
-          createpdf($fbresults, $teacherresults, $subjectresults,$subjectid,$teacherid,$divisionid);
+          SubjectDivWiseCompleteFeedback($fbresults, $teacherresults, $subjectresults,$subjectid,$teacherid,$divisionid);
+          SubjectDivWiseFeedback($fbresults, $teacherresults, $subjectresults,$subjectid,$teacherid,$divisionid);
 
       }
       $qtr = "TRUNCATE table feedback_count";
@@ -339,7 +465,8 @@ if(isset($_POST['summary_fb'])){
           // $subjectresults = mysqli_query($db, $q3);
           // $subjectresults = mysqli_fetch_array($subjectresults);
 
-          createpdf_inst($idept,$isem,$idiv,$ir,$yr);
+          InstituteDivWiseFeedback($idept,$isem,$idiv,$ir,$yr);
+          InstituteCompleteFeedback();
 
       }
       $qtr = "TRUNCATE table feedback_inst_temp";
@@ -352,6 +479,7 @@ if(isset($_POST['summary_fb'])){
 
 
 }
+
 if(isset($_POST['trunc_fb'])){
 
     $q1 = "TRUNCATE table feedback_temp";
