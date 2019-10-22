@@ -60,17 +60,7 @@ else{
 }
 	$_SESSION['count'] = $arrlength;
 	$_SESSION['count-elec'] = $arrlength2;
-	
-	// echo "SUB<br>";
-	// for ($i=0; $i < $_SESSION['count']; $i++) {
-	// 	echo $teach[$i].'<br>';
-	// 	// echo $_SESSION['count'];
-	// }
-	// echo "ELEC<br>";
-	// for ($i=0; $i < $_SESSION['count-elec'] ; $i++) {
-	// 	echo $eteach[$i].'<br>';
-	// }
-	
+
 	
 	if(isset($_POST['feedback'])){
 		

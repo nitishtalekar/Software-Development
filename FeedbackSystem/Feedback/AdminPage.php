@@ -19,11 +19,17 @@ function InstituteCompleteFeedback(){
     $q = "SELECT * from feedback_inst";
     $result = mysqli_query($db, $q);
     while($row = mysqli_fetch_assoc($result)){
-      if($row['comment']!='-'){
+    $remarks = explode('0-0', $row['comment']);
+    $x = count($remarks)-1;
+    while($x >= 0){
+      if($remarks[$x]!='--' && $remarks[$x]!=' '){
         $pdf2->SetFont('Arial','',12);
-        $pdf2->MultiCell(0, 8, ucfirst(strtolower($row['comment'])), 'T','L');
+        $pdf2->MultiCell(0, 8, ucfirst(strtolower($remarks[$x])),'T','L');
       }
+      $x = $x-1;
     }
+    $pdf2->MultiCell(0, 8, "",'T','L');
+  }
     $pdf2->SetFont('Arial','',12);
     $pdf2->MultiCell(0, 8, "", 'T','L');
     $pdf2->Output('OUTPUT/InstituteSummary/AllFeedback.pdf', 'F');
@@ -58,7 +64,8 @@ function InstituteDivWiseFeedback($idept,$isem,$idiv,$ir,$y){
     while($x >= 0){
       if($remarks[$x]!='--'){
         $pdf2->SetFont('Arial','',12);
-        $pdf2->MultiCell(0, 8, ucfirst(strtolower($remarks[$x])), 0,'L');
+        $pdf2->MultiCell(0, 8, ucfirst(strtolower($remarks[$x])), 'T','L');
+        $pdf2->Ln(5);
       }
       $x = $x-1;
     }
@@ -77,7 +84,11 @@ function SubjectDivWiseFeedback($fbresults, $teacherresults, $subjectresults,$su
 
     $pdf->SetXY(10,30);
     $pdf->SetFont('Arial','B',15);
-    $pdf->Cell(0,10, 'DEPARTMENT OF '.strtoupper($teacherresults['teacher_dept']), 0,1,'C');
+    $pdf->Cell(0,10, 'DEPARTMENT OF '.strtoupper($subjectresults['sub_dept']), 0,1,'C');
+    
+    $pdf->SetFont('Arial','',12);
+    $pdf->Cell(0,10, strtoupper($fbresults['year']), 0,1,'R');
+    // $pdf->Cell(100,5, ': '.strtoupper($subjectresults['sub_name']), 0,1,'L');
 
     $pdf->SetFont('Arial','',12);
     $pdf->Cell(35,5, 'Professor Name', 0,0,'L');
@@ -88,28 +99,21 @@ function SubjectDivWiseFeedback($fbresults, $teacherresults, $subjectresults,$su
     $pdf->Cell(100,5, ': '.strtoupper($subjectresults['sub_name']), 0,1,'L');
 
     $pdf->SetFont('Arial','',12);
-    $pdf->Cell(35,5, 'Year', 0,0,'L');
-    $pdf->Cell(100,5, ': '.strtoupper($fbresults['year'])."    Div   :    ".$divisionid, 0,1,'L');
-
+    $pdf->Cell(35,5, 'Department', 0,0,'L');
+    $pdf->Cell(100,5, ': '.strtoupper($subjectresults['sub_dept'])."    Div   :    ".$divisionid, 0,1,'L');
+    
+    // strtoupper($fbresults['year'])
+    
     $pdf->Ln(5);
 
-    $pdf->Image('data/RGIT.png',10,0,0,35);
-    $pdf->SetFont('Arial','B',15);
 
-    $pdf->SetXY(10,30);
-    $pdf->SetFont('Arial','B',15);
-    $pdf->Cell(0,10, 'DEPARTMENT OF '.strtoupper($teacherresults['teacher_dept']), 0,1,'C');
-
-    $pdf->Ln(5);
 
     $width_cell=array(35,20,20,20,20,20,20,30);
     $pdf->SetFont('Arial','',12);
 
     //Background color of header//
     $pdf->SetFillColor(255,255,255);
-    // $pdf->SetXY(10,40);
-    // Header starts ///
-    //First header column //
+
     $pdf->Cell($width_cell[0],10,'Question no',1,0,'C',true);
     //Second header column//
     $pdf->Cell($width_cell[1],10,'A',1,0,'C',true);
@@ -147,7 +151,17 @@ function SubjectDivWiseFeedback($fbresults, $teacherresults, $subjectresults,$su
     }
 
     $pdf->SetFont('Arial','B',20);
-    $pdf->Cell(0,10, 'Overall Average :'.round(($totalsum/(int)12),2)."%", 'T',1,'C');
+    $pdf->Cell(0,20, 'Overall Average :'.round(($totalsum/(int)12),2)."%", 'T',1,'C');
+    
+    
+    // $pdf->SetFont('Arial','',12);
+    // $pdf->Cell(0,10, "_________________________                          _________________________                          _________________________", 'T',1,'C');
+    
+    $pdf->SetFont('Arial','',10);
+    $pdf->Cell(0,40, ".", 'T',1,'C');
+    
+    $pdf->SetFont('Arial','',12);
+    $pdf->Cell(0,10, strtoupper($teacherresults['teacher_name'])."                          Head Of Department                          Principal, RGIT", 0,1,'C');
 
     $pdf->AddPage();
     $remarks = explode('0-0', $fbresults['remark']);
@@ -161,7 +175,14 @@ function SubjectDivWiseFeedback($fbresults, $teacherresults, $subjectresults,$su
       }
       $x = $x-1;
     }
-    $pdf->Output('OUTPUT/FeedbackResults/'.$teacherresults['teacher_dept'].'-'.$subjectresults['sub_name'].'-'.$divisionid.'-'.$teacherresults['teacher_name'].'-'.$fbresults['year'].'.pdf', 'F');
+    
+    $pdf->SetFont('Arial','',10);
+    $pdf->Cell(0,40, ".", 'T',1,'C');
+    
+    $pdf->SetFont('Arial','',12);
+    $pdf->Cell(0,10, strtoupper($teacherresults['teacher_name'])."                          Head Of Department                          Principal, RGIT", 0,1,'C');
+    
+    $pdf->Output('OUTPUT/FeedbackResults/'.$subjectresults['sub_dept'].'-'.$subjectresults['sub_name'].'-'.$divisionid.'-'.$teacherresults['teacher_name'].'-'.$fbresults['year'].'.pdf', 'F');
 
 }
 
@@ -177,7 +198,11 @@ function SubjectDivWiseCompleteFeedback($fbresults, $teacherresults, $subjectres
 
     $pdf->SetXY(10,30);
     $pdf->SetFont('Arial','B',15);
-    $pdf->Cell(0,10, 'DEPARTMENT OF '.strtoupper($teacherresults['teacher_dept']), 0,1,'C');
+    $pdf->Cell(0,10, 'DEPARTMENT OF '.strtoupper($subjectresults['sub_dept']), 0,1,'C');
+    
+    $pdf->SetFont('Arial','',12);
+    $pdf->Cell(0,10, strtoupper($fbresults['year']), 0,1,'R');
+    // $pdf->Cell(100,5, ': '.strtoupper($subjectresults['sub_name']), 0,1,'L');
 
     $pdf->SetFont('Arial','',12);
     $pdf->Cell(35,5, 'Professor Name', 0,0,'L');
@@ -188,8 +213,8 @@ function SubjectDivWiseCompleteFeedback($fbresults, $teacherresults, $subjectres
     $pdf->Cell(100,5, ': '.strtoupper($subjectresults['sub_name']), 0,1,'L');
 
     $pdf->SetFont('Arial','',12);
-    $pdf->Cell(35,5, 'Year', 0,0,'L');
-    $pdf->Cell(100,5, ': '.strtoupper($fbresults['year'])."    Div   :    ".$divisionid, 0,1,'L');
+    $pdf->Cell(35,5, 'Department', 0,0,'L');
+    $pdf->Cell(100,5, ': '.strtoupper($subjectresults['sub_dept'])."    Div   :    ".$divisionid, 0,1,'L');
 
     $pdf->Ln(5);
 
@@ -283,7 +308,7 @@ function SubjectDivWiseCompleteFeedback($fbresults, $teacherresults, $subjectres
       }
       $x = $x-1;
     }
-    $pdf->Output('OUTPUT/FeedbackSummary/'.$teacherresults['teacher_dept'].'-'.$subjectresults['sub_name'].'-'.$divisionid.'-'.$teacherresults['teacher_name'].'-'.$fbresults['year'].'.pdf', 'F');
+    $pdf->Output('OUTPUT/FeedbackSummary/'.$subjectresults['sub_dept'].'-'.$subjectresults['sub_name'].'-'.$divisionid.'-'.$teacherresults['teacher_name'].'-'.$fbresults['year'].'.pdf', 'F');
 
 }
 
@@ -386,25 +411,26 @@ if(isset($_POST['upload_fb'])){
     $query1 = "SELECT DISTINCT dept,sem,div_id FROM feedback_inst_temp;";
     $results1 = mysqli_query($db, $query1);
     if(mysqli_num_rows($results1) > 0){
-      $irmrks = '';
       while($row1 = mysqli_fetch_assoc($results1)){
+        $irmrks = '';
         $dept_id = $row1['dept'];
         $sem_id = $row1['sem'];
         $div_id = $row1['div_id'];
 
         $qu2 = "SELECT * FROM feedback_inst_temp WHERE dept='$dept_id' and sem='$sem_id' and div_id='$div_id';";
         $res2 = mysqli_query($db, $qu2);
-        $row2 = mysqli_fetch_assoc($res2);
-
-        $irmrks = $irmrks.'0-0'.str_replace(array("'", "\""), "", $row2['comment']);
+        
+        while($row2 = mysqli_fetch_assoc($res2)){
+          $irmrks = $irmrks.'0-0'.str_replace(array("'", "\""), "", $row2['comment']);
+        }
 
         $yr = strval(date('Y'));
         $qu1 = "INSERT INTO feedback_inst(year, dept, sem, div_id, comment) VALUES ('$yr','$dept_id','$sem_id','$div_id','$irmrks')";
         mysqli_query($db, $qu1);
 
       }
-      $qt = "TRUNCATE table feedback_inst_temp";
-      mysqli_query($db, $qt);
+      // $qt = "TRUNCATE table feedback_inst_temp";
+      // mysqli_query($db, $qt);
       echo "<script>alert('Data Uploaded!')</script>";
     }
     else{
@@ -412,8 +438,6 @@ if(isset($_POST['upload_fb'])){
     }
 
 }
-
-
 
 if(isset($_POST['summary_fb'])){
 
@@ -438,8 +462,8 @@ if(isset($_POST['summary_fb'])){
           SubjectDivWiseFeedback($fbresults, $teacherresults, $subjectresults,$subjectid,$teacherid,$divisionid);
 
       }
-      $qtr = "TRUNCATE table feedback_count";
-      mysqli_query($db, $qtr);
+      // $qtr = "TRUNCATE table feedback_count";
+      // mysqli_query($db, $qtr);
       echo "<script>alert('Summary Created!')</script>";
     }
     else{
@@ -457,13 +481,6 @@ if(isset($_POST['summary_fb'])){
           $ir = $fbiresults['comment'];
           $yr = $fbiresults['year'];
 
-          // $q2 = "SELECT * FROM teacher WHERE teacher_id = '$teacherid'";
-          // $teacherresults = mysqli_query($db, $q2);
-          // $teacherresults = mysqli_fetch_array($teacherresults);
-          //
-          // $q3 = "SELECT * FROM subject WHERE sub_id = '$subjectid'";
-          // $subjectresults = mysqli_query($db, $q3);
-          // $subjectresults = mysqli_fetch_array($subjectresults);
 
           InstituteDivWiseFeedback($idept,$isem,$idiv,$ir,$yr);
           InstituteCompleteFeedback();
@@ -484,8 +501,8 @@ if(isset($_POST['trunc_fb'])){
 
     $q1 = "TRUNCATE table feedback_temp";
     mysqli_query($db, $q1);
-    $qt = "TRUNCATE table feedback_count";
-    mysqli_query($db, $qt);
+    // $qt = "TRUNCATE table feedback_count";
+    // mysqli_query($db, $qt);
     echo "<script>alert('Data Cleared!')</script>";
 }
 

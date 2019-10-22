@@ -3,9 +3,10 @@
   
   if(isset($_POST['complete_fb'])){
     
-    for ($i=0; $i < $_SESSION['count']; $i++) {
+    $cnt = count($_SESSION['qu']);
+    
+    for ($i=0; $i < $cnt ; $i++) {
       $q = $_SESSION['qu'][$i];
-      // echo $q;
       mysqli_query($db, $q);
     }
     $q1 = $_SESSION['inst_fb'];
