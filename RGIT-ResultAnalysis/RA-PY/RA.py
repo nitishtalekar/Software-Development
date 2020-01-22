@@ -8,6 +8,7 @@ import numpy as np
 from fpdf import FPDF, HTMLMixin
 import PIL.Image
 import PIL.ImageTk
+import threading
 
 
 
@@ -579,6 +580,10 @@ def select_output_folder():
     outputpath = filedialog.askdirectory()
     outputFolderVar.set(outputpath)
 
+def run_thread():
+    x = threading.Thread(target=file_submit, daemon=True)
+    x.start()
+
 def file_submit():
     global progressVar, root
     global inputpath, outputpath, department
@@ -782,7 +787,7 @@ class Page2(Page):
 
         Y = Y + 40
 
-        buttonSubmit = Button(self, text = "Submit", command = file_submit, width = 10, relief=RAISED )
+        buttonSubmit = Button(self, text = "Submit", command = run_thread, width = 10, relief=RAISED )
         buttonSubmit.place(x = (windowWidth - 100) // 2, y = windowHeight - 80)
 
 class Page3(Page):
